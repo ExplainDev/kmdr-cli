@@ -1,11 +1,19 @@
 Kommandr CLI
 ============
 
-A CLI client to interact with (Kommandr)[https://github.com/kommandr/kommandr).
+A CLI client to interact with [Kommandr](https://github.com/kommandr/kommandr).
 
 ## Installation
 ``` shell
 npm install -g kommandr-cli
+```
+
+Generate a token on kommandr.com and put it in `~/.kommandrrc`
+```
+{
+  "user": "your_username",
+  "token": "your_token"
+}
 ```
 ## Usage
 
