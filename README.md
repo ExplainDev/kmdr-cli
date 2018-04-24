@@ -1,7 +1,7 @@
-Kommandr CLI
+kmdr.sh
 ============
 
-A CLI client to interact with [Kommandr](https://github.com/kommandr/kommandr).
+A CLI client to interact with Kommandr
 
 ## Installation
 ``` shell
