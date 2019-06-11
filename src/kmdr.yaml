@@ -1,0 +1,34 @@
+---
+name: kmdr
+summary: CLI client for explaning shell commands
+link: https://kmdr.sh
+version: '0.1'
+locale: en
+options:
+  - name: language
+    short:
+      - '-l'
+    long:
+      - '--language'
+    summary: Set the language
+subcommands:
+  - name: explain
+    summary: Explain a command
+    aliases:
+      - exp
+      - e
+    options:
+      - name: interactive
+        summary: Opens the program in interactive more. The program does not close immediately.
+        long:
+          - '--interactive'
+        short:
+          - '-i'
+      - name: schema
+        long:
+          - '--schema'
+          - '-s'
+  - name: config
+    summary: Configure kmdr on this computer
+    aliases:
+      - c

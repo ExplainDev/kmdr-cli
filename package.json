@@ -1,35 +1,54 @@
 {
-  "name": "kommandr-cli",
-  "version": "0.0.1",
-  "description": "Kommandr CLI Client",
-  "main": "index.js",
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "commander": "^2.11.0",
-    "graphql": "^0.11.7",
-    "graphql-request": "^1.4.0",
-    "graphql-tag": "^2.5.0",
-    "inquirer": "^4.0.0",
-    "nconf": "^0.9.1",
-    "node-fetch": "^1.7.3",
-    "shelljs": "^0.7.8"
-  },
-  "devDependencies": {},
+  "name": "kmdr.sh",
+  "version": "0.0.2",
+  "description": "A command-line interface for explaining commands in the terminal",
+  "main": "dist/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node index.js"
+    "build": "tsc",
+    "test": "jest --verbose",
+    "start": "node dist/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/kommandr/kommandr-cli.git"
+  "repository": "git@github.com:kommandr/kmdr.sh.git",
+  "author": "Eddie Ramirez <djedi.r@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "^6.0.3",
+    "@types/node": "^12.0.2",
+    "@types/node-emoji": "^1.8.1",
+    "@types/ora": "^3.2.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.17.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
   },
-  "author": "Eddie Ramirez",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kommandr/kommandr-cli/issues"
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "dist/",
+      "tests/data/"
+    ],
+    "testRegex": "tests/.*\\.(ts|tsx|js)$"
   },
-  "homepage": "https://github.com/kommandr/kommandr-cli#readme"
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.18.0",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "http": "^0.0.0",
+    "inquirer": "^6.3.1",
+    "js-yaml": "^3.13.1",
+    "node-emoji": "^1.10.0",
+    "ora": "^3.4.0"
+  }
 }
