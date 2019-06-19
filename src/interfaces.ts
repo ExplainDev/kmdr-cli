@@ -47,7 +47,14 @@ export interface AssignmentNodeAST extends NodeAST {
  */
 export interface CommandNodeAST extends NodeAST {
   word: string;
-  parts: Array<AssignmentNodeAST | WordNodeAST | ProgramNodeAST | SubcommandNodeAST | OptionNodeAST | ArgumentNodeAST>;
+  parts: Array<
+    | AssignmentNodeAST
+    | WordNodeAST
+    | ProgramNodeAST
+    | SubcommandNodeAST
+    | OptionNodeAST
+    | ArgumentNodeAST
+  >;
   inSudoContext?: boolean;
 }
 
@@ -118,7 +125,6 @@ export interface OptionNodeAST extends WordNodeAST {
   optionSchema?: OptionSchema | null;
   optPos: number[];
   startsWithDash?: number;
-  word: string;
 }
 
 /**
@@ -229,12 +235,30 @@ export interface Theme {
   attributes: { color: string; style: string };
 }
 
-export interface FlatTree {
-  explainCommand: Array<OptionNodeAST | ProgramNodeAST>;
+export interface ExplainCommand {
+  query: string;
+  leafNodes: Array<OptionNodeAST | ProgramNodeAST>;
 }
 
 export interface Settings {
   locale: string;
+  username: string;
+  token: string;
+}
+
+export interface ExplainCommandResponse {
+  explainCommand: ExplainCommand;
+}
+
+export interface GraphQLResponse {
+  data: ExplainCommandResponse;
+}
+
+export interface ConsoleAnswers {
+  [key: string]: string;
+}
+
+export interface AuthCredentials {
   username: string;
   token: string;
 }

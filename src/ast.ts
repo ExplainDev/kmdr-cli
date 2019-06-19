@@ -17,7 +17,7 @@ import {
   StickyOptionNodeAST,
   SubcommandNodeAST,
   WordNodeAST,
-} from '../interfaces';
+} from './interfaces';
 
 class AST {
   /**
@@ -81,7 +81,11 @@ class AST {
    * @param argValue
    * @param pos
    */
-  static commandHasOption(node: CommandNodeAST | StickyOptionNodeAST, optionName: string, argValue?: string): boolean {
+  static commandHasOption(
+    node: CommandNodeAST | StickyOptionNodeAST,
+    optionName: string,
+    argValue?: string,
+  ): boolean {
     if (!node.parts) return false;
 
     for (let i = 0; i < node.parts.length; i++) {
@@ -128,7 +132,11 @@ class AST {
     return false;
   }
 
-  static commandHasSubcommand(node: CommandNodeAST, subcommandName: string, pos: number = 0): boolean {
+  static commandHasSubcommand(
+    node: CommandNodeAST,
+    subcommandName: string,
+    pos: number = 0,
+  ): boolean {
     if (!node.parts) return false;
 
     if (pos < 0) pos = 0;
@@ -178,7 +186,9 @@ class AST {
     return subcommands;
   }
 
-  static getCommandOptions(node: CommandNodeAST | StickyOptionNodeAST): OptionNodeAST[] | undefined {
+  static getCommandOptions(
+    node: CommandNodeAST | StickyOptionNodeAST,
+  ): OptionNodeAST[] | undefined {
     if (!node.parts) return;
     const options: OptionNodeAST[] = [];
 
@@ -199,7 +209,10 @@ class AST {
     return options;
   }
 
-  static getCommandOption(node: CommandNodeAST | StickyOptionNodeAST, optionName: string): OptionNodeAST | undefined {
+  static getCommandOption(
+    node: CommandNodeAST | StickyOptionNodeAST,
+    optionName: string,
+  ): OptionNodeAST | undefined {
     if (!node.parts) return;
 
     let startPos = 0;
@@ -302,7 +315,10 @@ class AST {
     return options;
   }
 
-  static getSudoOption(node: CommandNodeAST | StickyOptionNodeAST, optionName: string): OptionNodeAST | undefined {
+  static getSudoOption(
+    node: CommandNodeAST | StickyOptionNodeAST,
+    optionName: string,
+  ): OptionNodeAST | undefined {
     if (!node.parts) return;
 
     let stopPos = node.parts.length;
