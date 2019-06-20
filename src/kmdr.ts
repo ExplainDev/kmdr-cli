@@ -44,13 +44,12 @@ class KMDR {
     try {
       this.explainConsole.showSpinner('Loading...');
       const res = await this.explainClient.getExplanation(query);
+      this.explainConsole.hideSpinner();
       if (res && res.data) {
         this.explainConsole.render(res.data);
       }
     } catch (err) {
       this.explainConsole.error(err);
-    } finally {
-      this.explainConsole.hideSpinner();
     }
 
     /*const { query } = (await explain.prompt()) as { query: string };

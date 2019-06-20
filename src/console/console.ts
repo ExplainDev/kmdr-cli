@@ -16,6 +16,10 @@ class Console {
     console.log(content);
   }
 
+  log(str: string) {
+    console.log(str);
+  }
+
   clear() {
     console.log('TODO');
   }
@@ -33,13 +37,7 @@ class Console {
   }
 
   box(str: string) {
-    return boxen(str, { padding: 2, dimBorder: true });
-  }
-
-  help(rows: any) {
-    for (const row of rows) {
-      this.print(row);
-    }
+    return boxen(str, { padding: 1, dimBorder: true });
   }
 }
 

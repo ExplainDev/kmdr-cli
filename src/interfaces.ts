@@ -28,7 +28,7 @@ export interface ProgramNodeAST extends NodeAST {
   programName: string;
   isDotSlash?: boolean | null;
   hasPath?: boolean | null;
-  schema?: ProgramSchema | null;
+  schema: ProgramSchema;
 }
 
 /**
@@ -36,8 +36,8 @@ export interface ProgramNodeAST extends NodeAST {
  */
 export interface AssignmentNodeAST extends NodeAST {
   word: string;
-  identifier: string | null;
-  identifier_pos: number[];
+  name: string;
+  name_pos: number[];
   value: string | null;
   value_pos: number[];
 }
@@ -122,7 +122,7 @@ export interface WordNodeAST extends NodeAST {
 export interface OptionNodeAST extends WordNodeAST {
   followedByArg?: boolean;
   opt: string;
-  optionSchema?: OptionSchema | null;
+  optionSchema: OptionSchema;
   optPos: number[];
   startsWithDash?: number;
 }
@@ -148,7 +148,7 @@ export interface StickyOptionNodeAST extends WordNodeAST {
  * Interface to construct a SubcommandNode
  */
 export interface SubcommandNodeAST extends WordNodeAST {
-  schema?: ProgramSchema;
+  schema: ProgramSchema;
 }
 
 /**
@@ -237,7 +237,15 @@ export interface Theme {
 
 export interface ExplainCommand {
   query: string;
-  leafNodes: Array<OptionNodeAST | ProgramNodeAST>;
+  leafNodes: Array<
+    | OptionNodeAST
+    | ProgramNodeAST
+    | AssignmentNodeAST
+    | SubcommandNodeAST
+    | OperatorNodeAST
+    | PipeNodeAST
+    | StickyOptionNodeAST
+  >;
 }
 
 export interface Settings {

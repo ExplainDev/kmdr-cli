@@ -27,8 +27,8 @@ class AST {
    * @param value the value we try to validate against
    * @returns true if there's a match, false if not
    */
-  static assignmentHasValue(node: AssignmentNodeAST, identifier: string, value: string): boolean {
-    return node.identifier === identifier && node.value === value;
+  static assignmentHasValue(node: AssignmentNodeAST, name: string, value: string): boolean {
+    return node.name === name && node.value === value;
   }
 
   /**
@@ -48,7 +48,7 @@ class AST {
         const assignmentNode = <AssignmentNodeAST>currentNode;
         if (
           (value && AST.assignmentHasValue(assignmentNode, identifier, value)) ||
-          (!value && assignmentNode.identifier === identifier)
+          (!value && assignmentNode.name === name)
         ) {
           return true;
         }

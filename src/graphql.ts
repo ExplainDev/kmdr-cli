@@ -15,7 +15,9 @@ query Explain($query: String!) {
         word
         pos
         value
-        identifier
+        value_pos
+        name
+        name_pos
       }
       ... on OptionNodeAST {
         kind
@@ -33,6 +35,7 @@ query Explain($query: String!) {
       ... on OptionWithArgNodeAST {
         kind
         word
+        pos
         option {
           word
           pos
