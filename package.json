@@ -12,6 +12,7 @@
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/inquirer": "^6.0.3",
@@ -41,12 +42,10 @@
     "testRegex": "tests/.*\\.(ts|tsx|js)$"
   },
   "dependencies": {
-    "@types/axios": "^0.14.0",
     "axios": "^0.18.0",
     "boxen": "^4.1.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "http": "^0.0.0",
     "inquirer": "^6.3.1",
     "js-yaml": "^3.13.1",
     "log-symbols": "^3.0.0",
