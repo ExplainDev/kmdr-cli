@@ -2,8 +2,21 @@ export const queryExplainCommand = `
 query Explain($query: String!) {
   explainCommand(query: $query) {
     query,
+    
     leafNodes {
       __typename
+      ... on StickyOptionNodeAST {
+        kind
+        pos
+        word
+        parts {
+          kind
+          pos
+          optionSchema {
+            summary
+          }
+        }
+      }
       ... on ArgumentNodeAST {
         kind
         word
@@ -16,7 +29,6 @@ query Explain($query: String!) {
         pos
         value
         value_pos
-        name
         name_pos
       }
       ... on OptionNodeAST {
@@ -66,7 +78,7 @@ query Explain($query: String!) {
         schema {
           name
           summary
-          manSynopsis
+          locale
         }
       }
       ... on SubcommandNodeAST {
@@ -90,6 +102,23 @@ query Explain($query: String!) {
         kind
         word
         pos
+        pos
+        schema {
+          name
+          summary
+        }
+      }
+      
+      ... on RedirectNodeAST {
+        kind
+        type
+        pos
+        input
+        output {
+          kind
+          word
+          pos
+        }
       }
     }
   }
