@@ -39,7 +39,7 @@ class AST {
    * @param value
    * @returns true if a first assignment matches the criteria
    */
-  static commandHasAssignment(node: CommandNodeAST, identifier: string, value?: string): boolean {
+  static commandHasAssignment(node: CommandNodeAST, name: string, value?: string): boolean {
     if (!node.parts) return false;
 
     for (let i = 0; i < node.parts.length; i++) {
@@ -47,7 +47,7 @@ class AST {
       if (AST.isAssignment(<AssignmentNodeAST>currentNode)) {
         const assignmentNode = <AssignmentNodeAST>currentNode;
         if (
-          (value && AST.assignmentHasValue(assignmentNode, identifier, value)) ||
+          (value && AST.assignmentHasValue(assignmentNode, name, value)) ||
           (!value && assignmentNode.name === name)
         ) {
           return true;
@@ -170,6 +170,21 @@ class AST {
     }
 
     return args;
+  }
+
+  static getAllAssignments(node: CommandNodeAST): AssignmentNodeAST[] {
+    if (!node.parts) return [];
+
+    let assignments: AssignmentNodeAST[] = [];
+
+    for (let i = 0; i < node.parts.length; i++) {
+      const currentNode = node.parts[i];
+      if (AST.isAssignment(<AssignmentNodeAST>currentNode)) {
+        assignments.push(<AssignmentNodeAST>currentNode);
+      }
+    }
+
+    return assignments;
   }
 
   static getAllSubcommands(node: CommandNodeAST): SubcommandNodeAST[] | undefined {

@@ -12,6 +12,8 @@ import {
   ProgramSchema,
   AssignmentNodeAST,
   PipeNodeAST,
+  StickyOptionNodeAST,
+  SudoNodeAST,
 } from '../interfaces';
 import AST from '../ast';
 
@@ -40,7 +42,8 @@ class Decorator {
       | ArgumentNodeAST
       | OperatorNodeAST
       | AssignmentNodeAST
-      | PipeNodeAST,
+      | PipeNodeAST
+      | SudoNodeAST,
   ): string {
     let decoratedString: string;
     if (AST.isAssignment(token)) {

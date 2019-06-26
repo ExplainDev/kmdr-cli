@@ -156,7 +156,7 @@ export interface SubcommandNodeAST extends WordNodeAST {
  */
 export interface SudoNodeAST extends WordNodeAST {
   word: string;
-  schema?: ProgramSchema | null;
+  schema?: ProgramSchema;
 }
 
 /**
@@ -238,13 +238,15 @@ export interface Theme {
 export interface ExplainCommand {
   query: string;
   leafNodes: Array<
-    | OptionNodeAST
-    | ProgramNodeAST
-    | AssignmentNodeAST
-    | SubcommandNodeAST
-    | OperatorNodeAST
-    | PipeNodeAST
-    | StickyOptionNodeAST
+    Array<
+      | OptionNodeAST
+      | ProgramNodeAST
+      | AssignmentNodeAST
+      | SubcommandNodeAST
+      | OperatorNodeAST
+      | PipeNodeAST
+      | StickyOptionNodeAST
+    >
   >;
 }
 

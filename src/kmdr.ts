@@ -35,33 +35,24 @@ class KMDR {
     this.cli.parse(process.argv);
   }
 
-  private async promptExplain(args: any, options: any) {
-    let { query } = await this.explainConsole.prompt();
-    if (query === '') {
-      this.explainConsole.error('Please enter a command');
-      return;
-    }
-    try {
-      this.explainConsole.showSpinner('Loading...');
-      const res = await this.explainClient.getExplanation(query);
-      this.explainConsole.hideSpinner();
-      if (res && res.data) {
-        this.explainConsole.render(res.data);
+  private async promptExplain(args: any, { interactive }: any) {
+    do {
+      let { query } = await this.explainConsole.prompt();
+      if (query === '') {
+        this.explainConsole.error('Please enter a command');
+        return;
       }
-    } catch (err) {
-      this.explainConsole.error(err);
-    }
-
-    /*const { query } = (await explain.prompt()) as { query: string };
-      const response = await this.client.explainCommand(query);
-      console.log(response);
-      if (response && response.data) {
-        console.log(response.data);
-        /*
-        const { explainCommand } = result.data.data;
-        console.log(explainCommand);
-        explain.render(explainCommand);
-        */
+      try {
+        this.explainConsole.showSpinner('Loading...');
+        const res = await this.explainClient.getExplanation(query);
+        this.explainConsole.hideSpinner();
+        if (res && res.data) {
+          this.explainConsole.render(res.data);
+        }
+      } catch (err) {
+        this.explainConsole.error(err);
+      }
+    } while (interactive);
   }
 
   private promptConfig() {

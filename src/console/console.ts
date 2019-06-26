@@ -12,8 +12,8 @@ class Console {
     return inquirer.prompt(questions);
   }
 
-  print(content: string) {
-    console.log(content);
+  print(content?: string) {
+    console.log(content ? content : '');
   }
 
   log(str: string) {
@@ -37,7 +37,7 @@ class Console {
   }
 
   box(str: string) {
-    return boxen(str, { padding: 1, dimBorder: true });
+    return boxen(str, { padding: 1, dimBorder: false });
   }
 }
 
