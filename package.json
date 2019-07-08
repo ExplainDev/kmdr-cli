@@ -1,6 +1,6 @@
 {
   "name": "kmdr.sh",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/src/index.js",
   "scripts": {
@@ -8,6 +8,14 @@
     "test": "jest --verbose",
     "start": "node dist/index.js"
   },
+  "bin": {
+    "kmdr": "dist/src/bin.js"
+  },
+  "keywords": [
+    "shell",
+    "bash",
+    "terminal"
+  ],
   "repository": "git@github.com:kommandr/kmdr.sh.git",
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
