@@ -1,6 +1,6 @@
 {
   "name": "kmdr.sh",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/src/index.js",
   "scripts": {
@@ -22,8 +22,9 @@
     "jest": "^24.8.0",
     "prettier": "^1.17.1",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.16.0",
+    "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
     "typescript": "^3.4.5"
   },
   "jest": {
