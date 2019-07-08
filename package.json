@@ -1,15 +1,15 @@
 {
-  "name": "kmdr.sh",
-  "version": "0.0.4",
+  "name": "kmdr",
+  "version": "0.0.6",
   "description": "A command-line interface for explaining commands in the terminal",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --verbose",
     "start": "node dist/index.js"
   },
   "bin": {
-    "kmdr": "dist/src/bin.js"
+    "kmdr": "dist/bin.js"
   },
   "keywords": [
     "shell",
