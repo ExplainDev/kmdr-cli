@@ -1,7 +1,7 @@
-import cli from 'commander';
-import { Settings } from './interfaces';
-import ExplainClient from './client/explain';
-import ExplainConsole from './console/explain';
+import cli from "commander";
+import { Settings } from "./interfaces";
+import ExplainClient from "./client/explain";
+import ExplainConsole from "./console/explain";
 
 class KMDR {
   private settings: Settings | undefined;
@@ -15,48 +15,47 @@ class KMDR {
   }
 
   public init() {
-    this.cli.version('0.1').option('-l, --languate <language>', 'change the language');
+    this.cli.version("0.1").option("-l, --languate <language>", "change the language");
 
     this.cli
-      .command('explain [options]')
-      .alias('e')
-      .alias('exp')
-      .description('Explain a command')
-      .option('-i, --interactive', 'Opens the program in interactivec mode')
-      .option('-s, --schema <file>', 'Use the Schema in file')
+      .command("explain [options]")
+      .alias("e")
+      .alias("exp")
+      .description("Explain a command")
+      .option("-i, --interactive", "Opens the program in interactivec mode")
+      .option("-s, --schema <file>", "Use the Schema in file")
       .action(this.promptExplain.bind(this));
 
     this.cli
-      .command('config')
-      .alias('c')
-      .description('Set or view configuration for kmdr on this computer')
+      .command("config")
+      .alias("c")
+      .description("Set or view configuration for kmdr on this computer")
       .action(this.promptConfig.bind(this));
 
     this.cli.parse(process.argv);
   }
 
   private async promptExplain(args: any, { interactive }: any) {
-    do {
-      let { query } = await this.explainConsole.prompt();
-      if (query === '') {
-        this.explainConsole.error('Please enter a command');
-        return;
+    let { query } = await this.explainConsole.prompt();
+    if (query === "") {
+      this.explainConsole.error("Enter a command");
+      return;
+    }
+    try {
+      this.explainConsole.showSpinner("Loading...");
+      const res = await this.explainClient.getExplanation(query);
+      this.explainConsole.hideSpinner();
+      if (res && res.data) {
+        this.explainConsole.render(res.data);
       }
-      try {
-        this.explainConsole.showSpinner('Loading...');
-        const res = await this.explainClient.getExplanation(query);
-        this.explainConsole.hideSpinner();
-        if (res && res.data) {
-          this.explainConsole.render(res.data);
-        }
-      } catch (err) {
-        this.explainConsole.error(err);
-      }
-    } while (interactive);
+    } catch (err) {
+      this.explainConsole.hideSpinner();
+      this.explainConsole.error(err);
+    }
   }
 
   private promptConfig() {
-    console.log('promptConfig');
+    console.log("promptConfig");
   }
 }
 

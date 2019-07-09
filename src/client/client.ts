@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
-import { ExplainCommandResponse, AuthCredentials } from '../interfaces';
+import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from "axios";
+import { ExplainCommandResponse, AuthCredentials } from "../interfaces";
 
 class Client {
-  private url: string = 'http://localhost:8081/api/graphql';
+  private baseURL: string = "http://localhost:8081/api/graphql";
   private username?: string;
   private token?: string;
 
@@ -13,14 +13,15 @@ class Client {
       this.username = auth.username;
       this.token = auth.token;
     }
+
     this.instance =
       axiosInstance ||
       axios.create({
-        baseURL: 'http://localhost:8081/api/graphql',
+        baseURL: this.baseURL,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        responseType: 'json',
+        responseType: "json",
       });
   }
 
@@ -37,32 +38,8 @@ class Client {
   }
 
   private post(data: any, config: AxiosRequestConfig | undefined = undefined) {
-    return this.instance.post(this.url, data, { ...config });
+    return this.instance.post("", data, { ...config });
   }
-  /*
-  public async explainCommand(query: string, schema?: string[]) {
-    try {
-      return axios.post(
-        this.url,
-        {
-          query: queryExplainCommand,
-          variables: {
-            query,
-          },
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          transformResponse: (res: APIResponse) => {},
-        },
-      );
-    } catch (err) {
-      console.error(err);
-      throw Error(err);
-    }
-  }
-  */
 
   public config() {}
 }

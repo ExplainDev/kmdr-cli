@@ -1,126 +1,111 @@
 export const queryExplainCommand = `
-query Explain($query: String!) {
-  explainCommand(query: $query) {
-    query,
-    
-    leafNodes {
-      __typename
-      ... on StickyOptionNodeAST {
-        kind
-        pos
-        word
-        parts {
+  query Explain($query: String!) {
+    explainCommand(query: $query) {
+      query
+      leafNodes {
+        __typename
+
+        ... on ArgumentNodeAST {
           kind
-          pos
-          optionSchema {
-            summary
-          }
-        }
-      }
-      ... on ArgumentNodeAST {
-        kind
-        word
-        pos
-        startsWithDash
-      }
-      ... on AssignmentNodeAST {
-        kind
-        word
-        pos
-        value
-        value_pos
-        name_pos
-      }
-      ... on OptionNodeAST {
-        kind
-        word
-        opt
-        optionSchema {
-          long
-          short
-          summary
-          description
-        }
-        pos
-        startsWithDash
-      }
-      ... on OptionWithArgNodeAST {
-        kind
-        word
-        pos
-        option {
           word
           pos
+          startsWithDash
+        }
+        ... on AssignmentNodeAST {
           kind
+          word
+          pos
+          value
+          value_pos
+          name_pos
+        }
+        ... on OptionNodeAST {
+          kind
+          word
+          opt
           optionSchema {
-            short
             long
+            short
+            summary
+            description
+          }
+          pos
+          startsWithDash
+        }
+        ... on OptionWithArgNodeAST {
+          kind
+          word
+          pos
+          option {
+            word
+            pos
+            kind
+            optionSchema {
+              short
+              long
+              summary
+            }
+          }
+          arg {
+            kind
+            word
+            pos
+          }
+        }
+        ... on PipeNodeAST {
+          kind
+          pipe
+          pos
+        }
+        ... on ProgramNodeAST {
+          kind
+          word
+          pos
+          programName
+          schema {
+            name
+            summary
+            locale
+          }
+        }
+        ... on SubcommandNodeAST {
+          kind
+          pos
+          schema {
+            name
+            summary
+            description
+          }
+          word
+        }
+        ... on OperatorNodeAST {
+          kind
+          word
+          op
+          pos
+        }
+        ... on SudoNodeAST {
+          kind
+          word
+          pos
+          pos
+          schema {
+            name
             summary
           }
         }
-        arg {
+        ... on RedirectNodeAST {
           kind
-          word
+          type
           pos
-          
-        }
-      }
-      ... on PipeNodeAST {
-        kind
-        pipe
-        pos
-      }
-      ... on ProgramNodeAST {
-        kind
-        word
-        pos
-        programName
-        schema {
-          name
-          summary
-          locale
-        }
-      }
-      ... on SubcommandNodeAST {
-        kind
-        pos
-        schema {
-          name
-          summary
-          description
-        }
-        word
-      }
-      
-      ... on OperatorNodeAST {
-        kind
-        word
-        op
-        pos
-      }
-      ... on SudoNodeAST {
-        kind
-        word
-        pos
-        pos
-        schema {
-          name
-          summary
-        }
-      }
-      
-      ... on RedirectNodeAST {
-        kind
-        type
-        pos
-        input
-        output {
-          kind
-          word
-          pos
+          input
+          output {
+            kind
+            word
+            pos
+          }
         }
       }
     }
   }
-}
 `;

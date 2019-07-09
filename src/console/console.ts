@@ -25,7 +25,8 @@ class Console {
   }
 
   error(msg: string) {
-    console.error(logSymbols.error, chalk.bgRedBright(msg));
+    console.log(`thre was an erro`);
+    console.error(chalk.bgRedBright(msg));
   }
 
   showSpinner(msg: string) {

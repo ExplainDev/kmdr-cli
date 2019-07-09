@@ -1,27 +1,14 @@
-import {
-  ProgramNodeAST,
-  SudoNodeAST,
-  StickyOptionNodeAST,
-  ArgumentNodeAST,
-  SubcommandNodeAST,
-  OperatorNodeAST,
-  OptionNodeAST,
-  WordNodeAST,
-  OptionWithArgNodeAST,
-  Settings,
-  GraphQLResponse,
-  ExplainCommandResponse,
-} from '../interfaces';
-import { queryExplainCommand } from '../graphql';
-import Client from './client';
-import { AxiosResponse } from 'axios';
+import { GraphQLResponse } from "../interfaces";
+import { queryExplainCommand } from "../graphql";
+import Client from "./client";
+import { AxiosResponse } from "axios";
 
 class Explain extends Client {
   constructor() {
     super();
   }
 
-  public getExplanation(query: string, schema?: string) {
+  public async getExplanation(query: string, schema?: string) {
     const transformResponse = (res: string) => {
       if (res) {
         try {

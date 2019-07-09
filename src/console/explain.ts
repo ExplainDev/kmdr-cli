@@ -1,7 +1,7 @@
-import Console from './console';
-import { ConsoleAnswers, ExplainCommandResponse } from '../interfaces';
-import Highlight from '../highlight/highlight';
-import AST from '../ast';
+import Console from "./console";
+import { ConsoleAnswers, ExplainCommandResponse } from "../interfaces";
+import Highlight from "../highlight/highlight";
+import AST from "../ast";
 import {
   OptionNodeAST,
   ProgramNodeAST,
@@ -11,16 +11,21 @@ import {
   PipeNodeAST,
   StickyOptionNodeAST,
   SudoNodeAST,
-} from '../interfaces';
-import Decorator from '../highlight/decorator';
-import { program } from '../../node_modules/@types/babel__template';
+} from "../interfaces";
+import Decorator from "../highlight/decorator";
+import emoji from "node-emoji";
+
+const keyboardEmoji = emoji.get("keyboard");
+const syntaxEmoji = emoji.get("boom");
+const explanationEmoji = emoji.get("bulb");
 
 class ExplainConsole extends Console {
   private questions: Array<Object> = [
     {
-      type: 'input',
-      name: 'query',
-      message: 'Explain a command:',
+      message: "Explain a command:",
+      name: "query",
+      prefix: `${keyboardEmoji}`,
+      type: "input",
     },
   ];
 
@@ -28,7 +33,7 @@ class ExplainConsole extends Console {
     super();
   }
 
-  makeHelp(
+  public makeHelp(
     leafNodes: Array<
       Array<
         | OptionNodeAST
@@ -41,7 +46,7 @@ class ExplainConsole extends Console {
       >
     >,
   ): string {
-    let help = '';
+    let help = "";
     for (const unit of leafNodes) {
       for (const node of unit) {
         if (AST.isProgram(node)) {
@@ -49,23 +54,23 @@ class ExplainConsole extends Console {
           const { summary, name } = programNode.schema;
           const decoratedProgramName = Decorator.decorate(name, programNode);
 
-          help += `${decoratedProgramName}: ${summary}\n`;
+          help += `  ${decoratedProgramName}: ${summary}\n`;
         }
 
         if (AST.isOption(node)) {
-          const optionNode = <OptionNodeAST>node;
+          const optionNode = node as OptionNodeAST;
           const { summary, long, short } = optionNode.optionSchema;
-          let decoratedOptions = [];
+          const decoratedOptions = [];
 
           if (short) {
-            decoratedOptions.push(Decorator.decorate(short.join(', '), optionNode));
+            decoratedOptions.push(Decorator.decorate(short.join(", "), optionNode));
           }
 
           if (long) {
-            decoratedOptions.push(Decorator.decorate(long.join(', '), optionNode));
+            decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
           }
 
-          help += `${decoratedOptions.join(', ')}: ${summary}\n`;
+          help += `  ${decoratedOptions.join(", ")}: ${summary}\n`;
         }
 
         if (AST.isSubcommand(node)) {
@@ -73,15 +78,15 @@ class ExplainConsole extends Console {
           const { name, summary } = subcommandNode.schema;
           const decoratedSubcommandName = Decorator.decorate(name, subcommandNode);
 
-          help += `${decoratedSubcommandName}: ${summary}\n`;
+          help += `  ${decoratedSubcommandName}: ${summary}\n`;
         }
 
         if (AST.isAssignment(node)) {
-          const assignmentNode = <AssignmentNodeAST>node;
-          const { name, value, word } = assignmentNode;
+          const assignmentNode = node as AssignmentNodeAST;
+          const { word } = assignmentNode;
           const decoratedAssignment = Decorator.decorate(word, assignmentNode);
 
-          help += `${decoratedAssignment}: A variable that is passed to the program\n`;
+          help += `  ${decoratedAssignment}: A variable passed to the program process\n`;
         }
 
         if (AST.isOperator(node)) {
@@ -90,17 +95,17 @@ class ExplainConsole extends Console {
           const decoratedOperator = Decorator.decorate(op, operatorNode);
 
           help += `${decoratedOperator} - `;
-          if (op === '&&') {
-            help += `command2 is executed if, and only if, command1 returns an exit status of zero\n`;
-          } else if (op === '||') {
-            help += `command2  is  executed  if and only if command1 returns a non-zero exit status\n`;
+          if (op === "&&") {
+            help += `  command2 is executed if, and only if, command1 returns an exit status of zero\n`;
+          } else if (op === "||") {
+            help += `  command2  is  executed  if and only if command1 returns a non-zero exit status\n`;
           }
         }
 
         if (AST.isSudo(node)) {
           const sudoNode = <SudoNodeAST>node;
           const { summary } = sudoNode.schema;
-          const decoratedNode = Decorator.decorate('sudo', sudoNode);
+          const decoratedNode = Decorator.decorate("sudo", sudoNode);
           help += `${decoratedNode} - ${summary}`;
         }
       }
@@ -119,23 +124,27 @@ class ExplainConsole extends Console {
 
   render(data: ExplainCommandResponse) {
     const { query, leafNodes } = data.explainCommand;
-    const title = 'Syntax Highlighting';
+
     this.print();
     if (leafNodes) {
       const highlight = new Highlight();
-      let decoratedCommands: string;
-      let underlines: string;
+      const decoratedQuery = highlight.decorate(query, leafNodes);
+      // const boxedContent = this.box(decoratedQuery);
 
-      decoratedCommands = highlight.decorate(query, leafNodes);
+      // add a new line
+      this.print();
 
-      let decoratedQuery = `${decoratedCommands}`;
-      let boxedContent = this.box(decoratedQuery);
+      this.print(`${syntaxEmoji} Syntax Highlighting`);
+      this.print(`  ${decoratedQuery}`);
 
-      this.print(`${title}\n${boxedContent}`);
       const help = this.makeHelp(leafNodes);
+
+      this.print();
+
+      this.print(`${explanationEmoji} Explanation`);
       this.print(help);
     } else {
-      this.error('No result');
+      this.error("No result");
     }
     this.print();
   }
