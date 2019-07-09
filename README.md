@@ -1,39 +1,43 @@
-kmdr.sh
-============
+# kmdr.sh
 
-A CLI client to interact with Kommandr
+The CLI client for explaining shell commands.
 
 ## Installation
-``` shell
-npm install -g kommandr-cli
+
+```bash
+yarn global add kmdr
 ```
 
-Generate a token on kommandr.com and put it in `~/.kommandrrc`
+```bash
+npm install kmdr --global
 ```
-{
-  "user": "your_username",
-  "token": "your_token"
-}
-```
+
 ## Usage
 
-``` shell
-$ kommandr save
-? Command: ls -al
-? Title:  List all files in current directory
-? Description: This command displays all existing files in the current working directory
-Your Kommandr has been saved!
-Go to http://kommandr.com:5000/qlGv1K
-````
+```bash
+$ kmdr explain
+⌨️ Explain a command: rm -rf /
 
-``` shell
-$ kommandr search git
-These are the coincidences:
-- Reset last commit
-  git reset git reset HEAD~
-- Push changes to remote master branch
-  git push origin master
+💥 Syntax Highlighting
+  rm -rf /
+
+💡 Explanation
+  rm: remove files or directories
+  -r, -R, --recursive: remove directories and their contents recursively
+  -f, --force: ignore nonexistent files and arguments, never prompt
+  /: an argument
 ```
 
-## Development
-This project is under heavy development. Not all features may behave as expected.
+## Schemas
+
+A schema is the machine-readable structure used by kmdr for organizing command descriptions.
+
+Every program explained by kmdr has a schema with key-value pairs defining the properties of commands. There are three sets of key-value pairs which make up a schema: program, subcommand, and option. Some programs do not have subcommands or/nor options.
+
+## Program key-value pairs
+
+The basis of a schema is its program key-value pairs. Information about the key-value pairs <available> for a CLI program is described in Table 1.0 with `yarn` as the example program.
+
+| Key-value pair | Definition                            | Required | Type     | Sample value |
+| -------------- | ------------------------------------- | -------- | -------- | ------------ |
+| `name`         | The name of the program or subcommand | Yes      | `string` | "git"        |
