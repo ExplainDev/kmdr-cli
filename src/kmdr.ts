@@ -1,13 +1,14 @@
 import cli from "commander";
-import { Settings } from "./interfaces";
 import ExplainClient from "./client/explain";
 import ExplainConsole from "./console/explain";
+import { Settings } from "./interfaces";
 
 class KMDR {
   private settings: Settings | undefined;
   private cli = cli;
   private explainClient: ExplainClient;
   private explainConsole: ExplainConsole;
+
   constructor(settings?: Settings) {
     this.settings = settings;
     this.explainClient = new ExplainClient();
@@ -36,15 +37,18 @@ class KMDR {
   }
 
   private async promptExplain(args: any, { interactive }: any) {
-    let { query } = await this.explainConsole.prompt();
+    const { query } = await this.explainConsole.prompt();
+
     if (query === "") {
       this.explainConsole.error("Enter a command");
       return;
     }
+
     try {
       this.explainConsole.showSpinner("Loading...");
       const res = await this.explainClient.getExplanation(query);
       this.explainConsole.hideSpinner();
+
       if (res && res.data) {
         this.explainConsole.render(res.data);
       }

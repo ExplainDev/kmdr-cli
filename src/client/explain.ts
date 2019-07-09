@@ -21,15 +21,6 @@ class Explain extends Client {
     };
     return super.doQuery(queryExplainCommand, { query }, { transformResponse });
   }
-
-  /* public render(data: ExplainCommandResponse) {
-    const { query, leafNodes } = data.explainCommand;
-    const highlight = new Highlight(query);
-    leafNodes.forEach((leaf: OptionNodeAST | ProgramNodeAST) => {
-      highlight.decorate(leaf);
-    });
-    console.log(highlight.highlight());
-  } */
 }
 
 export default Explain;

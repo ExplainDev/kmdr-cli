@@ -1,43 +1,42 @@
-import inquirer from 'inquirer';
-import chalk from 'chalk';
-import emoji from 'node-emoji';
-import logSymbols from 'log-symbols';
-import { ConsoleAnswers } from '../interfaces';
-import Spinner from 'ora';
-import boxen from 'boxen';
+import boxen from "boxen";
+import chalk from "chalk";
+import inquirer from "inquirer";
+import Spinner from "ora";
+import { ConsoleAnswers } from "../interfaces";
 
 class Console {
   private spinner?: any;
-  prompt(questions: Array<Object>): Promise<ConsoleAnswers> {
+
+  public prompt(questions: object[]): Promise<ConsoleAnswers> {
     return inquirer.prompt(questions);
   }
 
-  print(content?: string) {
-    console.log(content ? content : '');
+  public print(content?: string) {
+    console.log(content ? content : "");
   }
 
-  log(str: string) {
+  public log(str: string) {
     console.log(str);
   }
 
-  clear() {
-    console.log('TODO');
+  public clear() {
+    console.log("TODO");
   }
 
-  error(msg: string) {
+  public error(msg: string) {
     console.log(`thre was an erro`);
     console.error(chalk.bgRedBright(msg));
   }
 
-  showSpinner(msg: string) {
+  public showSpinner(msg: string) {
     this.spinner = Spinner(msg).start();
   }
 
-  hideSpinner() {
+  public hideSpinner() {
     this.spinner.stop();
   }
 
-  box(str: string) {
+  public box(str: string) {
     return boxen(str, { padding: 1, dimBorder: false });
   }
 }

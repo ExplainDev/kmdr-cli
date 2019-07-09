@@ -1,5 +1,5 @@
 import Console from "./console";
-import { ConsoleAnswers, ExplainCommandResponse } from "../interfaces";
+import { ConsoleAnswers, ExplainCommandResponse, ArgumentNodeAST } from "../interfaces";
 import Highlight from "../highlight/highlight";
 import AST from "../ast";
 import {
@@ -103,10 +103,24 @@ class ExplainConsole extends Console {
         }
 
         if (AST.isSudo(node)) {
-          const sudoNode = <SudoNodeAST>node;
+          const sudoNode = node as SudoNodeAST;
           const { summary } = sudoNode.schema;
           const decoratedNode = Decorator.decorate("sudo", sudoNode);
-          help += `${decoratedNode} - ${summary}`;
+          help += `  ${decoratedNode} - ${summary}`;
+        }
+
+        if (AST.isArgument(node)) {
+          const argNode = node as ArgumentNodeAST;
+          const { word } = argNode;
+          const decoratedNode = Decorator.decorate(word, argNode);
+          help += `  ${decoratedNode}: an argument\n`;
+        }
+
+        if (AST.isPipe(node)) {
+          const pipeNode = node as PipeNodeAST;
+          const { pipe } = pipeNode;
+          const decoratedNode = Decorator.decorate(pipe, pipeNode);
+          help += `  ${decoratedNode}: A pipe connects the STDOUT of the first process to the STDIN of the second\n`;
         }
       }
     }
