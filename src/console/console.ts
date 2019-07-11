@@ -28,12 +28,16 @@ class Console {
     console.error(chalk.bgRedBright(msg));
   }
 
-  public showSpinner(msg: string) {
+  public startSpinner(msg: string) {
     this.spinner = Spinner(msg).start();
   }
 
   public hideSpinner() {
     this.spinner.stop();
+  }
+
+  public succeedSpinner(text?: string) {
+    this.spinner.succeed(text);
   }
 
   public box(str: string) {

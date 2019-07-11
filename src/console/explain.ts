@@ -113,7 +113,7 @@ class ExplainConsole extends Console {
           const argNode = node as ArgumentNodeAST;
           const { word } = argNode;
           const decoratedNode = Decorator.decorate(word, argNode);
-          help += `  ${decoratedNode}: an argument\n`;
+          help += `  ls${decoratedNode}: an argument\n`;
         }
 
         if (AST.isPipe(node)) {
@@ -146,16 +146,14 @@ class ExplainConsole extends Console {
       // const boxedContent = this.box(decoratedQuery);
 
       // add a new line
-      this.print();
-
-      this.print(`${syntaxEmoji} Syntax Highlighting`);
+      this.print(`${syntaxEmoji}Syntax Highlighting`);
       this.print(`  ${decoratedQuery}`);
 
       const help = this.makeHelp(leafNodes);
 
       this.print();
 
-      this.print(`${explanationEmoji} Explanation`);
+      this.print(`${explanationEmoji}Explanation`);
       this.print(help);
     } else {
       this.error("No result");
@@ -163,8 +161,8 @@ class ExplainConsole extends Console {
     this.print();
   }
 
-  showSpinner(msg: string) {
-    super.showSpinner(msg);
+  public startSpinner(msg: string) {
+    super.startSpinner(msg);
   }
 }
 
