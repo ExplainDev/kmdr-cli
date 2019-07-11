@@ -45,9 +45,9 @@ class KMDR {
     }
 
     try {
-      this.explainConsole.showSpinner("Loading...");
+      this.explainConsole.startSpinner("Analyzing...");
       const res = await this.explainClient.getExplanation(query);
-      this.explainConsole.hideSpinner();
+      this.explainConsole.succeedSpinner("Explanation loaded!");
 
       if (res && res.data) {
         this.explainConsole.render(res.data);
