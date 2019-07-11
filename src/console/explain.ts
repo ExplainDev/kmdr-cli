@@ -106,14 +106,14 @@ class ExplainConsole extends Console {
           const sudoNode = node as SudoNodeAST;
           const { summary } = sudoNode.schema;
           const decoratedNode = Decorator.decorate("sudo", sudoNode);
-          help += `  ${decoratedNode} - ${summary}`;
+          help += `  ${decoratedNode}: ${summary}`;
         }
 
         if (AST.isArgument(node)) {
           const argNode = node as ArgumentNodeAST;
           const { word } = argNode;
           const decoratedNode = Decorator.decorate(word, argNode);
-          help += `  ls${decoratedNode}: an argument\n`;
+          help += `  ${decoratedNode}: an argument\n`;
         }
 
         if (AST.isPipe(node)) {
@@ -128,15 +128,15 @@ class ExplainConsole extends Console {
     return help;
   }
 
-  async prompt(): Promise<ConsoleAnswers> {
+  public async prompt(): Promise<ConsoleAnswers> {
     return super.prompt(this.questions);
   }
 
-  error(msg: string) {
+  public error(msg: string) {
     super.error(msg);
   }
 
-  render(data: ExplainCommandResponse) {
+  public render(data: ExplainCommandResponse) {
     const { query, leafNodes } = data.explainCommand;
 
     this.print();
