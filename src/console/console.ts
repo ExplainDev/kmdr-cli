@@ -32,7 +32,7 @@ class Console {
     this.spinner = Spinner(msg).start();
   }
 
-  public hideSpinner() {
+  public stopSpinner() {
     this.spinner.stop();
   }
 

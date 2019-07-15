@@ -146,7 +146,6 @@ class ExplainConsole extends Console {
       // const boxedContent = this.box(decoratedQuery);
 
       // add a new line
-      this.print(`${syntaxEmoji}Syntax Highlighting`);
       this.print(`  ${decoratedQuery}`);
 
       const help = this.makeHelp(leafNodes);
@@ -159,10 +158,6 @@ class ExplainConsole extends Console {
       this.error("No result");
     }
     this.print();
-  }
-
-  public startSpinner(msg: string) {
-    super.startSpinner(msg);
   }
 }
 

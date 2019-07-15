@@ -47,13 +47,13 @@ class KMDR {
     try {
       this.explainConsole.startSpinner("Analyzing...");
       const res = await this.explainClient.getExplanation(query);
-      this.explainConsole.succeedSpinner("Explanation loaded!");
+      this.explainConsole.stopSpinner();
 
       if (res && res.data) {
         this.explainConsole.render(res.data);
       }
     } catch (err) {
-      this.explainConsole.hideSpinner();
+      this.explainConsole.stopSpinner();
       this.explainConsole.error(err);
     }
   }
