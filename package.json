@@ -1,6 +1,6 @@
 {
   "name": "kmdr",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,10 @@
     "bash",
     "terminal"
   ],
-  "repository": "git@github.com:ediardo/kmdr.sh.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ediardo/kmdr.git"
+  },
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -51,11 +54,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "boxen": "^4.1.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "inquirer": "^6.3.1",
-    "js-yaml": "^3.13.1",
     "node-emoji": "^1.10.0",
     "ora": "^3.4.0"
   }

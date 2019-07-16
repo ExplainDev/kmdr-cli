@@ -1,4 +1,3 @@
-import boxen from "boxen";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import Spinner from "ora";
@@ -38,10 +37,6 @@ class Console {
 
   public succeedSpinner(text?: string) {
     this.spinner.succeed(text);
-  }
-
-  public box(str: string) {
-    return boxen(str, { padding: 1, dimBorder: false });
   }
 }
 
