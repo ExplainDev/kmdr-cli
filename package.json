@@ -16,7 +16,7 @@
     "bash",
     "terminal"
   ],
-  "repository": "git@github.com:kommandr/kmdr.sh.git",
+  "repository": "git@github.com:ediardo/kmdr.sh.git",
   "author": "Eddie Ramirez <djedi.r@gmail.com>",
   "license": "MIT",
   "devDependencies": {
