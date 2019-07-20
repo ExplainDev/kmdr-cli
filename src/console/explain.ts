@@ -62,11 +62,11 @@ class ExplainConsole extends Console {
           const { summary, long, short } = optionNode.optionSchema;
           const decoratedOptions = [];
 
-          if (short) {
+          if (short && short.length >= 1) {
             decoratedOptions.push(Decorator.decorate(short.join(", "), optionNode));
           }
 
-          if (long) {
+          if (long && long.length >= 1) {
             decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
           }
 
