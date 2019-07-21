@@ -2,6 +2,10 @@
 
 The CLI client for explaining complex shell commands.
 
+kmdr provides command explanations for hundreds of programs including
+```git```, ```docker```, ```kubectl```,```npm```, ```go``` and
+more straight forward programs such as those built into ```bash```.
+
 ## Installation
 
 ### With yarn
