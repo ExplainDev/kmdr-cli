@@ -1,6 +1,6 @@
 # kmdr.sh
 
-The CLI client for explaining shell commands.
+The CLI client for explaining complex shell commands.
 
 ## Installation
 
@@ -19,6 +19,17 @@ npm install kmdr --global
 ## Usage
 
 ### Explain a command
+
+Once kmdr is installed on your system, enter ```kmdr explain``` to return
+a prompt for entering the command you would like explained.
+
+When the ```Explain a command:``` prompt is returned, enter the command
+you would like explained and hit the ```Enter``` key.
+
+kmdr will return ```Syntax Highlighting``` to assist you in differentiating
+parts of the command followed by the explanation of each of these parts.
+
+An example explanation of ```rm -rf /``` can be seen below.
 
 ```bash
 $ kmdr explain
