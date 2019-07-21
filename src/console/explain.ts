@@ -1,30 +1,30 @@
-import Console from "./console";
-import { ConsoleAnswers, ExplainCommandResponse, ArgumentNodeAST } from "../interfaces";
-import Highlight from "../highlight/highlight";
+import emoji from "node-emoji";
 import AST from "../ast";
+import Decorator from "../highlight/decorator";
+import Highlight from "../highlight/highlight";
 import {
-  OptionNodeAST,
-  ProgramNodeAST,
+  ArgumentNodeAST,
   AssignmentNodeAST,
-  SubcommandNodeAST,
+  ConsoleAnswers,
+  ExplainCommandResponse,
   OperatorNodeAST,
+  OptionNodeAST,
   PipeNodeAST,
+  ProgramNodeAST,
   StickyOptionNodeAST,
+  SubcommandNodeAST,
   SudoNodeAST,
 } from "../interfaces";
-import Decorator from "../highlight/decorator";
-import emoji from "node-emoji";
+import Console from "./console";
 
-const keyboardEmoji = emoji.get("keyboard");
-const syntaxEmoji = emoji.get("boom");
 const explanationEmoji = emoji.get("bulb");
 
 class ExplainConsole extends Console {
-  private questions: Array<Object> = [
+  private questions: Object[] = [
     {
       message: "Explain a command:",
       name: "query",
-      prefix: `${keyboardEmoji}`,
+      prefix: `${explanationEmoji}`,
       type: "input",
     },
   ];
@@ -132,6 +132,10 @@ class ExplainConsole extends Console {
     return super.prompt(this.questions);
   }
 
+  public makeSamples() {
+    //
+  }
+
   public error(msg: string) {
     super.error(msg);
   }
@@ -152,7 +156,6 @@ class ExplainConsole extends Console {
 
       this.print();
 
-      this.print(`${explanationEmoji}Explanation`);
       this.print(help);
     } else {
       this.error("No result");
