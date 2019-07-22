@@ -14,6 +14,8 @@ import {
   PipeNodeAST,
   StickyOptionNodeAST,
   SudoNodeAST,
+  ReservedWordNodeAST,
+  RedirectNodeAST,
 } from "../interfaces";
 import AST from "../ast";
 
@@ -26,6 +28,8 @@ const HIGHLIGHT_DEFAULTS: any = {
   optionWithArg: chalk.cyan,
   pipe: chalk.blueBright,
   program: chalk.bold.redBright,
+  redirect: chalk.bold.blueBright,
+  reservedword: chalk.bold.gray,
   stickyOption: chalk.cyan,
   subcommand: chalk.bold.magenta,
   sudo: chalk.bgRed.bold,
@@ -43,7 +47,9 @@ class Decorator {
       | OperatorNodeAST
       | AssignmentNodeAST
       | PipeNodeAST
-      | SudoNodeAST,
+      | SudoNodeAST
+      | ReservedWordNodeAST
+      | RedirectNodeAST,
   ): string {
     let decoratedString: string;
     if (AST.isAssignment(token)) {

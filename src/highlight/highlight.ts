@@ -1,4 +1,4 @@
-import Decorator from './decorator';
+import Decorator from "./decorator";
 
 import {
   RootNodeAST,
@@ -12,11 +12,13 @@ import {
   OptionSchema,
   ProgramSchema,
   AssignmentNodeAST,
+  ReservedWordNodeAST,
   PipeNodeAST,
-} from '../interfaces';
+  RedirectNodeAST,
+} from "../interfaces";
 
 class Highlight {
-  decorate(
+  public decorate(
     query: string,
     leafNodes: Array<
       Array<
@@ -27,14 +29,17 @@ class Highlight {
         | OperatorNodeAST
         | AssignmentNodeAST
         | PipeNodeAST
+        | ReservedWordNodeAST
+        | RedirectNodeAST
       >
     >,
   ): string {
-    let decoratedString: string = '';
+    let decoratedString: string = "";
     let currentToken = 0;
-    let wordInRange = '';
+    let wordInRange = "";
     let inRange = false;
     const tokens = leafNodes.flat();
+
     for (let pos = 0; pos < query.length; pos++) {
       const char = query[pos];
       if (currentToken < tokens.length && this.inRange(pos, tokens[currentToken].pos)) {
@@ -44,14 +49,14 @@ class Highlight {
         if (pos === query.length - 1 || pos === tokens[currentToken].pos[1] - 1) {
           decoratedString += Decorator.decorate(wordInRange, tokens[currentToken]);
           inRange = false;
-          wordInRange = '';
+          wordInRange = "";
           currentToken += 1;
         }
       } else {
         if (inRange) {
           inRange = false;
           decoratedString += Decorator.decorate(wordInRange, tokens[currentToken]);
-          wordInRange = '';
+          wordInRange = "";
           currentToken += 1;
         }
         // if the current char is not part of any token, then append it to the string
@@ -69,51 +74,6 @@ class Highlight {
     }
 
     return false;
-  }
-
-  public underline(
-    tokens: Array<
-      Array<
-        | OptionNodeAST
-        | ProgramNodeAST
-        | OptionWithArgNodeAST
-        | ArgumentNodeAST
-        | OperatorNodeAST
-        | AssignmentNodeAST
-        | PipeNodeAST
-      >
-    >,
-  ): string {
-    const boundaries = tokens.map(token => this.getCommandBoundaries(token));
-    let underline = '';
-    let pos = 0;
-    let currentToken = 0;
-    /*
-    while (true) {
-      if (this.inRange(pos, boundaries[currentToken])) {
-        underline += '~';
-      } else {
-        underline += ' ';
-      }
-    }
-    */
-    return '';
-  }
-
-  private getCommandBoundaries(
-    tokens: Array<
-      | OptionNodeAST
-      | ProgramNodeAST
-      | OptionWithArgNodeAST
-      | ArgumentNodeAST
-      | OperatorNodeAST
-      | AssignmentNodeAST
-      | PipeNodeAST
-    >,
-  ): number[] {
-    const lastTokenPos = tokens.length - 1;
-    const pos = [tokens[0].pos[0], tokens[lastTokenPos].pos[1]];
-    return pos;
   }
 }
 

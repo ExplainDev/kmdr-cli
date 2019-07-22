@@ -1,7 +1,6 @@
-import { GraphQLResponse } from "../interfaces";
-import { queryExplainCommand } from "../graphql";
 import Client from "./client";
-import { AxiosResponse } from "axios";
+import { mutationCreateExplainFeedback, queryExplainCommand } from "../graphql";
+import { GraphQLResponse } from "../interfaces";
 
 class Explain extends Client {
   constructor() {
@@ -20,6 +19,10 @@ class Explain extends Client {
       }
     };
     return super.doQuery(queryExplainCommand, { query }, { transformResponse });
+  }
+
+  public async sendFeedback(answer: string, comment: string) {
+    return super.doMutation(mutationCreateExplainFeedback, { answer, comment });
   }
 }
 

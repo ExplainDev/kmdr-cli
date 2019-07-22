@@ -6,7 +6,7 @@ import { ConsoleAnswers } from "../interfaces";
 class Console {
   private spinner?: any;
 
-  public prompt(questions: object[]): Promise<ConsoleAnswers> {
+  public async prompt(questions: object[]): Promise<ConsoleAnswers> {
     return inquirer.prompt(questions);
   }
 
@@ -23,8 +23,7 @@ class Console {
   }
 
   public error(msg: string) {
-    console.log(`thre was an erro`);
-    console.error(chalk.bgRedBright(msg));
+    console.error(chalk.red(msg));
   }
 
   public startSpinner(msg: string) {

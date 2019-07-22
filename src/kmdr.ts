@@ -16,22 +16,13 @@ class KMDR {
   }
 
   public init() {
-    this.cli.version("0.1").option("-l, --languate <language>", "change the language");
+    this.cli.version("0.1").option("-v, version", "Show program version and exit");
 
     this.cli
       .command("explain [options]")
-      .alias("e")
       .alias("exp")
       .description("Explain a command")
-      .option("-i, --interactive", "Opens the program in interactivec mode")
-      .option("-s, --schema <file>", "Use the Schema in file")
       .action(this.promptExplain.bind(this));
-
-    this.cli
-      .command("config")
-      .alias("c")
-      .description("Set or view configuration for kmdr on this computer")
-      .action(this.promptConfig.bind(this));
 
     this.cli.parse(process.argv);
   }
@@ -51,6 +42,22 @@ class KMDR {
 
       if (res && res.data) {
         this.explainConsole.render(res.data);
+
+        const answer = await this.explainConsole.wasItHelpful();
+
+        if (answer === "Yes") {
+          const comment = await this.explainConsole.yesFeedback();
+          this.explainConsole.startSpinner("Sending feedback...");
+          await this.explainClient.sendFeedback("yes", comment);
+          this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
+        } else if (answer === "No") {
+          const comment = await this.explainConsole.noFeedback();
+          this.explainConsole.startSpinner("Sending feedback...");
+          await this.explainClient.sendFeedback("no", comment);
+          this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
+        } else {
+          process.exit();
+        }
       }
     } catch (err) {
       this.explainConsole.stopSpinner();

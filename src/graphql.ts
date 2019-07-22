@@ -4,7 +4,6 @@ export const queryExplainCommand = `
       query
       leafNodes {
         __typename
-
         ... on ArgumentNodeAST {
           kind
           word
@@ -17,6 +16,7 @@ export const queryExplainCommand = `
           pos
           value
           value_pos
+          name
           name_pos
         }
         ... on OptionNodeAST {
@@ -105,7 +105,22 @@ export const queryExplainCommand = `
             pos
           }
         }
+        ... on ReservedWordNodeAST {
+          kind
+          pos
+          word
+        }
       }
     }
   }
+
+`;
+
+export const mutationCreateExplainFeedback = `
+mutation createExplainFeedback($answer: String!, $comment: String) {
+  createExplainFeedback(answer: $answer, comment: $comment) {
+    answer
+    comment
+  }
+}
 `;

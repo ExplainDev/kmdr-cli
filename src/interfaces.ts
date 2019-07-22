@@ -58,6 +58,11 @@ export interface CommandNodeAST extends NodeAST {
   inSudoContext?: boolean;
 }
 
+export interface CompoundNodeAST extends NodeAST {
+  word: string;
+  list: Array<ReservedWordNodeAST | ListNodeAST>;
+  redirects?: RedirectNodeAST;
+}
 /**
  * Interface to construct a PipelineNode
  */

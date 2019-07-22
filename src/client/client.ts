@@ -1,18 +1,21 @@
-import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from "axios";
-import { ExplainCommandResponse, AuthCredentials } from "../interfaces";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import os from "os";
+import uuid from "uuid/v1";
+import { AuthCredentials } from "../interfaces";
 
 class Client {
   private baseURL: string = "http://localhost:8081/api/graphql";
-  private username?: string;
-  private token?: string;
-
+  private shell: string;
+  private term: string;
+  private os: string;
+  private sessionId: string;
   private instance: AxiosInstance;
 
   constructor(axiosInstance?: AxiosInstance, auth?: AuthCredentials) {
-    if (auth) {
-      this.username = auth.username;
-      this.token = auth.token;
-    }
+    this.sessionId = uuid();
+    this.shell = process.env.SHELL || "";
+    this.os = `${os.platform()} ${os.release()}`;
+    this.term = `${process.env.TERM};${process.env.TERM_PROGRAM}`;
 
     this.instance =
       axiosInstance ||
@@ -20,6 +23,11 @@ class Client {
         baseURL: this.baseURL,
         headers: {
           "Content-Type": "application/json",
+          "X-kmdr-client-os": this.os,
+          "X-kmdr-client-session-id": this.sessionId,
+          "X-kmdr-client-shell": this.shell,
+          "X-kmdr-client-term": this.term,
+          "X-kmdr-client-version": "0.1",
         },
         responseType: "json",
       });
@@ -40,8 +48,6 @@ class Client {
   private post(data: any, config: AxiosRequestConfig | undefined = undefined) {
     return this.instance.post("", data, { ...config });
   }
-
-  public config() {}
 }
 
 export default Client;
