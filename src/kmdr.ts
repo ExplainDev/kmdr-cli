@@ -26,8 +26,7 @@ class KMDR {
 
     this.cli.parse(process.argv);
 
-    console.log(process.argv);
-    if (process.argv.length === 0) {
+    if (process.argv.length < 3) {
       this.cli.help();
     }
   }
