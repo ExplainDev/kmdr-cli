@@ -2297,33 +2297,6 @@ kleur@^3.0.2:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-kmdr@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/kmdr/-/kmdr-0.1.0.tgz#bf04147562b4e677fbe1e6c1f000cb0d6d80f74c"
-  integrity sha512-o9/I9p3dCBa6QZbjVjy2yaML735IzQdw39eANg0+p/LtUc+12SL/kq0sZC+J/lkxppQg+4dQtKJboRho0sXGfg==
-  dependencies:
-    axios "^0.18.0"
-    chalk "^2.4.2"
-    commander "^2.20.0"
-    inquirer "^6.3.1"
-    node-emoji "^1.10.0"
-    ora "^3.4.0"
-    uuid "^3.3.2"
-
-kmdr@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/kmdr/-/kmdr-0.1.1.tgz#3f2f9ee6463aa9b41985327dc922a074479a8f6e"
-  integrity sha512-gPrxEDVobBuffs64NkDCjPP27zxGZd9PlmcHfS06ah9zRnV3hbAyUvO4f2i7YHK8ltZ/c4TwCmSvLs5tsF405w==
-  dependencies:
-    axios "^0.18.0"
-    chalk "^2.4.2"
-    commander "^2.20.0"
-    inquirer "^6.3.1"
-    kmdr "^0.1.0"
-    node-emoji "^1.10.0"
-    ora "^3.4.0"
-    uuid "^3.3.2"
-
 lcid@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/lcid/-/lcid-2.0.0.tgz#6ef5d2df60e52f82eb228a4c373e8d1f397253cf"
