@@ -10,19 +10,22 @@ kmdr provides command explanations for hundreds of programs including `git`, `do
 
 ## Installation
 
-### With yarn
+**With yarn**
 
 ```bash
 yarn global add kmdr@latest
 ```
 
-### With npm
+**With npm**
 
 ```bash
 npm install kmdr --global
 ```
 
-## Check installation
+### Check installation
+
+Run the command `kmdr` to check if it was correctly installed on your system.
+
 ```
 $ kmdr
 Usage: kmdr [options] [command]
@@ -37,19 +40,15 @@ Commands:
   explain|e      Explain a shell command
 ```
 
-### Troubleshooting installation
+#### Troubleshooting installation
 
-#### `Command not found: kmdr`
+##### Command not found: kmdr
 
 Add the line below to your `.bashrc` or `.zshrc` if using `zsh`
 
 ```
 export PATH="$(yarn global bin):$PATH"
 ```
-
-
-###
-
 
 ## Usage
 
