@@ -47,15 +47,17 @@ class KMDR {
           const comment = await this.explainConsole.yesFeedback();
           this.explainConsole.startSpinner("Sending feedback...");
           await this.explainClient.sendFeedback("yes", comment);
-          this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
+          this.explainConsole.succeedSpinner("Your feedback was saved. Thank you!");
         } else if (answer === "No") {
           const comment = await this.explainConsole.noFeedback();
           this.explainConsole.startSpinner("Sending feedback...");
           await this.explainClient.sendFeedback("no", comment);
           this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
         } else {
+          console.log("Learn more at https://github.com/ediardo/kmdr.sh");
           process.exit();
         }
+        console.log("Learn more at https://github.com/ediardo/kmdr.sh");
       }
     } catch (err) {
       this.explainConsole.stopSpinner();
