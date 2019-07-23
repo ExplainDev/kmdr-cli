@@ -17,12 +17,19 @@ class KMDR {
 
   public async init() {
     this.cli
-      .usage("kmdr")
       .description("Explain a command")
       .version("0.1.0", "-v, --version")
-      .parse(process.argv);
+      .command("explain")
+      .alias("e")
+      .description("Explain a shell command")
+      .action(this.promptExplain.bind(this));
 
-    await this.promptExplain();
+    this.cli.parse(process.argv);
+
+    console.log(process.argv);
+    if (process.argv.length === 0) {
+      this.cli.help();
+    }
   }
 
   private async promptExplain(args?: any) {

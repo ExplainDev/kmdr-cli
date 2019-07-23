@@ -23,11 +23,12 @@ const explanationEmoji = emoji.get("bulb");
 const robotEmoji = emoji.get("robot_face");
 const fireEmoji = emoji.get("fire");
 const thumbsDownEmoji = emoji.get("thumbsdown");
+const helloEmoji = emoji.get("wave");
 
 class ExplainConsole extends Console {
   private explainQuestion: Object[] = [
     {
-      message: "What's the command?",
+      message: "Enter your command: ",
       name: "query",
       prefix: `${explanationEmoji}`,
       type: "input",
@@ -40,7 +41,7 @@ class ExplainConsole extends Console {
       name: "helpful",
       message: "Is this helpful?",
       prefix: `${robotEmoji}`,
-      choices: ["Skip", new inquirer.Separator(), "Yes", "No"],
+      choices: ["Skip & Exit", new inquirer.Separator(), "Yes", "No"],
     },
   ];
 
@@ -182,7 +183,9 @@ class ExplainConsole extends Console {
   }
 
   public async prompt(): Promise<ConsoleAnswers> {
-    this.print("kmdr explains shell commands right on your terminal!");
+    this.print(`${helloEmoji} Hi, welcome to kmdr!`);
+    this.print(`This CLI program explains shell commands right on your terminal!`);
+    this.print();
     return super.prompt(this.explainQuestion);
   }
 
