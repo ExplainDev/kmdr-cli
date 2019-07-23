@@ -4,6 +4,10 @@ The CLI client for explaining complex shell commands.
 
 kmdr provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
 
+## Requirements
+- Node.js v12.6.0 https://nodejs.org/en/
+- A package manager like yarn or npm
+
 ## Installation
 
 ### With yarn
@@ -18,6 +22,35 @@ yarn global add kmdr@latest
 npm install kmdr --global
 ```
 
+## Check installation
+```
+$ kmdr
+Usage: kmdr [options] [command]
+
+Explain a command
+
+Options:
+  -v, --version  output the version number
+  -h, --help     output usage information
+
+Commands:
+  explain|e      Explain a shell command
+```
+
+### Troubleshooting installation
+
+#### `Command not found: kmdr`
+
+Add the line below to your `.bashrc` or `.zshrc` if using `zsh`
+
+```
+export PATH="$(yarn global bin):$PATH"
+```
+
+
+###
+
+
 ## Usage
 
 ### Explain a command
@@ -26,7 +59,7 @@ Once kmdr is installed on your system, enter `kmdr explain` to return a prompt f
 
 When the `Enter your command:` prompt is returned, enter the command you would like explained and hit the `Enter` key.
 
-kmdr will return `Syntax Highlighting` to assist you in differentiating parts of the command followed by the explanation of each of these parts.
+kmdr will return syntax highlighting to assist you in differentiating parts of the command followed by the explanation of each of these parts.
 
 An example explanation of `git commit -am "Initial commit"` can be seen below.
 
