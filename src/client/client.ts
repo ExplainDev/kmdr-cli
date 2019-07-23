@@ -4,7 +4,7 @@ import uuid from "uuid/v1";
 import { AuthCredentials } from "../interfaces";
 
 class Client {
-  private baseURL: string = "http://localhost:8081/api/graphql";
+  private baseURL: string = "https://api.kmdr.sh/api/graphql";
   private shell: string;
   private term: string;
   private os: string;
