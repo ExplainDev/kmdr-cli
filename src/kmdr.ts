@@ -15,19 +15,17 @@ class KMDR {
     this.explainConsole = new ExplainConsole();
   }
 
-  public init() {
-    this.cli.version("0.1").option("-v, version", "Show program version and exit");
-
+  public async init() {
     this.cli
-      .command("explain [options]")
-      .alias("exp")
+      .usage("kmdr")
       .description("Explain a command")
-      .action(this.promptExplain.bind(this));
+      .version("0.1.0", "-v, --version")
+      .parse(process.argv);
 
-    this.cli.parse(process.argv);
+    await this.promptExplain();
   }
 
-  private async promptExplain(args: any, { interactive }: any) {
+  private async promptExplain(args?: any) {
     const { query } = await this.explainConsole.prompt();
 
     if (query === "") {

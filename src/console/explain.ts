@@ -27,7 +27,7 @@ const thumbsDownEmoji = emoji.get("thumbsdown");
 class ExplainConsole extends Console {
   private explainQuestion: Object[] = [
     {
-      message: "Explain a command:",
+      message: "What's the command?",
       name: "query",
       prefix: `${explanationEmoji}`,
       type: "input",
@@ -182,6 +182,7 @@ class ExplainConsole extends Console {
   }
 
   public async prompt(): Promise<ConsoleAnswers> {
+    this.print("kmdr explains shell commands right on your terminal!");
     return super.prompt(this.explainQuestion);
   }
 
