@@ -4,7 +4,10 @@ The CLI client for explaining complex shell commands.
 
 kmdr provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
 
+![kmdr](screenshot.png)
+
 ## Requirements
+
 - Node.js v12.6.0 https://nodejs.org/en/
 - A package manager like yarn or npm
 
