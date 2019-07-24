@@ -8,6 +8,8 @@ class KMDR {
   private cli = cli;
   private explainClient: ExplainClient;
   private explainConsole: ExplainConsole;
+  // tslint:disable-next-line: max-line-length
+  private welcomeMsg = `The CLI client for explaining complex shell commands.\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.`;
 
   constructor(settings?: Settings) {
     this.settings = settings;
@@ -16,9 +18,8 @@ class KMDR {
   }
 
   public async init() {
+    this.cli.description(this.welcomeMsg).version("0.1.0", "-v, --version");
     this.cli
-      .description("Explain a command")
-      .version("0.1.0", "-v, --version")
       .command("explain")
       .alias("e")
       .description("Explain a shell command")

@@ -4,13 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorator_1 = __importDefault(require("./decorator"));
+const flatten = (list) => list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
 class Highlight {
     decorate(query, leafNodes) {
         let decoratedString = "";
         let currentToken = 0;
         let wordInRange = "";
         let inRange = false;
-        const tokens = leafNodes.flat();
+        const tokens = flatten(leafNodes);
         for (let pos = 0; pos < query.length; pos++) {
             const char = query[pos];
             if (currentToken < tokens.length && this.inRange(pos, tokens[currentToken].pos)) {

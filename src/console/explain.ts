@@ -183,9 +183,6 @@ class ExplainConsole extends Console {
   }
 
   public async prompt(): Promise<ConsoleAnswers> {
-    this.print(`${helloEmoji} Hi, welcome to kmdr!`);
-    this.print(`This CLI program explains shell commands right on your terminal!`);
-    this.print();
     return super.prompt(this.explainQuestion);
   }
 

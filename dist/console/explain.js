@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -146,43 +138,20 @@ class ExplainConsole extends console_1.default {
         }
         return help;
     }
-    prompt() {
-        const _super = Object.create(null, {
-            prompt: { get: () => super.prompt }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            this.print(`${helloEmoji} Hi, welcome to kmdr!`);
-            this.print(`This CLI program explains shell commands right on your terminal!`);
-            this.print();
-            return _super.prompt.call(this, this.explainQuestion);
-        });
+    async prompt() {
+        return super.prompt(this.explainQuestion);
     }
-    wasItHelpful() {
-        const _super = Object.create(null, {
-            prompt: { get: () => super.prompt }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            const answer = yield _super.prompt.call(this, this.helpfulQuestion);
-            return answer.helpful;
-        });
+    async wasItHelpful() {
+        const answer = await super.prompt(this.helpfulQuestion);
+        return answer.helpful;
     }
-    yesFeedback() {
-        const _super = Object.create(null, {
-            prompt: { get: () => super.prompt }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            const answer = yield _super.prompt.call(this, this.yesFeedbackQuestion);
-            return answer.comment;
-        });
+    async yesFeedback() {
+        const answer = await super.prompt(this.yesFeedbackQuestion);
+        return answer.comment;
     }
-    noFeedback() {
-        const _super = Object.create(null, {
-            prompt: { get: () => super.prompt }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            const answer = yield _super.prompt.call(this, this.noFeedbackQuestion);
-            return answer.comment;
-        });
+    async noFeedback() {
+        const answer = await super.prompt(this.noFeedbackQuestion);
+        return answer.comment;
     }
     error(msg) {
         super.error(msg);

@@ -17,6 +17,9 @@ import {
   RedirectNodeAST,
 } from "../interfaces";
 
+const flatten = (list: any) =>
+  list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
+
 class Highlight {
   public decorate(
     query: string,
@@ -38,7 +41,7 @@ class Highlight {
     let currentToken = 0;
     let wordInRange = "";
     let inRange = false;
-    const tokens = leafNodes.flat();
+    const tokens = flatten(leafNodes);
 
     for (let pos = 0; pos < query.length; pos++) {
       const char = query[pos];
