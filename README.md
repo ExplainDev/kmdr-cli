@@ -8,7 +8,7 @@ kmdr provides command explanations for hundreds of programs including `git`, `do
 
 ## Requirements
 
-- Node.js v12.6.0 https://nodejs.org/en/
+- Node.js v8.x and above
 - A package manager like yarn or npm
 
 ## Installation
@@ -33,7 +33,9 @@ Run the command `kmdr` to check if it was correctly installed on your system.
 $ kmdr
 Usage: kmdr [options] [command]
 
-Explain a command
+The CLI client for explaining complex shell commands.
+
+kmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.
 
 Options:
   -v, --version  output the version number
@@ -67,9 +69,6 @@ An example explanation of `git commit -am "Initial commit"` can be seen below.
 
 ```bash
 $ kmdr explain
-👋 Hi, welcome to kmdr!
-This CLI program explains shell commands right on your terminal!
-
 💡 Enter your command:  git commit -am "Initial commit"
 
   git commit -am "Initial commit"
@@ -95,7 +94,7 @@ Learn more at https://github.com/ediardo/kmdr.sh
 
 We add new programs every day!
 
-`cat`, `cd`,`cp`, `curl`, `cut`,`df`,`docker`,`docker-compose`,`du`, `echo`, `false`, `find`, `free`, `gcc`, `git`, `go`, `grep`, `head`, `hostname`, `journalctl`, `kmdr`, `kubectl`, `less`, `ls`, `md5sum`, `mkdir`, `mv`, `netstat`, `node`, `now`, `npm`, `openssl`, `ping`, `pip`, `python`, `rm`, `rmdir`, `rsync`, `scp`, `sort`, `sqlite3`, `ssh`, `ssh-add`, `ssh-keygen`, `sudo`, `tail`, `tar`, `top`, `true`, `uniq`, `wc`, `wget`,`yarn`
+`cat`, `cd`,`cp`, `curl`, `cut`,`df`,`docker`,`docker-compose`,`du`, `echo`, `false`, `find`, `free`, `gcc`, `git`, `go`, `grep`, `gunzip` `gzip`,`head`, `hostname`, `id`, `iperf`, `isoinfo`, `kill`, `killall`, `ln`, `journalctl`, `kmdr`, `kubectl`, `less`, `ls`, `md5sum`, `mkdir`, `make`, `mktemp`, `mongo`, `mongod`, `nl`, `nmap`, `mv`, `netstat`, `node`, `now`, `npm`, `openssl`, `ping`, `pip`, `python`, `rm`, `rmdir`, `rsync`, `scp`, `sort`, `sqlite3`, `ssh`, `ssh-add`, `ssh-keygen`, `sudo`, `systemctl`, `tail`, `tar`, `top`, `true`, `uname`, `uniq`, `uptime`, `watch`, `wc`, `wget`, `yarn`
 
 ## Stay tuned for more updates
 
