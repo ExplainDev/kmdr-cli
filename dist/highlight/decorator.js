@@ -6,19 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const ast_1 = __importDefault(require("../ast"));
 const HIGHLIGHT_DEFAULTS = {
-    argument: chalk_1.default.italic.whiteBright,
+    argument: chalk_1.default.italic.bold.whiteBright,
     assignmentName: chalk_1.default.green,
     assignmentValue: chalk_1.default.whiteBright,
     operator: chalk_1.default.yellowBright.bold,
-    option: chalk_1.default.bold.cyan,
+    option: chalk_1.default.bold.greenBright,
     optionWithArg: chalk_1.default.cyan,
-    pipe: chalk_1.default.blueBright,
-    program: chalk_1.default.bold.redBright,
+    pipe: chalk_1.default.bold.magentaBright,
+    program: chalk_1.default.bold.cyan,
     redirect: chalk_1.default.bold.blueBright,
     reservedword: chalk_1.default.bold.gray,
     stickyOption: chalk_1.default.cyan,
-    subcommand: chalk_1.default.bold.magenta,
-    sudo: chalk_1.default.bgRed.bold,
+    subcommand: chalk_1.default.bold.blue,
+    sudo: chalk_1.default.bold.redBright,
     word: chalk_1.default.gray,
 };
 class Decorator {

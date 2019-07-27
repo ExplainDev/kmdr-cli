@@ -18,6 +18,7 @@ import {
 } from "../interfaces";
 import Console from "./console";
 import inquirer = require("inquirer");
+import chalk from "chalk";
 
 const explanationEmoji = emoji.get("bulb");
 const robotEmoji = emoji.get("robot_face");
@@ -26,16 +27,19 @@ const thumbsDownEmoji = emoji.get("thumbsdown");
 const helloEmoji = emoji.get("wave");
 
 class ExplainConsole extends Console {
-  private explainQuestion: Object[] = [
+  private explainQuestion: object[] = [
     {
-      message: "Enter your command: ",
+      message: "Enter your command:",
       name: "query",
       prefix: `${explanationEmoji}`,
+      transformer: (arg: any) => {
+        return chalk.whiteBright(arg);
+      },
       type: "input",
     },
   ];
 
-  private helpfulQuestion: Object[] = [
+  private helpfulQuestion: object[] = [
     {
       type: "list",
       name: "helpful",
@@ -45,7 +49,7 @@ class ExplainConsole extends Console {
     },
   ];
 
-  private yesFeedbackQuestion: Object[] = [
+  private yesFeedbackQuestion: object[] = [
     {
       message: "Awesome! What did you like about this explanation?",
       name: "comment",
@@ -54,7 +58,7 @@ class ExplainConsole extends Console {
     },
   ];
 
-  private noFeedbackQuestion: Object[] = [
+  private noFeedbackQuestion: object[] = [
     {
       message: "What's wrong with the explanation?",
       name: "comment",
@@ -219,11 +223,11 @@ class ExplainConsole extends Console {
       // const boxedContent = this.box(decoratedQuery);
 
       // add a new line
-      this.print(`  ${decoratedQuery}`);
+      // this.print(`  ${decoratedQuery}`);
 
       const help = this.makeHelp(leafNodes);
 
-      this.print();
+      //this.print();
 
       this.print(help);
     }
