@@ -19,7 +19,7 @@ const HIGHLIGHT_DEFAULTS = {
     stickyOption: chalk_1.default.cyan,
     subcommand: chalk_1.default.bold.blue,
     sudo: chalk_1.default.bold.redBright,
-    word: chalk_1.default.gray,
+    word: chalk_1.default.bold.white,
 };
 class Decorator {
     static decorate(word, token) {

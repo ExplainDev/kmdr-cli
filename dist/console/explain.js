@@ -123,6 +123,38 @@ class ExplainConsole extends console_1.default {
                     const decoratedNode = decorator_1.default.decorate(pipe, pipeNode);
                     help += `  ${decoratedNode}\n    A pipe connects the STDOUT of the first process to the STDIN of the second`;
                 }
+                if (ast_1.default.isRedirect(node)) {
+                    const redirectNode = node;
+                    const { type, output, input } = redirectNode;
+                    const decoratedRedirectNode = decorator_1.default.decorate(type, redirectNode);
+                    // const decoratedNode = Decorator.decorate(type, redirectNode);
+                    // help += `  ${decoratedNode}\n    Captures the output of a file, command, program or script and sends it as input to another file, command, program or script`;
+                    // help += `  ${}`
+                    var inputFileDescriptor = "", outputFileDescriptor = "";
+                    if (input !== null && input === 1) {
+                        inputFileDescriptor = "stdout";
+                    }
+                    else if (input !== null && input === 2) {
+                        inputFileDescriptor = "stderr";
+                    }
+                    if (typeof output === "number" && output === 1) {
+                        outputFileDescriptor = "stdout";
+                        help += `  ${decoratedRedirectNode} 1\n    This will cause the stderr ouput of a program to be written to the same filedescriptor than stdout.`;
+                    }
+                    else if (typeof output === "number" && output === 2) {
+                        outputFileDescriptor = "stderr";
+                    }
+                    else if (typeof output === "object" && ast_1.default.isWord(output)) {
+                        const wordNode = output;
+                        const decoratedWordNode = decorator_1.default.decorate(wordNode.word, wordNode);
+                        if (type === "<") {
+                            help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdin from ${wordNode.word}.`;
+                        }
+                        else if (type === ">") {
+                            help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdout to ${wordNode.word}.`;
+                        }
+                    }
+                }
                 /*
                 if (AST.isReservedWord(node)) {
                   const reservedWordNode = node as ReservedWordNodeAST;

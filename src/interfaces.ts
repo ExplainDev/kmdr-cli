@@ -88,8 +88,8 @@ export interface PipeNodeAST extends NodeAST {
  * Interface to construct a RedirectNode
  */
 export interface RedirectNodeAST extends NodeAST {
-  input: string | null;
-  output: object;
+  input: number | null;
+  output: number | WordNodeAST;
   type: string;
 }
 

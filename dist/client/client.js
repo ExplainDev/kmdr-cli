@@ -8,7 +8,7 @@ const os_1 = __importDefault(require("os"));
 const v1_1 = __importDefault(require("uuid/v1"));
 class Client {
     constructor(axiosInstance, auth) {
-        this.baseURL = "https://api.kmdr.sh/api/graphql";
+        this.baseURL = process.env.KMDR_API_URL || "https://api.kmdr.sh/api/graphql";
         this.sessionId = v1_1.default();
         this.shell = process.env.SHELL || "";
         this.os = `${os_1.default.platform()} ${os_1.default.release()}`;

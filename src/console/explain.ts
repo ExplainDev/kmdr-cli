@@ -15,6 +15,8 @@ import {
   SubcommandNodeAST,
   SudoNodeAST,
   ReservedWordNodeAST,
+  RedirectNodeAST,
+  WordNodeAST,
 } from "../interfaces";
 import Console from "./console";
 import inquirer = require("inquirer");
@@ -81,6 +83,7 @@ class ExplainConsole extends Console {
         | OperatorNodeAST
         | PipeNodeAST
         | StickyOptionNodeAST
+        | RedirectNodeAST
       >
     >,
   ): string {
@@ -163,6 +166,39 @@ class ExplainConsole extends Console {
           const { pipe } = pipeNode;
           const decoratedNode = Decorator.decorate(pipe, pipeNode);
           help += `  ${decoratedNode}\n    A pipe connects the STDOUT of the first process to the STDIN of the second`;
+        }
+
+        if (AST.isRedirect(node)) {
+          const redirectNode = node as RedirectNodeAST;
+          const { type, output, input } = redirectNode;
+          const decoratedRedirectNode = Decorator.decorate(type, redirectNode);
+
+          // const decoratedNode = Decorator.decorate(type, redirectNode);
+          // help += `  ${decoratedNode}\n    Captures the output of a file, command, program or script and sends it as input to another file, command, program or script`;
+          // help += `  ${}`
+
+          var inputFileDescriptor = "",
+            outputFileDescriptor = "";
+
+          if (input !== null && input === 1) {
+            inputFileDescriptor = "stdout";
+          } else if (input !== null && input === 2) {
+            inputFileDescriptor = "stderr";
+          }
+          if (typeof output === "number" && output === 1) {
+            outputFileDescriptor = "stdout";
+            help += `  ${decoratedRedirectNode} 1\n    This will cause the stderr ouput of a program to be written to the same filedescriptor than stdout.`;
+          } else if (typeof output === "number" && output === 2) {
+            outputFileDescriptor = "stderr";
+          } else if (typeof output === "object" && AST.isWord(output as WordNodeAST)) {
+            const wordNode = output as WordNodeAST;
+            const decoratedWordNode = Decorator.decorate(wordNode.word, wordNode);
+            if (type === "<") {
+              help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdin from ${wordNode.word}.`;
+            } else if (type === ">") {
+              help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdout to ${wordNode.word}.`;
+            }
+          }
         }
 
         /*
