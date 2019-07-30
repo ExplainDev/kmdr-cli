@@ -1,12 +1,13 @@
 {
   "name": "kmdr",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --verbose",
-    "start": "node dist/index.js"
+    "start:prod": "node dist/index.js",
+    "start:dev": "KMDR_API_URL=http://localhost:8081/api/graphql node dist/index.js"
   },
   "bin": {
     "kmdr": "dist/bin.js"
