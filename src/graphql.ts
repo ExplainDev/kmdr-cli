@@ -110,6 +110,11 @@ export const queryExplainCommand = `
           pos
           word
         }
+        ... on WordNodeAST {
+          kind
+          pos
+          word
+        }
       }
     }
   }

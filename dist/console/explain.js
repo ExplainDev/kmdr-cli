@@ -115,7 +115,7 @@ class ExplainConsole extends console_1.default {
                     const argNode = node;
                     const { word } = argNode;
                     const decoratedNode = decorator_1.default.decorate(word, argNode);
-                    help += `  ${decoratedNode}\n    An argument`;
+                    help += `  ${decoratedNode}\n    An argument of the previous option`;
                 }
                 if (ast_1.default.isPipe(node)) {
                     const pipeNode = node;
@@ -154,6 +154,11 @@ class ExplainConsole extends console_1.default {
                             help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdout to ${wordNode.word}.`;
                         }
                     }
+                }
+                if (ast_1.default.isWord(node)) {
+                    const wordNode = node;
+                    const decoratedNode = decorator_1.default.decorate(wordNode.word, wordNode);
+                    help += `  ${decoratedNode}\n    An argument`;
                 }
                 /*
                 if (AST.isReservedWord(node)) {
