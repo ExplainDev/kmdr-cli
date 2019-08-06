@@ -1,6 +1,6 @@
 {
   "name": "kmdr",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
@@ -8,6 +8,9 @@
     "test": "jest --verbose",
     "start:prod": "node dist/index.js",
     "start:dev": "KMDR_API_URL=http://localhost:8081/api/graphql node dist/index.js"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   },
   "bin": {
     "kmdr": "dist/bin.js"
