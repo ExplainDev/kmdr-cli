@@ -1,4 +1,4 @@
-# kmdr.sh
+# kmdr.sh ![npm](https://img.shields.io/npm/v/kmdr?color=green&style=flat-square)![npm](https://img.shields.io/npm/dt/kmdr?color=blue&style=flat-square)
 
 The CLI client for explaining complex shell commands.
 
