@@ -4,14 +4,95 @@
 
 `kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
 
-![kmdr](screenshot.png)
+<p align="center">
+  <img src="kmdr-explain.gif">
+</p>
 
-## Requirements
+## Examples
+
+### Explaining commands with subcommands
+
+```
+$ kmdr explain
+💡 Enter your command: sudo npm install kmdr@latest --global
+
+  sudo
+    execute a command as another user
+  npm
+    javascript package manager
+  install
+    Install a package
+  kmdr@latest
+    An argument of the previous option
+  -g, --global
+    Argument will cause npm to install the package globally rather than locally.
+```
+
+### Explanining commands with grouped options
+
+```
+$ kmdr explain
+💡 Enter your command: rsync -anv dir1 dir2
+
+  rsync
+    A fast, versatile, remote (and local) file-copying tool
+  -a, --archive
+    This is equivalent to -rlptgoD.
+  -n, --dry-run
+    This makes rsync perform a trial run that doesn’t make any changes (and produces mostly the same output as a real run).
+  -v, --verbose
+    This option increases the amount of information you are given during the transfer.
+  dir1
+    An argument
+  dir2
+    An argument
+```
+
+### Explaining commands with redireciton
+
+```
+$ kmdr explain
+💡 Enter your command: ls -alh > contents.txt
+
+  ls
+    List directory contents
+  -a, --all
+    Do not ignore entries starting with .
+  -l
+    Use a long listing format
+  -h, --human-readable
+    With -l and/or -s, print human readable sizes (e.g., 1K 234M 2G)
+  > contents.txt
+    Redirect stdout to contents.txt.
+```
+
+### Explaining list of commands
+
+```
+$ kmdr explain
+💡 Enter your command: cd git/ && git clone git@github.com:ediardo/kmdr.sh.git && git log
+
+  cd
+    Change working directory
+  git/
+    An argument of the previous option
+  &&
+    Command2 is executed if, and only if, command1 returns an exit status of zero
+
+  git
+    The stupid content tracker
+  clone
+    Clone a repository into a new directory
+  git@github.com:ediardo/kmdr.sh.git
+    An argument of the previous option
+```
+
+## Installation
+
+### Requirements
 
 - Node.js v8.x and above
 - A package manager like `yarn` or `npm`
-
-## Installation
 
 **With yarn**
 
