@@ -60,11 +60,9 @@ class KMDR {
           this.explainConsole.startSpinner("Sending feedback...");
           await this.explainClient.sendFeedback("no", comment);
           this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
-        } else {
-          console.log("Learn more at https://github.com/ediardo/kmdr.sh");
-          process.exit();
         }
-        console.log("Learn more at https://github.com/ediardo/kmdr.sh");
+        console.log("Learn more at https://kmdr.sh");
+        process.exit();
       }
     } catch (err) {
       this.explainConsole.stopSpinner();

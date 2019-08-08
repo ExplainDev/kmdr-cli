@@ -33,7 +33,7 @@ class ExplainConsole extends console_1.default {
             {
                 type: "list",
                 name: "helpful",
-                message: "Is this helpful?",
+                message: "Did we help you better understand this command?",
                 prefix: `${robotEmoji}`,
                 choices: ["Skip & Exit", new inquirer.Separator(), "Yes", "No"],
             },
