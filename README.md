@@ -196,7 +196,7 @@ We add new programs every day.
 | `kubectl`        | yes                    | partial              |
 | `singularity`    | yes                    | no                   |
 
-#### Control Version
+#### Version Control
 
 | Program | Options/flags coverage | Subcommands coverage |
 | ------- | ---------------------- | -------------------- |
