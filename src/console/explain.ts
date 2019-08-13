@@ -34,9 +34,6 @@ class ExplainConsole extends Console {
       message: "Enter your command:",
       name: "query",
       prefix: `${explanationEmoji}`,
-      transformer: (arg: any) => {
-        return chalk.whiteBright(arg);
-      },
       type: "input",
     },
   ];

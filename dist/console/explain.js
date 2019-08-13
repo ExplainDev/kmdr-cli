@@ -9,7 +9,6 @@ const decorator_1 = __importDefault(require("../highlight/decorator"));
 const highlight_1 = __importDefault(require("../highlight/highlight"));
 const console_1 = __importDefault(require("./console"));
 const inquirer = require("inquirer");
-const chalk_1 = __importDefault(require("chalk"));
 const explanationEmoji = node_emoji_1.default.get("bulb");
 const robotEmoji = node_emoji_1.default.get("robot_face");
 const fireEmoji = node_emoji_1.default.get("fire");
@@ -23,9 +22,6 @@ class ExplainConsole extends console_1.default {
                 message: "Enter your command:",
                 name: "query",
                 prefix: `${explanationEmoji}`,
-                transformer: (arg) => {
-                    return chalk_1.default.whiteBright(arg);
-                },
                 type: "input",
             },
         ];
