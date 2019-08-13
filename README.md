@@ -307,6 +307,8 @@ We add new programs every day.
 | `env`         | yes                    | -                    |
 | `free`        | yes                    | -                    |
 | `id`          | yes                    | -                    |
+| `iperf`       | yes                    | -                    |
+| `iperf3`      | yes                    | -                    |
 | `journalctl`  | yes                    | -                    |
 | `killall`     | yes                    | -                    |
 | `lsb_release` | yes                    | -                    |
