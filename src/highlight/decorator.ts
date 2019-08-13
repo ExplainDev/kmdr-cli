@@ -24,6 +24,7 @@ const HIGHLIGHT_DEFAULTS: any = {
   argument: chalk.italic.bold.whiteBright,
   assignmentName: chalk.green,
   assignmentValue: chalk.whiteBright,
+  fileDescriptor: chalk.magenta.bold,
   operator: chalk.yellowBright.bold,
   option: chalk.bold.greenBright,
   optionWithArg: chalk.cyan,
@@ -53,12 +54,29 @@ class Decorator {
       | RedirectNodeAST
       | WordNodeAST,
   ): string {
-    let decoratedString: string;
+    let decoratedString: string = "";
+
     if (AST.isAssignment(token)) {
       const assignmentToken = token as AssignmentNodeAST;
+
       decoratedString = Decorator.color("assignmentName", assignmentToken.name);
       decoratedString += "=";
       decoratedString += Decorator.color("assignmentValue", assignmentToken.value || "");
+    } else if (AST.isRedirect(token)) {
+      const redirectToken = token as RedirectNodeAST;
+      const { input, output, output_fd, type } = redirectToken;
+
+      if (input !== null) {
+        decoratedString = Decorator.color("fileDescriptor", input.toString());
+      }
+
+      decoratedString += Decorator.color("redirect", type);
+
+      if (output === null && output_fd) {
+        decoratedString += Decorator.color("fileDescriptor", output_fd.toString());
+      } else if (typeof output === "object" && output.kind === "word") {
+        decoratedString += ` ${Decorator.color("word", output.word)}`;
+      }
     } else {
       decoratedString = Decorator.color(token.kind, word);
     }

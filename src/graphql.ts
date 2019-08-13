@@ -104,6 +104,7 @@ export const queryExplainCommand = `
             word
             pos
           }
+          output_fd
         }
         ... on ReservedWordNodeAST {
           kind

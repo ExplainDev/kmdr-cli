@@ -9,6 +9,7 @@ const HIGHLIGHT_DEFAULTS = {
     argument: chalk_1.default.italic.bold.whiteBright,
     assignmentName: chalk_1.default.green,
     assignmentValue: chalk_1.default.whiteBright,
+    fileDescriptor: chalk_1.default.magenta.bold,
     operator: chalk_1.default.yellowBright.bold,
     option: chalk_1.default.bold.greenBright,
     optionWithArg: chalk_1.default.cyan,
@@ -23,12 +24,26 @@ const HIGHLIGHT_DEFAULTS = {
 };
 class Decorator {
     static decorate(word, token) {
-        let decoratedString;
+        let decoratedString = "";
         if (ast_1.default.isAssignment(token)) {
             const assignmentToken = token;
             decoratedString = Decorator.color("assignmentName", assignmentToken.name);
             decoratedString += "=";
             decoratedString += Decorator.color("assignmentValue", assignmentToken.value || "");
+        }
+        else if (ast_1.default.isRedirect(token)) {
+            const redirectToken = token;
+            const { input, output, output_fd, type } = redirectToken;
+            if (input !== null) {
+                decoratedString = Decorator.color("fileDescriptor", input.toString());
+            }
+            decoratedString += Decorator.color("redirect", type);
+            if (output === null && output_fd) {
+                decoratedString += Decorator.color("fileDescriptor", output_fd.toString());
+            }
+            else if (typeof output === "object" && output.kind === "word") {
+                decoratedString += ` ${Decorator.color("word", output.word)}`;
+            }
         }
         else {
             decoratedString = Decorator.color(token.kind, word);

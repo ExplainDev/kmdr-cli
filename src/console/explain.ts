@@ -136,11 +136,11 @@ class ExplainConsole extends Console {
           const decoratedOperator = Decorator.decorate(op, operatorNode);
 
           if (op === "&&") {
-            help += `  ${decoratedOperator}\n    Command2 is executed if, and only if, command1 returns an exit status of zero`;
+            help += `  ${decoratedOperator}\n    Run the next command if and only if the previous command returns a successful exit status (zero)`;
           } else if (op === "||") {
-            help += `  ${decoratedOperator}\n    Command2  is  executed  if and only if command1 returns a non-zero exit status`;
+            help += `  ${decoratedOperator}\n    Run the next command if and only if the previous command returns a non-zero exit status`;
           } else if (op === ";") {
-            help += `  ${decoratedOperator}\n    Commands separated by a ; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
+            help += `  ${decoratedOperator}\n    Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
           }
         }
 
@@ -155,46 +155,54 @@ class ExplainConsole extends Console {
           const argNode = node as ArgumentNodeAST;
           const { word } = argNode;
           const decoratedNode = Decorator.decorate(word, argNode);
-          help += `  ${decoratedNode}\n    An argument of the previous option`;
+          help += `  ${decoratedNode}\n    An argument`;
         }
 
         if (AST.isPipe(node)) {
           const pipeNode = node as PipeNodeAST;
           const { pipe } = pipeNode;
           const decoratedNode = Decorator.decorate(pipe, pipeNode);
-          help += `  ${decoratedNode}\n    A pipe connects the STDOUT of the first process to the STDIN of the second`;
+          help += `  ${decoratedNode}\n`;
+          help += `    A pipe connects the STDOUT of the first process to the STDIN of the second`;
         }
 
         if (AST.isRedirect(node)) {
           const redirectNode = node as RedirectNodeAST;
-          const { type, output, input } = redirectNode;
+          const { type, output, input, output_fd } = redirectNode;
           const decoratedRedirectNode = Decorator.decorate(type, redirectNode);
+          let wordNode: any;
 
-          // const decoratedNode = Decorator.decorate(type, redirectNode);
-          // help += `  ${decoratedNode}\n    Captures the output of a file, command, program or script and sends it as input to another file, command, program or script`;
-          // help += `  ${}`
-
-          var inputFileDescriptor = "",
-            outputFileDescriptor = "";
-
-          if (input !== null && input === 1) {
-            inputFileDescriptor = "stdout";
-          } else if (input !== null && input === 2) {
-            inputFileDescriptor = "stderr";
+          if (typeof output === "object") {
+            wordNode = output as WordNodeAST;
           }
-          if (typeof output === "number" && output === 1) {
-            outputFileDescriptor = "stdout";
-            help += `  ${decoratedRedirectNode} 1\n    This will cause the stderr ouput of a program to be written to the same filedescriptor than stdout.`;
-          } else if (typeof output === "number" && output === 2) {
-            outputFileDescriptor = "stderr";
-          } else if (typeof output === "object" && AST.isWord(output as WordNodeAST)) {
-            const wordNode = output as WordNodeAST;
-            const decoratedWordNode = Decorator.decorate(wordNode.word, wordNode);
-            if (type === "<") {
-              help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdin from ${wordNode.word}.`;
-            } else if (type === ">") {
-              help += `  ${decoratedRedirectNode} ${decoratedWordNode}\n    Redirect stdout to ${wordNode.word}.`;
-            }
+
+          if (type === ">|") {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect stdout to ${wordNode.word} even if the shell has been configured to refuse overwriting`;
+          } else if (type === ">" && input === 2) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect stderr to ${wordNode.word}.`;
+          } else if (type === "&>" || (type === ">&" && output_fd === null)) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect both stdout and stderr to ${wordNode.word}.`;
+          } else if (type === ">>" && (input === null || input === 1)) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect and append stdout to ${wordNode.word}.`;
+          } else if (type === "&>>") {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect and append both stdout and stderr to ${wordNode.word}.`;
+          } else if (type === ">&" && input === 2 && output_fd === 1) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect stderr to stdout.`;
+          } else if (type === ">>" && input === 2) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect and append stderr to ${wordNode.word}.`;
+          } else if (type === "<") {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect stdin from ${wordNode.word}.`;
+          } else if (type === ">" || (type === ">" && input === 1)) {
+            help += `  ${decoratedRedirectNode}\n`;
+            help += `    Redirect stdout to ${wordNode.word}.`;
           }
         }
 
