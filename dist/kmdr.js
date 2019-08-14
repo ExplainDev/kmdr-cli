@@ -50,9 +50,8 @@ class KMDR {
                     const comment = await this.explainConsole.noFeedback();
                     this.explainConsole.startSpinner("Sending feedback...");
                     await this.explainClient.sendFeedback("no", comment);
-                    this.explainConsole.succeedSpinner("Your feedback has been saved. Thank you!");
+                    this.explainConsole.succeedSpinner("Your feedback was saved. Thank you!");
                 }
-                console.log("Learn more at https://kmdr.sh");
                 process.exit();
             }
         }

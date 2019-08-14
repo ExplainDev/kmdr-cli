@@ -149,7 +149,6 @@ class ExplainConsole extends console_1.default {
                         help += `    Redirect and append both stdout and stderr to ${wordNode.word}.`;
                     }
                     else if (type === ">&" && input === 2 && output_fd === 1) {
-                        console.log("sico");
                         help += `  ${decoratedRedirectNode}\n`;
                         help += `    Redirect stderr to stdout.`;
                     }
