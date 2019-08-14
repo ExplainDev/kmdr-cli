@@ -106,6 +106,7 @@ exports.queryExplainCommand = `
             word
             pos
           }
+          output_fd
         }
         ... on ReservedWordNodeAST {
           kind

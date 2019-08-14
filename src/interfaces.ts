@@ -90,6 +90,7 @@ export interface PipeNodeAST extends NodeAST {
 export interface RedirectNodeAST extends NodeAST {
   input: number | null;
   output: number | WordNodeAST;
+  output_fd: number;
   type: string;
 }
 
