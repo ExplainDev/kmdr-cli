@@ -18,7 +18,7 @@ class KMDR {
   }
 
   public async init() {
-    this.cli.description(this.welcomeMsg).version("0.1.0", "-v, --version");
+    this.cli.description(this.welcomeMsg).version("0.1.24", "-v, --version");
     this.cli
       .command("explain")
       .alias("e")
