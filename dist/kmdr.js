@@ -16,7 +16,7 @@ class KMDR {
         this.explainConsole = new explain_2.default();
     }
     async init() {
-        this.cli.description(this.welcomeMsg).version("0.1.0", "-v, --version");
+        this.cli.description(this.welcomeMsg).version("0.1.26", "-v, --version");
         this.cli
             .command("explain")
             .alias("e")
