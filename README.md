@@ -177,6 +177,8 @@ We add new programs every day.
 
 #### Bash/Bourne Shell Builtins
 
+systemctl.json > Some descriptions modified, couple of options adde
+
 | Program   | Options/flags coverage | Subcommands coverage |
 | --------- | ---------------------- | -------------------- |
 | `cd`      | -                      |                      |
@@ -296,6 +298,7 @@ We add new programs every day.
 | `node`       | yes                    | -                    |
 | `perl`       | no                     | -                    |
 | `python`     | yes                    | -                    |
+| `ruby`       | yes                    | -                    |
 | `virtualenv` | yes                    | -                    |
 
 #### Sysadmin / Monitoring
@@ -312,11 +315,14 @@ We add new programs every day.
 | `journalctl`  | yes                    | -                    |
 | `killall`     | yes                    | -                    |
 | `lsb_release` | yes                    | -                    |
+| `mount`       | yes                    | -                    |
 | `nice`        | yes                    | -                    |
 | `ps`          | yes                    | -                    |
 | `sudo`        | yes                    | -                    |
+| `systemctl`   | yes                    | -                    |
 | `top`         | yes                    | -                    |
 | `uname`       | yes                    | -                    |
+| `visudo`      | yes                    | -                    |
 | `who`         | yes                    | -                    |
 | `whoami`      | yes                    | -                    |
 
@@ -362,6 +368,7 @@ We add new programs every day.
 | `kmdr`   | yes                    | yes                  |
 | `pandoc` | yes                    | -                    |
 | `tree`   | yes                    | -                    |
+| `screen` | yes                    | -                    |
 
 #### Miscellaneous
 
