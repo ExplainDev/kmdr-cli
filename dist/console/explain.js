@@ -118,7 +118,7 @@ class ExplainConsole extends console_1.default {
                     const { pipe } = pipeNode;
                     const decoratedNode = decorator_1.default.decorate(pipe, pipeNode);
                     help += `  ${decoratedNode}\n`;
-                    help += `    A pipe connects the STDOUT of the first process to the STDIN of the second`;
+                    help += `    A pipe serves the sdout of the previous command as input (stdin) to the next one`;
                 }
                 if (ast_1.default.isRedirect(node)) {
                     const redirectNode = node;
@@ -170,20 +170,6 @@ class ExplainConsole extends console_1.default {
                     const decoratedNode = decorator_1.default.decorate(wordNode.word, wordNode);
                     help += `  ${decoratedNode}\n    An argument`;
                 }
-                /*
-                if (AST.isReservedWord(node)) {
-                  const reservedWordNode = node as ReservedWordNodeAST;
-                  const { word } = reservedWordNode;
-                  const decoratedNode = Decorator.decorate(word, reservedWordNode);
-                  help += `  ${decoratedNode}\n  A list of commands\n`;
-                }
-                
-                */
-                if (++j !== unit.length) {
-                    help += `\n`;
-                }
-            }
-            if (++i !== leafNodes.length) {
                 help += `\n`;
             }
         }
@@ -216,14 +202,9 @@ class ExplainConsole extends console_1.default {
         else {
             const highlight = new highlight_1.default();
             const decoratedQuery = highlight.decorate(query, leafNodes);
-            // const boxedContent = this.box(decoratedQuery);
-            // add a new line
-            // this.print(`  ${decoratedQuery}`);
             const help = this.makeHelp(leafNodes);
-            //this.print();
             this.print(help);
         }
-        this.print();
     }
 }
 exports.default = ExplainConsole;
