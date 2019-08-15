@@ -177,8 +177,6 @@ We add new programs every day.
 
 #### Bash/Bourne Shell Builtins
 
-systemctl.json > Some descriptions modified, couple of options adde
-
 | Program   | Options/flags coverage | Subcommands coverage |
 | --------- | ---------------------- | -------------------- |
 | `cd`      | -                      |                      |
