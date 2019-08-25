@@ -136,6 +136,20 @@ Add the line below to your `.bashrc` or `.zshrc` if using `zsh`
 export PATH="$(yarn global bin):$PATH"
 ```
 
+### Running `kmdr` in a docker container
+
+1. Build the image
+
+   ```bash
+   docker build -t kmdr-cli .
+   ```
+
+2. Enter the docker container
+
+   ```bash
+   docker run -h kmdr -it --rm  kmdr-cli /bin/bash
+   ```
+
 ## Usage
 
 ### Explain a command
