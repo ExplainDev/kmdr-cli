@@ -2,6 +2,7 @@ import cli from "commander";
 import ExplainClient from "./client/explain";
 import ExplainConsole from "./console/explain";
 import { Settings } from "./interfaces";
+const pkg = require("../package.json");
 
 class KMDR {
   private settings: Settings | undefined;
@@ -18,7 +19,7 @@ class KMDR {
   }
 
   public async init() {
-    this.cli.description(this.welcomeMsg).version("0.1.29", "-v, --version");
+    this.cli.description(this.welcomeMsg).version(pkg.version, "-v, --version");
     this.cli
       .command("explain")
       .alias("e")

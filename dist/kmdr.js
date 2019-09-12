@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = __importDefault(require("commander"));
 const explain_1 = __importDefault(require("./client/explain"));
 const explain_2 = __importDefault(require("./console/explain"));
+const pkg = require("../package.json");
 class KMDR {
     constructor(settings) {
         this.cli = commander_1.default;
@@ -16,7 +17,7 @@ class KMDR {
         this.explainConsole = new explain_2.default();
     }
     async init() {
-        this.cli.description(this.welcomeMsg).version("0.1.29", "-v, --version");
+        this.cli.description(this.welcomeMsg).version(pkg.version, "-v, --version");
         this.cli
             .command("explain")
             .alias("e")
