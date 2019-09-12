@@ -1,3 +1,4 @@
+import inquirer from "inquirer";
 import emoji from "node-emoji";
 import AST from "../ast";
 import Decorator from "../highlight/decorator";
@@ -11,18 +12,15 @@ import {
   OptionNodeAST,
   PipeNodeAST,
   ProgramNodeAST,
+  RedirectNodeAST,
   StickyOptionNodeAST,
   SubcommandNodeAST,
   SudoNodeAST,
-  ReservedWordNodeAST,
-  RedirectNodeAST,
   WordNodeAST,
 } from "../interfaces";
 import Console from "./console";
-import inquirer = require("inquirer");
-import chalk from "chalk";
 
-const explanationEmoji = emoji.get("bulb");
+// const explanationEmoji = emoji.get("bulb");
 const robotEmoji = emoji.get("robot_face");
 const fireEmoji = emoji.get("fire");
 const thumbsDownEmoji = emoji.get("thumbsdown");
@@ -33,7 +31,6 @@ class ExplainConsole extends Console {
     {
       message: "Enter your command:",
       name: "query",
-      prefix: `${explanationEmoji}`,
       type: "input",
     },
   ];
@@ -85,8 +82,6 @@ class ExplainConsole extends Console {
     >,
   ): string {
     let help = "";
-    let i = 0;
-    let j = 0;
 
     for (const unit of leafNodes) {
       for (const node of unit) {
@@ -115,7 +110,7 @@ class ExplainConsole extends Console {
         }
 
         if (AST.isSubcommand(node)) {
-          const subcommandNode = <SubcommandNodeAST>node;
+          const subcommandNode = node as SubcommandNodeAST;
           const { name, summary } = subcommandNode.schema;
           const decoratedSubcommandName = Decorator.decorate(name, subcommandNode);
 
@@ -131,7 +126,7 @@ class ExplainConsole extends Console {
         }
 
         if (AST.isOperator(node)) {
-          const operatorNode = <OperatorNodeAST>node;
+          const operatorNode = node as OperatorNodeAST;
           const { op } = operatorNode;
           const decoratedOperator = Decorator.decorate(op, operatorNode);
 
@@ -173,7 +168,7 @@ class ExplainConsole extends Console {
           let wordNode: any;
 
           if (typeof output === "object") {
-            wordNode = output as WordNodeAST;
+            wordNode = output;
           }
 
           if (type === ">|") {

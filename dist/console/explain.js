@@ -3,13 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const inquirer_1 = __importDefault(require("inquirer"));
 const node_emoji_1 = __importDefault(require("node-emoji"));
 const ast_1 = __importDefault(require("../ast"));
 const decorator_1 = __importDefault(require("../highlight/decorator"));
 const highlight_1 = __importDefault(require("../highlight/highlight"));
 const console_1 = __importDefault(require("./console"));
-const inquirer = require("inquirer");
-const explanationEmoji = node_emoji_1.default.get("bulb");
+// const explanationEmoji = emoji.get("bulb");
 const robotEmoji = node_emoji_1.default.get("robot_face");
 const fireEmoji = node_emoji_1.default.get("fire");
 const thumbsDownEmoji = node_emoji_1.default.get("thumbsdown");
@@ -21,7 +21,6 @@ class ExplainConsole extends console_1.default {
             {
                 message: "Enter your command:",
                 name: "query",
-                prefix: `${explanationEmoji}`,
                 type: "input",
             },
         ];
@@ -31,7 +30,7 @@ class ExplainConsole extends console_1.default {
                 name: "helpful",
                 message: "Did we help you better understand this command?",
                 prefix: `${robotEmoji}`,
-                choices: ["Skip & Exit", new inquirer.Separator(), "Yes", "No"],
+                choices: ["Skip & Exit", new inquirer_1.default.Separator(), "Yes", "No"],
             },
         ];
         this.yesFeedbackQuestion = [
@@ -53,8 +52,6 @@ class ExplainConsole extends console_1.default {
     }
     makeHelp(leafNodes) {
         let help = "";
-        let i = 0;
-        let j = 0;
         for (const unit of leafNodes) {
             for (const node of unit) {
                 if (ast_1.default.isProgram(node)) {
