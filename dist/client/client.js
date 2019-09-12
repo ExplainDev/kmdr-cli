@@ -32,7 +32,7 @@ class Client {
         return this.post({ query, variables }, config);
     }
     doMutation(query, variables) {
-        this.post({ query, variables });
+        return this.post({ query, variables });
     }
     post(data, config = undefined) {
         return this.instance.post("", data, Object.assign({}, config));

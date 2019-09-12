@@ -42,7 +42,7 @@ class Client {
   }
 
   protected doMutation(query: string, variables?: {}) {
-    this.post({ query, variables });
+    return this.post({ query, variables });
   }
 
   private post(data: any, config: AxiosRequestConfig | undefined = undefined) {
