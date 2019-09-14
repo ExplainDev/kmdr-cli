@@ -7,12 +7,13 @@ const axios_1 = __importDefault(require("axios"));
 const os_1 = __importDefault(require("os"));
 const v1_1 = __importDefault(require("uuid/v1"));
 class Client {
-    constructor(axiosInstance, auth) {
+    constructor(version, axiosInstance, auth) {
         this.baseURL = process.env.KMDR_API_URL || "https://api.kmdr.sh/api/graphql";
         this.sessionId = v1_1.default();
         this.shell = process.env.SHELL || "";
         this.os = `${os_1.default.platform()} ${os_1.default.release()}`;
         this.term = `${process.env.TERM};${process.env.TERM_PROGRAM}`;
+        this.version = version;
         this.instance =
             axiosInstance ||
                 axios_1.default.create({
@@ -23,7 +24,7 @@ class Client {
                         "X-kmdr-client-session-id": this.sessionId,
                         "X-kmdr-client-shell": this.shell,
                         "X-kmdr-client-term": this.term,
-                        "X-kmdr-client-version": "0.1",
+                        "X-kmdr-client-version": this.version,
                     },
                     responseType: "json",
                 });

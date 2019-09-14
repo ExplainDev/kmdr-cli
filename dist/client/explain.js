@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const client_1 = __importDefault(require("./client"));
 const graphql_1 = require("../graphql");
+const client_1 = __importDefault(require("./client"));
 class Explain extends client_1.default {
-    constructor() {
-        super();
+    constructor(version) {
+        super(version);
     }
     async getExplanation(query, schema) {
         const transformResponse = (res) => {

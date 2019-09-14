@@ -6,18 +6,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = __importDefault(require("commander"));
 const explain_1 = __importDefault(require("./client/explain"));
 const explain_2 = __importDefault(require("./console/explain"));
+// tslint:disable-next-line: no-var-requires
 const pkg = require("../package.json");
 class KMDR {
     constructor(settings) {
         this.cli = commander_1.default;
+        this.version = "";
         // tslint:disable-next-line: max-line-length
         this.welcomeMsg = `The CLI client for explaining complex shell commands.\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.`;
         this.settings = settings;
-        this.explainClient = new explain_1.default();
+        this.version = pkg.version;
+        this.explainClient = new explain_1.default(this.version);
         this.explainConsole = new explain_2.default();
     }
     async init() {
-        this.cli.description(this.welcomeMsg).version(pkg.version, "-v, --version");
+        this.cli.description(this.welcomeMsg).version(this.version, "-v, --version");
         this.cli
             .command("explain")
             .alias("e")

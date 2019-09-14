@@ -10,12 +10,14 @@ class Client {
   private os: string;
   private sessionId: string;
   private instance: AxiosInstance;
+  private version: string;
 
-  constructor(axiosInstance?: AxiosInstance, auth?: AuthCredentials) {
+  constructor(version: string, axiosInstance?: AxiosInstance, auth?: AuthCredentials) {
     this.sessionId = uuid();
     this.shell = process.env.SHELL || "";
     this.os = `${os.platform()} ${os.release()}`;
     this.term = `${process.env.TERM};${process.env.TERM_PROGRAM}`;
+    this.version = version;
 
     this.instance =
       axiosInstance ||
@@ -27,7 +29,7 @@ class Client {
           "X-kmdr-client-session-id": this.sessionId,
           "X-kmdr-client-shell": this.shell,
           "X-kmdr-client-term": this.term,
-          "X-kmdr-client-version": "0.1",
+          "X-kmdr-client-version": this.version,
         },
         responseType: "json",
       });

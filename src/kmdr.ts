@@ -2,11 +2,14 @@ import cli from "commander";
 import ExplainClient from "./client/explain";
 import ExplainConsole from "./console/explain";
 import { Settings } from "./interfaces";
+
+// tslint:disable-next-line: no-var-requires
 const pkg = require("../package.json");
 
 class KMDR {
   private settings: Settings | undefined;
   private cli = cli;
+  private version: string = "";
   private explainClient: ExplainClient;
   private explainConsole: ExplainConsole;
   // tslint:disable-next-line: max-line-length
@@ -14,12 +17,13 @@ class KMDR {
 
   constructor(settings?: Settings) {
     this.settings = settings;
-    this.explainClient = new ExplainClient();
+    this.version = pkg.version;
+    this.explainClient = new ExplainClient(this.version);
     this.explainConsole = new ExplainConsole();
   }
 
   public async init() {
-    this.cli.description(this.welcomeMsg).version(pkg.version, "-v, --version");
+    this.cli.description(this.welcomeMsg).version(this.version, "-v, --version");
     this.cli
       .command("explain")
       .alias("e")

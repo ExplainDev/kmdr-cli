@@ -1,10 +1,10 @@
-import Client from "./client";
 import { mutationCreateExplainFeedback, queryExplainCommand } from "../graphql";
 import { GraphQLResponse } from "../interfaces";
+import Client from "./client";
 
 class Explain extends Client {
-  constructor() {
-    super();
+  constructor(version: string) {
+    super(version);
   }
 
   public async getExplanation(query: string, schema?: string) {
