@@ -2,22 +2,24 @@
  * Copyright 2019 Eddie Ramirez
  */
 import {
-  ArgumentNodeAST,
-  AssignmentNodeAST,
-  CommandNodeAST,
-  ListNodeAST,
+  ArgumentNode,
+  AssignmentNode,
+  CommandLeafNodes,
+  CommandNode,
+  ListLeafNodes,
+  ListNode,
   NodeAST,
-  OperatorNodeAST,
-  OptionNodeAST,
-  OptionWithArgNodeAST,
-  PipelineNodeAST,
-  PipeNodeAST,
-  ProgramNodeAST,
-  RedirectNodeAST,
-  ReservedWordNodeAST,
-  StickyOptionNodeAST,
-  SubcommandNodeAST,
-  WordNodeAST,
+  OperatorNode,
+  OptionNode,
+  OptionWithArgNode,
+  PipelineNode,
+  PipeNode,
+  ProgramNode,
+  RedirectNode,
+  ReservedWordNode,
+  StickyOptionNode,
+  SubcommandNode,
+  WordNode,
 } from "./interfaces";
 
 class AST {
@@ -28,7 +30,7 @@ class AST {
    * @param value the value we try to validate against
    * @returns true if there's a match, false if not
    */
-  public static assignmentHasValue(node: AssignmentNodeAST, name: string, value: string): boolean {
+  public static assignmentHasValue(node: AssignmentNode, name: string, value: string): boolean {
     return node.name === name && node.value === value;
   }
 
@@ -40,14 +42,14 @@ class AST {
    * @param value
    * @returns true if a first assignment matches the criteria
    */
-  public static commandHasAssignment(node: CommandNodeAST, name: string, value?: string): boolean {
+  public static commandHasAssignment(node: CommandNode, name: string, value?: string): boolean {
     if (!node.parts) {
       return false;
     }
 
     for (const currentNode of node.parts) {
-      if (AST.isAssignment(currentNode as AssignmentNodeAST)) {
-        const assignmentNode = currentNode as AssignmentNodeAST;
+      if (AST.isAssignment(currentNode as AssignmentNode)) {
+        const assignmentNode = currentNode as AssignmentNode;
         if (
           (value && AST.assignmentHasValue(assignmentNode, name, value)) ||
           (!value && assignmentNode.name === name)
@@ -66,7 +68,7 @@ class AST {
    * @returns true if at least 1 node is of kind stickyOptions and
    *  its word matches stickyOptions string
    */
-  public static commandHasStickyOptions(node: CommandNodeAST, stickyOptions: string): boolean {
+  public static commandHasStickyOptions(node: CommandNode, stickyOptions: string): boolean {
     if (!node.parts) {
       return false;
     }
@@ -87,7 +89,7 @@ class AST {
    * @param pos
    */
   public static commandHasOption(
-    node: CommandNodeAST | StickyOptionNodeAST,
+    node: CommandNode | StickyOptionNode,
     optionName: string,
     argValue?: string,
   ): boolean {
@@ -98,7 +100,7 @@ class AST {
     for (let i = 0; i < node.parts.length; i++) {
       const currentNode = node.parts[i];
       if (AST.isOption(currentNode)) {
-        const optionNode = currentNode as OptionNodeAST;
+        const optionNode = currentNode as OptionNode;
         if (
           (argValue && optionNode.opt === optionName && AST.isArgument(node.parts[i + 1])) ||
           (!argValue && optionNode.opt === optionName)
@@ -106,7 +108,7 @@ class AST {
           return true;
         }
       } else if (AST.isOptionWithArg(currentNode)) {
-        const composedOptionNode = currentNode as OptionWithArgNodeAST;
+        const composedOptionNode = currentNode as OptionWithArgNode;
 
         const { option, arg } = composedOptionNode;
 
@@ -117,7 +119,7 @@ class AST {
           return true;
         }
       } else if (AST.isStickyOption(currentNode)) {
-        const composedOptionNode = currentNode as StickyOptionNodeAST;
+        const composedOptionNode = currentNode as StickyOptionNode;
         return AST.commandHasOption(composedOptionNode, optionName);
       }
     }
@@ -125,14 +127,14 @@ class AST {
     return false;
   }
 
-  public static commandHasProgram(node: CommandNodeAST, programName: string): boolean {
+  public static commandHasProgram(node: CommandNode, programName: string): boolean {
     if (!node.parts) {
       return false;
     }
 
     for (const currentNode of node.parts) {
-      if (AST.isProgram(currentNode as StickyOptionNodeAST)) {
-        const programNode = currentNode as ProgramNodeAST;
+      if (AST.isProgram(currentNode as StickyOptionNode)) {
+        const programNode = currentNode as ProgramNode;
         return programNode.programName === programName;
       }
     }
@@ -141,7 +143,7 @@ class AST {
   }
 
   public static commandHasSubcommand(
-    node: CommandNodeAST,
+    node: CommandNode,
     subcommandName: string,
     pos: number = 0,
   ): boolean {
@@ -156,7 +158,7 @@ class AST {
     for (const currentNode of node.parts) {
       if (AST.isSubcommand(currentNode)) {
         if (pos-- === 0) {
-          const subcommandNode = currentNode as SubcommandNodeAST;
+          const subcommandNode = currentNode as SubcommandNode;
           return subcommandNode.word === subcommandName;
         } else if (pos < 0) {
           return false;
@@ -167,15 +169,15 @@ class AST {
     return false;
   }
 
-  public static getAllArguments(node: CommandNodeAST): ArgumentNodeAST[] | undefined {
+  public static getAllArguments(node: CommandNode): ArgumentNode[] | undefined {
     if (!node.parts) {
       return [];
     }
 
-    const args: ArgumentNodeAST[] = [];
+    const args: ArgumentNode[] = [];
 
     for (const currentNode of node.parts) {
-      if (AST.isArgument(currentNode as ArgumentNodeAST)) {
+      if (AST.isArgument(currentNode as ArgumentNode)) {
         args.push(currentNode);
       }
     }
@@ -183,47 +185,47 @@ class AST {
     return args;
   }
 
-  public static getAllAssignments(node: CommandNodeAST): AssignmentNodeAST[] {
+  public static getAllAssignments(node: CommandNode): AssignmentNode[] {
     if (!node.parts) {
       return [];
     }
 
-    const assignments: AssignmentNodeAST[] = [];
+    const assignments: AssignmentNode[] = [];
 
     for (const currentNode of node.parts) {
       if (AST.isAssignment(currentNode as any)) {
-        assignments.push(currentNode as AssignmentNodeAST);
+        assignments.push(currentNode as AssignmentNode);
       }
     }
 
     return assignments;
   }
 
-  public static getAllRedirects(node: CommandNodeAST): RedirectNodeAST[] {
+  public static getAllRedirects(node: CommandNode): RedirectNode[] {
     if (!node.parts) {
       return [];
     }
 
-    const redirects: RedirectNodeAST[] = [];
+    const redirects: RedirectNode[] = [];
 
     for (const currentNode of node.parts) {
       if (AST.isRedirect(currentNode as any)) {
-        redirects.push(currentNode as RedirectNodeAST);
+        redirects.push(currentNode as RedirectNode);
       }
     }
 
     return redirects;
   }
 
-  public static getAllSubcommands(node: CommandNodeAST): SubcommandNodeAST[] | undefined {
+  public static getAllSubcommands(node: CommandNode): SubcommandNode[] | undefined {
     if (!node.parts) return;
 
-    const subcommands: SubcommandNodeAST[] = [];
+    const subcommands: SubcommandNode[] = [];
 
     for (let i = 0; i < node.parts.length; i++) {
       const currentNode = node.parts[i];
-      if (AST.isSubcommand(<SubcommandNodeAST>currentNode)) {
-        subcommands.push(<SubcommandNodeAST>currentNode);
+      if (AST.isSubcommand(<SubcommandNode>currentNode)) {
+        subcommands.push(<SubcommandNode>currentNode);
       }
     }
     return subcommands;
@@ -233,18 +235,16 @@ class AST {
    * Returns all OptionNodeAST in a command
    * @param node
    */
-  public static getCommandOptions(
-    node: CommandNodeAST | StickyOptionNodeAST,
-  ): OptionNodeAST[] | undefined {
+  public static getCommandOptions(node: CommandNode | StickyOptionNode): OptionNode[] | undefined {
     if (!node.parts) {
       return;
     }
-    const options: OptionNodeAST[] = [];
+    const options: OptionNode[] = [];
     let startPos = 0;
 
     // First find the ProgramNodeAST position in the tree
     if (AST.isCommand(node)) {
-      startPos = AST.getProgramNodePosition(node as CommandNodeAST);
+      startPos = AST.getProgramNodePosition(node as CommandNode);
       if (startPos === -1) {
         return;
       }
@@ -254,9 +254,9 @@ class AST {
       const currentNode = node.parts[i];
 
       if (AST.isOption(currentNode)) {
-        options.push(currentNode as OptionNodeAST);
+        options.push(currentNode as OptionNode);
       } else if (AST.isStickyOption(currentNode)) {
-        const composedOption = currentNode as StickyOptionNodeAST;
+        const composedOption = currentNode as StickyOptionNode;
         return AST.getCommandOptions(composedOption);
       }
     }
@@ -269,25 +269,25 @@ class AST {
    * @param optionName
    */
   public static getCommandOption(
-    node: CommandNodeAST | StickyOptionNodeAST,
+    node: CommandNode | StickyOptionNode,
     optionName: string,
-  ): OptionNodeAST | undefined {
+  ): OptionNode | undefined {
     if (!node.parts) return;
 
     let startPos = 0;
     if (AST.isCommand(node)) {
-      startPos = AST.getProgramNodePosition(<CommandNodeAST>node);
+      startPos = AST.getProgramNodePosition(<CommandNode>node);
     }
 
     for (let i = startPos; i < node.parts.length; i++) {
       const currentNode = node.parts[i];
-      if (AST.isOption(<OptionNodeAST>currentNode)) {
-        const optionNode = <OptionNodeAST>currentNode;
+      if (AST.isOption(<OptionNode>currentNode)) {
+        const optionNode = <OptionNode>currentNode;
         if (optionNode.opt === optionName) {
           return optionNode;
         }
       } else if (AST.isStickyOption(currentNode)) {
-        const composedOptionNode = <StickyOptionNodeAST>currentNode;
+        const composedOptionNode = <StickyOptionNode>currentNode;
         return AST.getCommandOption(composedOptionNode, optionName);
       }
     }
@@ -317,13 +317,13 @@ class AST {
    * Get the Program of a command
    * @param node
    */
-  static getCommandProgram(node: CommandNodeAST): ProgramNodeAST | undefined {
+  static getCommandProgram(node: CommandNode): ProgramNode | undefined {
     if (!node.parts) return;
 
     for (let i = 0; i < node.parts.length; i++) {
       const currentNode = node.parts[i];
       if (AST.isProgram(currentNode)) {
-        return <ProgramNodeAST>currentNode;
+        return <ProgramNode>currentNode;
       }
     }
   }
@@ -334,15 +334,15 @@ class AST {
    * @returns the last node in a list of nodes
    */
   static getLastNode(
-    node: CommandNodeAST | ListNodeAST,
-  ): CommandNodeAST | ListNodeAST | WordNodeAST | OperatorNodeAST | undefined {
+    node: CommandNode | ListNode,
+  ): CommandNode | ListNode | WordNode | OperatorNode | undefined {
     if (!node.parts) return;
 
     const lastPos = node.parts.length - 1;
     return node.parts[lastPos];
   }
 
-  static getProgramNodePosition(node: CommandNodeAST): number {
+  static getProgramNodePosition(node: CommandNode): number {
     if (!node.parts) return -1;
 
     for (let i = 0; i < node.parts.length; i++) {
@@ -353,23 +353,21 @@ class AST {
     return -1;
   }
 
-  public static getSudoOptions(
-    node: CommandNodeAST | StickyOptionNodeAST,
-  ): OptionNodeAST[] | undefined {
+  public static getSudoOptions(node: CommandNode | StickyOptionNode): OptionNode[] | undefined {
     if (!node.parts) return;
-    const options: OptionNodeAST[] = [];
+    const options: OptionNode[] = [];
 
     let stopPos = node.parts.length;
     if (AST.isCommand(node)) {
-      stopPos = AST.getProgramNodePosition(<CommandNodeAST>node);
+      stopPos = AST.getProgramNodePosition(<CommandNode>node);
     }
 
     for (let i = 0; i < stopPos; i++) {
       const currentNode = node.parts[i];
       if (AST.isOption(currentNode)) {
-        options.push(<OptionNodeAST>currentNode);
+        options.push(<OptionNode>currentNode);
       } else if (AST.isStickyOption(currentNode)) {
-        const composedOption = <StickyOptionNodeAST>currentNode;
+        const composedOption = <StickyOptionNode>currentNode;
         return AST.getCommandOptions(composedOption);
       }
     }
@@ -377,25 +375,25 @@ class AST {
   }
 
   public static getSudoOption(
-    node: CommandNodeAST | StickyOptionNodeAST,
+    node: CommandNode | StickyOptionNode,
     optionName: string,
-  ): OptionNodeAST | undefined {
+  ): OptionNode | undefined {
     if (!node.parts) return;
 
     let stopPos = node.parts.length;
     if (AST.isCommand(node)) {
-      stopPos = AST.getProgramNodePosition(<CommandNodeAST>node);
+      stopPos = AST.getProgramNodePosition(<CommandNode>node);
     }
 
     for (let i = 0; i < stopPos; i++) {
       const currentNode = node.parts[i];
       if (AST.isOption(currentNode)) {
-        const optionNode = <OptionNodeAST>currentNode;
+        const optionNode = <OptionNode>currentNode;
         if (optionNode.opt === optionName) {
           return optionNode;
         }
       } else if (AST.isStickyOption(currentNode)) {
-        const composedOptionNode = <StickyOptionNodeAST>currentNode;
+        const composedOptionNode = <StickyOptionNode>currentNode;
         return AST.getCommandOption(composedOptionNode, optionName);
       }
     }
@@ -550,7 +548,7 @@ class AST {
    * definition
    * @param node
    */
-  public static optionExpectsArg(node: OptionNodeAST): boolean {
+  public static optionExpectsArg(node: OptionNode): boolean {
     if (!node.optionSchema) return false;
     return node.optionSchema.expectsArg || false;
   }
@@ -560,11 +558,11 @@ class AST {
    * @param node the OptionNodeAST to validate
    * @returns true if it's followed by an argument
    */
-  public static optionFollowedByArg(node: OptionNodeAST): boolean {
+  public static optionFollowedByArg(node: OptionNode): boolean {
     return node.followedByArg || false;
   }
 
-  public static withSudo(node: CommandNodeAST): boolean {
+  public static withSudo(node: CommandNode): boolean {
     if (!node.parts) {
       return false;
     }
@@ -577,6 +575,80 @@ class AST {
     }
 
     return false;
+  }
+
+  public static serialize(str: string): NodeAST {
+    try {
+      return JSON.parse(str);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  public static flatten(
+    node: NodeAST,
+  ): Array<
+    | ProgramNode
+    | OptionNode
+    | OperatorNode
+    | ArgumentNode
+    | AssignmentNode
+    | OptionWithArgNode
+    | PipeNode
+    | RedirectNode
+    | ReservedWordNode
+  > {
+    if (!node.parts) {
+      return [];
+    }
+
+    if (AST.isCommand(node)) {
+      return AST.flattenCommandNode(node as CommandNode);
+    } else if (AST.isList(node)) {
+      return AST.flattenListNode(node as ListNode);
+    }
+
+    return [];
+  }
+
+  private static flattenCommandNode(node: CommandNode): CommandLeafNodes {
+    let flat: CommandLeafNodes = [];
+
+    for (const part of node.parts) {
+      if (
+        AST.isProgram(part) ||
+        AST.isSubcommand(part) ||
+        AST.isAssignment(part) ||
+        AST.isOption(part) ||
+        AST.isArgument(part)
+      ) {
+        flat = [...flat, part];
+      } else if (part.parts && AST.isStickyOption(part)) {
+        flat = [...flat, ...part.parts];
+      }
+    }
+
+    return flat;
+  }
+
+  private static flattenListNode(node: ListNode): ListLeafNodes {
+    if (!node.parts) {
+      return [];
+    }
+
+    let flat: Array<ProgramNode | AssignmentNode | OptionNode | ArgumentNode | OperatorNode> = [];
+
+    for (const part of node.parts) {
+      if (AST.isCommand(part)) {
+        const flatCommandNode = AST.flattenCommandNode(part as CommandNode);
+        flat = [...flat, ...flatCommandNode];
+      }
+      if (AST.isOperator(part)) {
+        flat = [...flat, part];
+      }
+    }
+
+    return flat;
   }
 }
 

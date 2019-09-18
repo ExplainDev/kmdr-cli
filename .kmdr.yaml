@@ -1,15 +1,13 @@
----
 name: kmdr
 summary: CLI client for explaning shell commands
-link: https://kmdr.sh
-version: '0.1'
+link: https://kmdr.sh/
+version: "0.2.0"
 locale: en
 options:
-  - name: language
-    short:
-      - '-l'
+  - short:
+      - "-l"
     long:
-      - '--language'
+      - "--language"
     summary: Set the language
     expectsArg: true
 subcommands:
@@ -17,6 +15,12 @@ subcommands:
     summary: Explain a command
     aliases:
       - e
+    options:
+      - short:
+          - "-h"
+        long:
+          - "--highlight"
+    summary: Show syntax highlighting
   - name: config
     summary: Configure kmdr on this computer
     aliases:

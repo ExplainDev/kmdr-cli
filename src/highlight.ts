@@ -1,21 +1,20 @@
 import Decorator from "./decorator";
 
 import {
-  RootNodeAST,
-  OptionNodeAST,
-  ArgumentNodeAST,
-  ProgramNodeAST,
-  OperatorNodeAST,
+  OptionNode,
+  ArgumentNode,
+  ProgramNode,
+  OperatorNode,
   Theme,
   ExplainCommand,
-  OptionWithArgNodeAST,
+  OptionWithArgNode,
   OptionSchema,
   ProgramSchema,
-  AssignmentNodeAST,
-  ReservedWordNodeAST,
-  PipeNodeAST,
-  RedirectNodeAST,
-} from "../interfaces";
+  AssignmentNode,
+  ReservedWordNode,
+  PipeNode,
+  RedirectNode,
+} from "./interfaces";
 
 const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
@@ -24,24 +23,22 @@ class Highlight {
   public decorate(
     query: string,
     leafNodes: Array<
-      Array<
-        | OptionNodeAST
-        | ProgramNodeAST
-        | OptionWithArgNodeAST
-        | ArgumentNodeAST
-        | OperatorNodeAST
-        | AssignmentNodeAST
-        | PipeNodeAST
-        | ReservedWordNodeAST
-        | RedirectNodeAST
-      >
+      | OptionNode
+      | ProgramNode
+      | OptionWithArgNode
+      | ArgumentNode
+      | OperatorNode
+      | AssignmentNode
+      | PipeNode
+      | ReservedWordNode
+      | RedirectNode
     >,
   ): string {
     let decoratedString: string = "";
     let currentToken = 0;
     let wordInRange = "";
     let inRange = false;
-    const tokens = flatten(leafNodes);
+    const tokens = leafNodes;
 
     for (let pos = 0; pos < query.length; pos++) {
       const char = query[pos];

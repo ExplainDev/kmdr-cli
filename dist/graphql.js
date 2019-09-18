@@ -123,6 +123,14 @@ exports.queryExplainCommand = `
   }
 
 `;
+exports.queryExplain = `
+query Explain($query: String!) {
+  explain(query: $query) {
+    query
+    ast
+  }
+}
+`;
 exports.mutationCreateExplainFeedback = `
 mutation createExplainFeedback($answer: String!, $comment: String) {
   createExplainFeedback(answer: $answer, comment: $comment) {

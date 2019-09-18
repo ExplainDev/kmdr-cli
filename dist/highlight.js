@@ -11,7 +11,7 @@ class Highlight {
         let currentToken = 0;
         let wordInRange = "";
         let inRange = false;
-        const tokens = flatten(leafNodes);
+        const tokens = leafNodes;
         for (let pos = 0; pos < query.length; pos++) {
             const char = query[pos];
             if (currentToken < tokens.length && this.inRange(pos, tokens[currentToken].pos)) {

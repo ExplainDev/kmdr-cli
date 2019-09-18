@@ -122,6 +122,14 @@ export const queryExplainCommand = `
 
 `;
 
+export const queryExplain = `
+query Explain($query: String!) {
+  explain(query: $query) {
+    query
+    ast
+  }
+}
+`;
 export const mutationCreateExplainFeedback = `
 mutation createExplainFeedback($answer: String!, $comment: String) {
   createExplainFeedback(answer: $answer, comment: $comment) {

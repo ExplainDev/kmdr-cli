@@ -1,29 +1,20 @@
-/**
- * Copyright 2019 Eddie Ramirez
- */
-
-/**
- * Interface to construct a RootNodeAST
- */
-export interface RootNodeAST {
-  query: string;
-  length: number;
-  trees: NodeAST[];
-}
+import { AxiosResponse } from "axios";
 
 /**
  * Interface to construct a Node
  */
+
 export interface NodeAST {
   kind: string;
   parts?: any;
   pos: number[];
   word?: string;
 }
+
 /**
  * Interface to construct a ProgramNode
  */
-export interface ProgramNodeAST extends NodeAST {
+export interface ProgramNode extends NodeAST {
   word: string;
   programName: string;
   isDotSlash?: boolean | null;
@@ -34,7 +25,7 @@ export interface ProgramNodeAST extends NodeAST {
 /**
  * Interface to construct an AssignmentNode
  */
-export interface AssignmentNodeAST extends NodeAST {
+export interface AssignmentNode extends NodeAST {
   word: string;
   name: string;
   name_pos: number[];
@@ -45,51 +36,46 @@ export interface AssignmentNodeAST extends NodeAST {
 /**
  * Interface to construct a CommandNode
  */
-export interface CommandNodeAST extends NodeAST {
+export interface CommandNode extends NodeAST {
   word: string;
   parts: Array<
-    | AssignmentNodeAST
-    | WordNodeAST
-    | ProgramNodeAST
-    | SubcommandNodeAST
-    | OptionNodeAST
-    | ArgumentNodeAST
+    AssignmentNode | WordNode | ProgramNode | SubcommandNode | OptionNode | ArgumentNode
   >;
   inSudoContext?: boolean;
 }
 
-export interface CompoundNodeAST extends NodeAST {
+export interface CompoundNode extends NodeAST {
   word: string;
-  list: Array<ReservedWordNodeAST | ListNodeAST>;
-  redirects?: RedirectNodeAST;
+  list: Array<ReservedWordNode | ListNode>;
+  redirects?: RedirectNode;
 }
 /**
  * Interface to construct a PipelineNode
  */
-export interface PipelineNodeAST extends NodeAST {
-  parts: Array<CommandNodeAST | PipeNodeAST>;
+export interface PipelineNode extends NodeAST {
+  parts: Array<CommandNode | PipeNode>;
 }
 
 /**
  * Interface to construct a ListNode
  */
-export interface ListNodeAST extends NodeAST {
-  parts: Array<CommandNodeAST | OperatorNodeAST>;
+export interface ListNode extends NodeAST {
+  parts: Array<CommandNode | OperatorNode>;
 }
 
 /**
  * Interface to construct a PipeNode
  */
-export interface PipeNodeAST extends NodeAST {
+export interface PipeNode extends NodeAST {
   pipe: string;
 }
 
 /**
  * Interface to construct a RedirectNode
  */
-export interface RedirectNodeAST extends NodeAST {
+export interface RedirectNode extends NodeAST {
   input: number | null;
-  output: number | WordNodeAST;
+  output: number | WordNode;
   output_fd: number;
   type: string;
 }
@@ -97,19 +83,19 @@ export interface RedirectNodeAST extends NodeAST {
 /**
  * Interface to construct an OperatorNode
  */
-export interface OperatorNodeAST extends NodeAST {
+export interface OperatorNode extends NodeAST {
   op: string;
 }
 
 /**
  * Interface to construct a ReservedNode
  */
-export interface ReservedWordNodeAST extends WordNodeAST {}
+export interface ReservedWordNode extends WordNode {}
 
 /**
  * Interface to construct an ArgumentNode
  */
-export interface ArgumentNodeAST extends WordNodeAST {
+export interface ArgumentNode extends WordNode {
   arg?: string;
   startsWithDash?: number;
   word: string;
@@ -118,14 +104,14 @@ export interface ArgumentNodeAST extends WordNodeAST {
 /**
  * Interface to construct a WordNode
  */
-export interface WordNodeAST extends NodeAST {
+export interface WordNode extends NodeAST {
   word: string;
 }
 
 /**
  * Interface to construct an OptionNode
  */
-export interface OptionNodeAST extends WordNodeAST {
+export interface OptionNode extends WordNode {
   followedByArg?: boolean;
   opt: string;
   optionSchema: OptionSchema;
@@ -136,31 +122,31 @@ export interface OptionNodeAST extends WordNodeAST {
 /**
  * Interface to construct an OptionWithNode
  */
-export interface OptionWithArgNodeAST extends WordNodeAST {
+export interface OptionWithArgNode extends WordNode {
   word: string;
-  option: OptionNodeAST;
-  arg: ArgumentNodeAST;
+  option: OptionNode;
+  arg: ArgumentNode;
 }
 
 /**
  * Interface to construct StickyOptionNode
  */
-export interface StickyOptionNodeAST extends WordNodeAST {
+export interface StickyOptionNode extends WordNode {
   word: string;
-  parts?: OptionNodeAST[];
+  parts?: OptionNode[];
 }
 
 /**
  * Interface to construct a SubcommandNode
  */
-export interface SubcommandNodeAST extends WordNodeAST {
+export interface SubcommandNode extends WordNode {
   schema: ProgramSchema;
 }
 
 /**
  * Interface to construct a SudoNode
  */
-export interface SudoNodeAST extends WordNodeAST {
+export interface SudoNode extends WordNode {
   word: string;
   schema: ProgramSchema;
 }
@@ -244,14 +230,7 @@ export interface Theme {
 export interface ExplainCommand {
   query: string;
   leafNodes: Array<
-    Array<
-      | OptionNodeAST
-      | ProgramNodeAST
-      | AssignmentNodeAST
-      | SubcommandNodeAST
-      | OperatorNodeAST
-      | PipeNodeAST
-    >
+    Array<OptionNode | ProgramNode | AssignmentNode | SubcommandNode | OperatorNode | PipeNode>
   >;
 }
 
@@ -265,6 +244,19 @@ export interface ExplainCommandResponse {
   explainCommand: ExplainCommand;
 }
 
+export interface ExplainResponse extends AxiosResponse {
+  data: ExplainData;
+}
+
+interface ExplainData {
+  explain: Explain;
+}
+
+export interface Explain {
+  query: string;
+  ast: string;
+}
+
 export interface GraphQLResponse {
   data: ExplainCommandResponse;
 }
@@ -276,4 +268,29 @@ export interface ConsoleAnswers {
 export interface AuthCredentials {
   username: string;
   token: string;
+}
+
+export interface ExplainClientInstance {
+  getExplanation(query: string, schema?: string | undefined): Promise<ExplainResponse>;
+  sendFeedback(sessionId: string, answer: string, comment: string): Promise<any>;
+}
+
+export interface CommandLeafNodes
+  extends Array<ProgramNode | AssignmentNode | OptionNode | ArgumentNode> {}
+
+export interface ListLeafNodes
+  extends Array<ProgramNode | AssignmentNode | OptionNode | ArgumentNode | OperatorNode> {}
+
+export interface ExplainConfig {
+  askOnce: boolean;
+  showSyntax: boolean;
+}
+
+export interface ExplainFeedbackResponse extends AxiosResponse {
+  data: ExplainFeedbackData;
+}
+
+interface ExplainFeedbackData {
+  answer: string;
+  comment: string;
 }

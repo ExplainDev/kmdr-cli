@@ -1,0 +1,15 @@
+FROM node:12-slim
+RUN mkdir /home/node/kmdr.sh
+WORKDIR /home/node/kmdr.sh
+COPY ./ ./
+ENV KMDR_API_URL=http://172.31.28.186:8081/api/graphql
+RUN npm install
+RUN npm run build
+RUN npm link
+RUN echo 'PS1="\\$ "' >> /home/node/.bashrc
+RUN echo export TMOUT=30 >> /home/node/.bashrc
+RUN echo 'echo Here you can try the kmdr cli without installing it on your local machine' >> /home/node/.bashrc
+RUN echo 'read -p "Press any key to start your demo"' >> /home/node/.bashrc
+RUN echo 'clear' >> /home/node/.bashrc
+RUN echo 'echo "$ kmdr explain"; kmdr explain' >> /home/node/.bashrc
+RUN echo 'echo Just type "'kmdr explain'" to run the program again' >> /home/node/.bashrc

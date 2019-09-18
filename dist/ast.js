@@ -477,6 +477,58 @@ class AST {
         }
         return false;
     }
+    static serialize(str) {
+        try {
+            return JSON.parse(str);
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+    static flatten(node) {
+        if (!node.parts) {
+            return [];
+        }
+        if (AST.isCommand(node)) {
+            return AST.flattenCommandNode(node);
+        }
+        else if (AST.isList(node)) {
+            return AST.flattenListNode(node);
+        }
+        return [];
+    }
+    static flattenCommandNode(node) {
+        let flat = [];
+        for (const part of node.parts) {
+            if (AST.isProgram(part) ||
+                AST.isSubcommand(part) ||
+                AST.isAssignment(part) ||
+                AST.isOption(part) ||
+                AST.isArgument(part)) {
+                flat = [...flat, part];
+            }
+            else if (part.parts && AST.isStickyOption(part)) {
+                flat = [...flat, ...part.parts];
+            }
+        }
+        return flat;
+    }
+    static flattenListNode(node) {
+        if (!node.parts) {
+            return [];
+        }
+        let flat = [];
+        for (const part of node.parts) {
+            if (AST.isCommand(part)) {
+                const flatCommandNode = AST.flattenCommandNode(part);
+                flat = [...flat, ...flatCommandNode];
+            }
+            if (AST.isOperator(part)) {
+                flat = [...flat, part];
+            }
+        }
+        return flat;
+    }
 }
 exports.default = AST;
 //# sourceMappingURL=ast.js.map

@@ -10,8 +10,14 @@ class Console {
     async prompt(questions) {
         return inquirer_1.default.prompt(questions);
     }
-    print(content) {
-        console.log(content ? content : "");
+    async promptInput(questions) {
+        return inquirer_1.default.prompt(questions);
+    }
+    async promptList(questions) {
+        return inquirer_1.default.prompt(questions);
+    }
+    print(content = "", leftSpaces = 0) {
+        console.log(`${" ".repeat(leftSpaces)}${content}`);
     }
     log(str) {
         console.log(str);
