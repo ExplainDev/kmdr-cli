@@ -1,11 +1,15 @@
 FROM node:12-slim
-USER node
-RUN mkdir /home/node/kmdr.sh
+
+COPY ./ /home/node/kmdr.sh
+
 WORKDIR /home/node/kmdr.sh
-COPY ./ ./
-ENV PATH=/home/node/.npm-global/bin:$PATH
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-RUN npm install 
-RUN npm run build
-RUN npm link
-RUN echo 'PS1="\\$\[$(tput sgr0)\] "' >> /home/node/.bashrc
+
+ENV PATH=/home/node/.npm-global/bin:$PATH \
+    NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+RUN npm install \ 
+&&  npm run build \
+&&  npm link \
+&&  echo 'PS1="\\$\[$(tput sgr0)\] "' >> /home/node/.bashrc
+
+ENTRYPOINT [ "kmdr", "explain" ]
