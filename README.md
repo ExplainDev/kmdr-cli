@@ -144,10 +144,10 @@ export PATH="$(yarn global bin):$PATH"
    docker build -t kmdr-cli .
    ```
 
-2. Enter the docker container
+2. Run the docker container
 
    ```bash
-   docker run -h kmdr -it --rm  kmdr-cli /bin/bash
+   docker run -it --rm  kmdr-cli
    ```
 
 ## Usage
