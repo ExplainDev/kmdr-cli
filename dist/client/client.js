@@ -29,13 +29,13 @@ class Client {
                     responseType: "json",
                 });
     }
-    doQuery(query, variables, config = undefined) {
+    doQuery(query, variables, config) {
         return this.post({ query, variables }, config);
     }
     doMutation(query, variables) {
         return this.post({ query, variables });
     }
-    post(data, config = undefined) {
+    post(data, config) {
         return this.instance.post("", data, Object.assign({}, config));
     }
 }

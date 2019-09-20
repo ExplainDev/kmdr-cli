@@ -35,11 +35,7 @@ class Client {
       });
   }
 
-  protected doQuery(
-    query: string,
-    variables?: {},
-    config: AxiosRequestConfig | undefined = undefined,
-  ) {
+  protected doQuery(query: string, variables?: {}, config?: AxiosRequestConfig) {
     return this.post({ query, variables }, config);
   }
 
@@ -47,7 +43,7 @@ class Client {
     return this.post({ query, variables });
   }
 
-  private post(data: any, config: AxiosRequestConfig | undefined = undefined) {
+  private post(data: any, config?: AxiosRequestConfig) {
     return this.instance.post("", data, { ...config });
   }
 }
