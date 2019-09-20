@@ -37,7 +37,6 @@ class ExplainConsole extends console_1.default {
             {
                 message: "Awesome! What did you like about this explanation?",
                 name: "comment",
-                prefix: `${fireEmoji}`,
                 type: "input",
             },
         ];
@@ -45,7 +44,6 @@ class ExplainConsole extends console_1.default {
             {
                 message: "What's wrong with the explanation?",
                 name: "comment",
-                prefix: `${thumbsDownEmoji}`,
                 type: "input",
             },
         ];
