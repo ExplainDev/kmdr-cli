@@ -1,9 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { Agent } from "http";
 import os from "os";
+import Tunnel, { ProxyOptions } from "tunnel";
+import Url from "url";
 import uuid from "uuid/v1";
-import { AuthCredentials } from "../interfaces";
-import Tunnel from 'tunnel';
-import Url from 'url';
 
 class Client {
   private baseURL: string = process.env.KMDR_API_URL || "https://api.kmdr.sh/api/graphql";
@@ -13,55 +13,49 @@ class Client {
   private sessionId: string;
   private instance: AxiosInstance;
   private version: string;
+  private isHttps: boolean;
 
-  constructor(version: string, axiosInstance?: AxiosInstance, auth?: AuthCredentials) {
+  constructor(version: string, axiosInstance?: AxiosInstance) {
     this.sessionId = uuid();
     this.shell = process.env.SHELL || "";
     this.os = `${os.platform()} ${os.release()}`;
     this.term = `${process.env.TERM};${process.env.TERM_PROGRAM}`;
     this.version = version;
-    
-    var protocol = this.baseURL.startsWith("https:") ? "https": this.baseURL.startsWith("http:") ? "http" : ""
-    var proxyEnv = protocol + "_proxy"
-    var proxyUrl = process.env[proxyEnv] || process.env[proxyEnv.toUpperCase()];
-    var agent : any;
-    if (proxyUrl && protocol){
-        proxyUrl = proxyUrl.startsWith("http") ? proxyUrl : "http://" + proxyUrl
-        var parsedProxyUrl = Url.parse(proxyUrl);
-	var tunnel = (protocol === "http") ? Tunnel.httpOverHttp : Tunnel.httpsOverHttp
-	var proxy:any = {
-	    host: parsedProxyUrl.hostname,
-	    port: parsedProxyUrl.port
-	}
-	if(parsedProxyUrl.auth){
-	    var proxyUrlAuth = parsedProxyUrl.auth.split(':');
-	    proxy.auth = {
-	        username: proxyUrlAuth[0],
-	        password: proxyUrlAuth[1]
-	    };
-        }
-	agent = tunnel({
-	    proxy:proxy
-	    })
-	}
+    this.isHttps = this.baseURL.startsWith("https:");
 
-    this.instance =
-      axiosInstance ||
-      axios.create({
-        baseURL: this.baseURL,
-        headers: {
-          "Content-Type": "application/json",
-          "X-kmdr-client-os": this.os,
-          "X-kmdr-client-session-id": this.sessionId,
-          "X-kmdr-client-shell": this.shell,
-          "X-kmdr-client-term": this.term,
-          "X-kmdr-client-version": this.version,
-        },
-	responseType: "json",
-	httpsAgent : agent,
-	proxy : false
-      }
-    );
+    const axiosConfig: AxiosRequestConfig = {
+      baseURL: this.baseURL,
+      headers: {
+        "Content-Type": "application/json",
+        "X-kmdr-client-os": this.os,
+        "X-kmdr-client-session-id": this.sessionId,
+        "X-kmdr-client-shell": this.shell,
+        "X-kmdr-client-term": this.term,
+        "X-kmdr-client-version": this.version,
+      },
+      responseType: "json",
+    };
+
+    const proxyEnv = this.isHttps ? "https_proxy" : "http_proxy";
+    let proxyUrl = process.env[proxyEnv] || process.env[proxyEnv.toUpperCase()];
+
+    if (this.isHttps && proxyUrl) {
+      proxyUrl = proxyUrl.startsWith("http") ? proxyUrl : "http://" + proxyUrl;
+      const parsedProxyUrl = Url.parse(proxyUrl);
+
+      const proxy: ProxyOptions = {
+        host: parsedProxyUrl.hostname || "",
+        port: parseInt(parsedProxyUrl.port || "", 10),
+        proxyAuth: parsedProxyUrl.auth,
+      };
+
+      let httpsAgent: Agent;
+      httpsAgent = Tunnel.httpsOverHttp({ proxy });
+      axiosConfig.httpsAgent = httpsAgent;
+      axiosConfig.proxy = false;
+    }
+
+    this.instance = axiosInstance || axios.create(axiosConfig);
   }
   protected doQuery(query: string, variables?: {}, config?: AxiosRequestConfig) {
     return this.post({ query, variables }, config);
