@@ -14,8 +14,10 @@ class Explain extends console_1.default {
         super();
         this.askOnce = false;
         this.showSyntax = false;
+        this.showRelated = false;
         this.client = new client_1.ExplainClient();
         this.askOnce = config.askOnce;
+        this.showRelated = config.showRelated;
         this.showSyntax = config.showSyntax;
     }
     async render() {
@@ -35,16 +37,14 @@ class Explain extends console_1.default {
                 const serializedAST = ast_1.default.serialize(ast);
                 const flatAST = ast_1.default.flatten(serializedAST);
                 if (this.showSyntax) {
-                    const h = new highlight_1.default();
-                    const decoratedString = h.decorate(apiQuery, flatAST);
-                    this.print();
-                    this.print("Your query");
-                    this.print(decoratedString, 2);
+                    this.printSyntax(apiQuery, flatAST);
                 }
                 this.print();
-                this.print("Explanation");
-                const explanation = this.makeExplanation(flatAST);
-                this.print(explanation);
+                this.printExplanation(flatAST);
+                if (this.showRelated) {
+                    const program = ast_1.default.getCommandProgram(serializedAST);
+                    await this.printRelated(program);
+                }
                 const { answer } = await this.promptHelpful();
                 if (answer !== "skip") {
                     const { comment } = await this.askFeedback(answer);
@@ -60,14 +60,16 @@ class Explain extends console_1.default {
             }
         } while (!this.askOnce);
     }
-    makeExplanation(leafNodes) {
+    printExplanation(leafNodes) {
         let help = "";
+        const offset = 4;
         for (const node of leafNodes) {
             if (ast_1.default.isProgram(node)) {
                 const programNode = node;
                 const { summary, name } = programNode.schema;
                 const decoratedProgramName = decorator_1.default.decorate(name, programNode);
-                help += `  ${decoratedProgramName}\n    ${summary}`;
+                help += `${" ".repeat(offset)}${decoratedProgramName}\n`;
+                help += `${" ".repeat(offset + 2)}${summary}`;
             }
             if (ast_1.default.isOption(node)) {
                 const optionNode = node;
@@ -79,52 +81,58 @@ class Explain extends console_1.default {
                 if (long && long.length >= 1) {
                     decoratedOptions.push(decorator_1.default.decorate(long.join(", "), optionNode));
                 }
-                help += `  ${decoratedOptions.join(", ")}\n    ${summary}`;
+                help += `${" ".repeat(offset)}${decoratedOptions.join(", ")}\n`;
+                help += `${" ".repeat(offset + 2)}${summary}`;
             }
             if (ast_1.default.isSubcommand(node)) {
                 const subcommandNode = node;
                 const { name, summary } = subcommandNode.schema;
                 const decoratedSubcommandName = decorator_1.default.decorate(name, subcommandNode);
-                help += `  ${decoratedSubcommandName}\n    ${summary}`;
+                help += `${" ".repeat(offset)}${decoratedSubcommandName}\n`;
+                help += `${" ".repeat(offset + 2)}${summary}`;
             }
             if (ast_1.default.isAssignment(node)) {
                 const assignmentNode = node;
                 const { word } = assignmentNode;
                 const decoratedAssignment = decorator_1.default.decorate(word, assignmentNode);
-                help += `  ${decoratedAssignment}\n    A variable passed to the program process`;
+                help += `${" ".repeat(offset)}${decoratedAssignment}\n`;
+                help += `${" ".repeat(offset + 2)}A variable passed to the program process`;
             }
             if (ast_1.default.isOperator(node)) {
                 const operatorNode = node;
                 const { op } = operatorNode;
                 const decoratedOperator = decorator_1.default.decorate(op, operatorNode);
                 if (op === "&&") {
-                    help += `  ${decoratedOperator}\n    Run the next command if and only if the previous command returns a successful exit status (zero)`;
+                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(offset + 2)}Run the next command if and only if the previous command returns a successful exit status (zero)`;
                 }
                 else if (op === "||") {
-                    help += `  ${decoratedOperator}\n    Run the next command if and only if the previous command returns a non-zero exit status`;
+                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(offset + 2)}Run the next command if and only if the previous command returns a non-zero exit status`;
                 }
                 else if (op === ";") {
-                    help += `  ${decoratedOperator}\n    Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
+                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(offset + 2)}Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
                 }
             }
             if (ast_1.default.isSudo(node)) {
                 const sudoNode = node;
                 const { summary } = sudoNode.schema;
                 const decoratedNode = decorator_1.default.decorate("sudo", sudoNode);
-                help += `  ${decoratedNode}\n    ${summary}`;
+                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}${summary}`;
             }
             if (ast_1.default.isArgument(node)) {
                 const argNode = node;
                 const { word } = argNode;
                 const decoratedNode = decorator_1.default.decorate(word, argNode);
-                help += `  ${decoratedNode}\n    An argument`;
+                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}An argument`;
             }
             if (ast_1.default.isPipe(node)) {
                 const pipeNode = node;
                 const { pipe } = pipeNode;
                 const decoratedNode = decorator_1.default.decorate(pipe, pipeNode);
-                help += `  ${decoratedNode}\n`;
-                help += `    A pipe serves the sdout of the previous command as input (stdin) to the next one`;
+                help += `${" ".repeat(offset)}${decoratedNode}\n`;
+                help += `${" ".repeat(offset + 2)}A pipe serves the sdout of the previous command as input (stdin) to the next one`;
             }
             if (ast_1.default.isRedirect(node)) {
                 const redirectNode = node;
@@ -135,54 +143,55 @@ class Explain extends console_1.default {
                     wordNode = output;
                 }
                 if (type === ">|") {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect stdout to ${wordNode.word} even if the shell has been configured to refuse overwriting`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect stdout to ${wordNode.word} even if the shell has been configured to refuse overwriting`;
                 }
                 else if (type === ">" && input === 2) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect stderr to ${wordNode.word}.`;
                 }
                 else if (type === "&>" || (type === ">&" && output_fd === null)) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect both stdout and stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect both stdout and stderr to ${wordNode.word}.`;
                 }
                 else if (type === ">>" && (input === null || input === 1)) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect and append stdout to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect and append stdout to ${wordNode.word}.`;
                 }
                 else if (type === "&>>") {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect and append both stdout and stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect and append both stdout and stderr to ${wordNode.word}.`;
                 }
                 else if (type === ">&" && input === 2 && output_fd === 1) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect stderr to stdout.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect stderr to stdout.`;
                 }
                 else if (type === ">>" && input === 2) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect and append stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect and append stderr to ${wordNode.word}.`;
                 }
                 else if (type === "<") {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect stdin from ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect stdin from ${wordNode.word}.`;
                 }
                 else if (type === ">" || (type === ">" && input === 1)) {
-                    help += `  ${decoratedRedirectNode}\n`;
-                    help += `    Redirect stdout to ${wordNode.word}.`;
+                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(offset + 2)}Redirect stdout to ${wordNode.word}.`;
                 }
             }
             if (ast_1.default.isWord(node)) {
                 const wordNode = node;
                 const decoratedNode = decorator_1.default.decorate(wordNode.word, wordNode);
-                help += `  ${decoratedNode}\n    An argument`;
+                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}An argument`;
             }
             help += `\n`;
         }
-        return help;
+        this.printTitle("Explanation");
+        this.print(help);
     }
     promptCommand() {
         const input = {
-            message: "Enter your command:",
+            message: "Enter your command",
             name: "query",
         };
         return this.promptInput(input);
@@ -208,6 +217,7 @@ class Explain extends console_1.default {
             name: "answer",
             type: "list",
         };
+        this.print();
         return this.prompt(choices);
     }
     askFeedback(answer) {
@@ -225,6 +235,24 @@ class Explain extends console_1.default {
             };
         }
         return this.promptInput(input);
+    }
+    async printRelated(program) {
+        this.printTitle("Related Programs");
+        if (!program) {
+            this.print("Could not find any related programs");
+        }
+        else {
+            const res = await this.client.getRelatedPrograms(program.schema.name);
+            const relatedPrograms = res.data.relatedPrograms.map(node => node.name).join(", ");
+            this.print(relatedPrograms, 4);
+        }
+    }
+    printSyntax(apiQuery, flatAST) {
+        const h = new highlight_1.default();
+        const decoratedString = h.decorate(apiQuery, flatAST);
+        this.print();
+        this.printTitle("Syntax Highlight");
+        this.print(decoratedString, 4);
     }
 }
 exports.Explain = Explain;

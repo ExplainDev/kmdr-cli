@@ -139,4 +139,13 @@ mutation createExplainFeedback($answer: String!, $comment: String) {
   }
 }
 `;
+exports.queryRelated = `
+query Related($programName: String!) {
+  relatedPrograms(programName: $programName) {
+    name
+    summary
+    description
+  }
+}
+`;
 //# sourceMappingURL=graphql.js.map

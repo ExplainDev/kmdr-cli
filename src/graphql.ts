@@ -130,11 +130,22 @@ query Explain($query: String!) {
   }
 }
 `;
+
 export const mutationCreateExplainFeedback = `
 mutation createExplainFeedback($answer: String!, $comment: String) {
   createExplainFeedback(answer: $answer, comment: $comment) {
     answer
     comment
+  }
+}
+`;
+
+export const queryRelated = `
+query Related($programName: String!) {
+  relatedPrograms(programName: $programName) {
+    name
+    summary
+    description
   }
 }
 `;

@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import inquirer, { InputQuestion, ListQuestion } from "inquirer";
 import Spinner from "ora";
-import { ConsoleAnswers } from "./interfaces";
 
 export default class Console {
   private spinner?: any;
@@ -44,5 +43,16 @@ export default class Console {
 
   public succeedSpinner(text?: string) {
     this.spinner.succeed(text);
+  }
+
+  public printWithIcon(title: string, icon: string) {
+    console.log(`${icon} ${title}`);
+  }
+
+  public printTitle(title: string, offset = 2) {
+    const styledTitle = chalk.bold.whiteBright(title);
+    const spaces = " ".repeat(offset);
+    console.log(`${spaces}${styledTitle}`);
+    console.log();
   }
 }

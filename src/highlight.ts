@@ -14,26 +14,14 @@ import {
   ReservedWordNode,
   PipeNode,
   RedirectNode,
+  FlatAST,
 } from "./interfaces";
 
 const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
 
 class Highlight {
-  public decorate(
-    query: string,
-    leafNodes: Array<
-      | OptionNode
-      | ProgramNode
-      | OptionWithArgNode
-      | ArgumentNode
-      | OperatorNode
-      | AssignmentNode
-      | PipeNode
-      | ReservedWordNode
-      | RedirectNode
-    >,
-  ): string {
+  public decorate(query: string, leafNodes: FlatAST): string {
     let decoratedString: string = "";
     let currentToken = 0;
     let wordInRange = "";

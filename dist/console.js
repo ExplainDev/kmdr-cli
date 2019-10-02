@@ -37,6 +37,15 @@ class Console {
     succeedSpinner(text) {
         this.spinner.succeed(text);
     }
+    printWithIcon(title, icon) {
+        console.log(`${icon} ${title}`);
+    }
+    printTitle(title, offset = 2) {
+        const styledTitle = chalk_1.default.bold.whiteBright(title);
+        const spaces = " ".repeat(offset);
+        console.log(`${spaces}${styledTitle}`);
+        console.log();
+    }
 }
 exports.default = Console;
 //# sourceMappingURL=console.js.map

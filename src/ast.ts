@@ -597,6 +597,7 @@ class AST {
     | PipeNode
     | RedirectNode
     | ReservedWordNode
+    | SubcommandNode
   > {
     if (!node.parts) {
       return [];

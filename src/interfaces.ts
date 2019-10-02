@@ -272,17 +272,19 @@ export interface AuthCredentials {
 
 export interface ExplainClientInstance {
   getExplanation(query: string, schema?: string | undefined): Promise<ExplainResponse>;
+  getRelatedPrograms(programName: string): Promise<RelatedProgramsResponse>;
   sendFeedback(sessionId: string, answer: string, comment: string): Promise<any>;
 }
 
 export interface CommandLeafNodes
-  extends Array<ProgramNode | AssignmentNode | OptionNode | ArgumentNode> {}
+  extends Array<ProgramNode | SubcommandNode | AssignmentNode | OptionNode | ArgumentNode> {}
 
 export interface ListLeafNodes
   extends Array<ProgramNode | AssignmentNode | OptionNode | ArgumentNode | OperatorNode> {}
 
 export interface ExplainConfig {
   askOnce: boolean;
+  showRelated: boolean;
   showSyntax: boolean;
 }
 
@@ -294,3 +296,24 @@ interface ExplainFeedbackData {
   answer: string;
   comment: string;
 }
+
+export interface RelatedProgramsResponse extends AxiosResponse {
+  data: RelatedProgramsData;
+}
+
+interface RelatedProgramsData {
+  relatedPrograms: ProgramSchema[];
+}
+
+export interface FlatAST
+  extends Array<
+    | OptionNode
+    | ProgramNode
+    | AssignmentNode
+    | OperatorNode
+    | PipeNode
+    | RedirectNode
+    | ArgumentNode
+    | OptionWithArgNode
+    | ReservedWordNode
+  > {}

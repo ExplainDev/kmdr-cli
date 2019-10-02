@@ -59,6 +59,13 @@ export default class Client {
     return this.post({ query, variables }, config);
   }
 
+  /**
+   * Send GraphQL mutation to the API server
+   *
+   * @param query
+   * @param variables
+   * @param config
+   */
   protected doMutation(query: string, variables?: {}, config?: AxiosRequestConfig) {
     return this.post({ query, variables }, config);
   }

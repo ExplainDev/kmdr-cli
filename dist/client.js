@@ -47,6 +47,13 @@ class Client {
     doQuery(query, variables, config) {
         return this.post({ query, variables }, config);
     }
+    /**
+     * Send GraphQL mutation to the API server
+     *
+     * @param query
+     * @param variables
+     * @param config
+     */
     doMutation(query, variables, config) {
         return this.post({ query, variables }, config);
     }
