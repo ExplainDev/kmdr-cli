@@ -1,6 +1,6 @@
 {
   "name": "kmdr",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
