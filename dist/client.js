@@ -45,7 +45,7 @@ class Client {
         this.instance = axiosInstance || axios_1.default.create(axiosConfig);
     }
     doQuery(query, variables, config) {
-        return this.post({ query, variables }, config);
+        return this.post({ query, variables }, Object.assign({ transformResponse: this.transformGQLResponse }, config));
     }
     /**
      * Send GraphQL mutation to the API server
@@ -59,6 +59,17 @@ class Client {
     }
     post(data, config) {
         return this.instance.post("", data, Object.assign({}, config));
+    }
+    transformGQLResponse(res) {
+        if (res) {
+            try {
+                const obj = JSON.parse(res);
+                return obj.data;
+            }
+            catch (err) {
+                throw err;
+            }
+        }
     }
 }
 exports.default = Client;

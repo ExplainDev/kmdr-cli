@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { InputQuestion } from "inquirer";
 
 /**
  * Interface to construct a Node
@@ -305,6 +306,30 @@ interface RelatedProgramsData {
   relatedPrograms: ProgramSchema[];
 }
 
+export interface LatestCliReleaseResponse extends AxiosResponse {
+  data: LatestCliReleaseData;
+}
+
+interface LatestCliReleaseData {
+  latestCliRelease: LatestCliRelease;
+}
+
+interface LatestCliRelease {
+  isCliVersionCurrent: boolean;
+  latestRelease: CliVersion;
+}
+
+interface CliVersion {
+  url: string;
+  body: string;
+  tagName: string;
+  preRelase: string;
+}
+
+export interface UpgradeClientInstance {
+  getLatestVersion(): Promise<LatestCliReleaseResponse>;
+}
+
 export interface FlatAST
   extends Array<
     | OptionNode
@@ -317,3 +342,22 @@ export interface FlatAST
     | OptionWithArgNode
     | ReservedWordNode
   > {}
+
+export interface ConsoleInstance {
+  clear(): void;
+  error(msg: string): void;
+  log(str: string): void;
+  printTitle(title: string, options?: ConsolePrintOptions): void;
+  print(msg: string, options?: ConsolePrintOptions): void;
+  prompt(questions: any): Promise<any>;
+  promptInput(questios: InputQuestion): Promise<any>;
+  startSpinner(msg: string): void;
+  stopSpinner(): void;
+  succeedSpinner(text?: string): void;
+}
+
+export interface ConsolePrintOptions {
+  margin?: number;
+  appendNewLine?: boolean;
+  prependNewLine?: boolean;
+}

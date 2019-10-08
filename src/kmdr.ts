@@ -1,6 +1,7 @@
 import cli from "commander";
 import { Settings } from "./interfaces";
 import { Explain } from "./explain";
+import { Upgrade } from "./upgrade";
 import { KMDR_CLI_VERSION } from "./constants";
 
 class KMDR {
@@ -25,10 +26,10 @@ class KMDR {
       .action(this.explain);
 
     this.cli
-      .command("config")
-      .alias("c")
-      .description("Configure kmdr cli on this machine")
-      .action(this.config);
+      .command("upgrade")
+      .alias("u")
+      .description("Check for newer releases")
+      .action(this.upgrade);
 
     this.cli.parse(process.argv);
 
@@ -43,8 +44,9 @@ class KMDR {
     await explain.render();
   }
 
-  private async config(a: any, b: any) {
-    console.log("config");
+  private async upgrade() {
+    const upgrade = new Upgrade();
+    await upgrade.render();
   }
 }
 

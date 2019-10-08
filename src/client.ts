@@ -4,6 +4,7 @@ import os from "os";
 import Tunnel, { ProxyOptions } from "tunnel";
 import Url from "url";
 import { KMDR_CLI_VERSION } from "./constants";
+import { GraphQLResponse } from "./interfaces";
 
 export default class Client {
   protected instance: AxiosInstance;
@@ -55,8 +56,12 @@ export default class Client {
 
     this.instance = axiosInstance || axios.create(axiosConfig);
   }
+
   protected doQuery(query: string, variables?: {}, config?: AxiosRequestConfig) {
-    return this.post({ query, variables }, config);
+    return this.post(
+      { query, variables },
+      { transformResponse: this.transformGQLResponse, ...config },
+    );
   }
 
   /**
@@ -72,5 +77,16 @@ export default class Client {
 
   private post(data: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post("", data, { ...config });
+  }
+
+  private transformGQLResponse(res: string) {
+    if (res) {
+      try {
+        const obj = JSON.parse(res) as GraphQLResponse;
+        return obj.data;
+      } catch (err) {
+        throw err;
+      }
+    }
   }
 }

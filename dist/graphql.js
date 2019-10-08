@@ -148,4 +148,17 @@ query Related($programName: String!) {
   }
 }
 `;
+exports.queryLatestCliVersion = `
+query CliVersions($cliVersion: String) {
+  latestCliRelease(cliVersion: $cliVersion) {
+    isCliVersionCurrent
+    latestRelease {
+      url
+			tagName
+      publishedAt
+      body
+    }
+  }
+}
+`;
 //# sourceMappingURL=graphql.js.map

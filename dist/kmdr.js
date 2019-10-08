@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = __importDefault(require("commander"));
 const explain_1 = require("./explain");
+const upgrade_1 = require("./upgrade");
 const constants_1 = require("./constants");
 class KMDR {
     constructor(settings) {
@@ -24,10 +25,10 @@ class KMDR {
             .option("-r, --show-related", "Show related CLI programs")
             .action(this.explain);
         this.cli
-            .command("config")
-            .alias("c")
-            .description("Configure kmdr cli on this machine")
-            .action(this.config);
+            .command("upgrade")
+            .alias("u")
+            .description("Check for newer releases")
+            .action(this.upgrade);
         this.cli.parse(process.argv);
         if (process.argv.length < 3) {
             this.cli.help();
@@ -38,8 +39,9 @@ class KMDR {
         const explain = new explain_1.Explain({ askOnce, showSyntax, showRelated });
         await explain.render();
     }
-    async config(a, b) {
-        console.log("config");
+    async upgrade() {
+        const upgrade = new upgrade_1.Upgrade();
+        await upgrade.render();
     }
 }
 exports.default = KMDR;

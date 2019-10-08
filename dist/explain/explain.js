@@ -8,14 +8,14 @@ const ast_1 = __importDefault(require("../ast"));
 const console_1 = __importDefault(require("../console"));
 const decorator_1 = __importDefault(require("../decorator"));
 const highlight_1 = __importDefault(require("../highlight"));
-const client_1 = require("./client");
-class Explain extends console_1.default {
+const client_1 = __importDefault(require("./client"));
+class Explain {
     constructor(config) {
-        super();
         this.askOnce = false;
         this.showSyntax = false;
         this.showRelated = false;
-        this.client = new client_1.ExplainClient();
+        this.client = new client_1.default();
+        this.console = new console_1.default();
         this.askOnce = config.askOnce;
         this.showRelated = config.showRelated;
         this.showSyntax = config.showSyntax;
@@ -24,22 +24,22 @@ class Explain extends console_1.default {
         do {
             const { query } = await this.promptCommand();
             if (query.trim() === "") {
-                this.error("Put a query");
+                this.console.error("Put a query");
                 continue;
             }
             try {
                 let sessionId;
-                this.startSpinner("Analyzing your command...");
+                this.console.startSpinner("Analyzing your command...");
                 const res = await this.client.getExplanation(query);
                 sessionId = res.headers["x-kmdr-client-session-id"];
-                this.stopSpinner();
+                this.console.stopSpinner();
                 const { ast, query: apiQuery } = res.data.explain;
                 const serializedAST = ast_1.default.serialize(ast);
                 const flatAST = ast_1.default.flatten(serializedAST);
                 if (this.showSyntax) {
                     this.printSyntax(apiQuery, flatAST);
                 }
-                this.print();
+                this.console.print("");
                 this.printExplanation(flatAST);
                 if (this.showRelated) {
                     const program = ast_1.default.getCommandProgram(serializedAST);
@@ -50,13 +50,13 @@ class Explain extends console_1.default {
                     const { comment } = await this.askFeedback(answer);
                     const res = await this.client.sendFeedback(sessionId, answer, comment);
                     if (res) {
-                        this.print("Your feedback was sent. Thank you!");
+                        this.console.print("Your feedback was sent. Thank you!");
                     }
                 }
             }
             catch (err) {
-                this.error("There was an error");
-                this.error(err);
+                this.console.error("There was an error");
+                this.console.error(err);
             }
         } while (!this.askOnce);
     }
@@ -186,15 +186,15 @@ class Explain extends console_1.default {
             }
             help += `\n`;
         }
-        this.printTitle("Explanation");
-        this.print(help);
+        this.console.printTitle("Explanation");
+        this.console.print(help);
     }
     promptCommand() {
         const input = {
             message: "Enter your command",
             name: "query",
         };
-        return this.promptInput(input);
+        return this.console.promptInput(input);
     }
     promptHelpful() {
         const choices = {
@@ -217,8 +217,8 @@ class Explain extends console_1.default {
             name: "answer",
             type: "list",
         };
-        this.print();
-        return this.prompt(choices);
+        this.console.print("");
+        return this.console.prompt(choices);
     }
     askFeedback(answer) {
         let input;
@@ -234,25 +234,25 @@ class Explain extends console_1.default {
                 name: "comment",
             };
         }
-        return this.promptInput(input);
+        return this.console.promptInput(input);
     }
     async printRelated(program) {
-        this.printTitle("Related Programs");
+        this.console.printTitle("Related Programs");
         if (!program) {
-            this.print("Could not find any related programs");
+            this.console.print("Could not find any related programs");
         }
         else {
             const res = await this.client.getRelatedPrograms(program.schema.name);
             const relatedPrograms = res.data.relatedPrograms.map(node => node.name).join(", ");
-            this.print(relatedPrograms, 4);
+            this.console.print(relatedPrograms, { margin: 4 });
         }
     }
     printSyntax(apiQuery, flatAST) {
         const h = new highlight_1.default();
         const decoratedString = h.decorate(apiQuery, flatAST);
-        this.print();
-        this.printTitle("Syntax Highlight");
-        this.print(decoratedString, 4);
+        this.console.print("");
+        this.console.printTitle("Syntax Highlight");
+        this.console.print(decoratedString, { margin: 4 });
     }
 }
 exports.Explain = Explain;

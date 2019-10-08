@@ -1,9 +1,16 @@
 import chalk from "chalk";
 import inquirer, { InputQuestion, ListQuestion } from "inquirer";
 import Spinner from "ora";
+import { ConsolePrintOptions } from "./interfaces";
+import { prependListener } from "cluster";
 
 export default class Console {
   private spinner?: any;
+  private defaultPrintOptions: ConsolePrintOptions = {
+    appendNewLine: true,
+    margin: 2,
+    prependNewLine: false,
+  };
 
   public async prompt(questions: any): Promise<any> {
     return inquirer.prompt(questions);
@@ -17,16 +24,12 @@ export default class Console {
     return inquirer.prompt(questions);
   }
 
-  public print(content: string = "", leftSpaces: number = 0) {
-    console.log(`${" ".repeat(leftSpaces)}${content}`);
-  }
-
   public log(str: string) {
     console.log(str);
   }
 
   public clear() {
-    console.log("TODO");
+    console.clear();
   }
 
   public error(msg: string) {
@@ -45,14 +48,28 @@ export default class Console {
     this.spinner.succeed(text);
   }
 
-  public printWithIcon(title: string, icon: string) {
-    console.log(`${icon} ${title}`);
+  public printTitle(title: string, options: ConsolePrintOptions = this.defaultPrintOptions) {
+    const styledTitle = chalk.bold.whiteBright(title);
+
+    this.print(styledTitle, options);
   }
 
-  public printTitle(title: string, offset = 2) {
-    const styledTitle = chalk.bold.whiteBright(title);
-    const spaces = " ".repeat(offset);
-    console.log(`${spaces}${styledTitle}`);
-    console.log();
+  public print(msg: string, options: ConsolePrintOptions = this.defaultPrintOptions) {
+    const { margin, prependNewLine, appendNewLine } = options;
+    const spaces = " ".repeat(margin ? margin : 0);
+
+    if (prependListener) {
+      console.log();
+    }
+
+    console.log(`${spaces}${msg}`);
+
+    if (appendNewLine) {
+      console.log();
+    }
+  }
+
+  public render() {
+    return;
   }
 }

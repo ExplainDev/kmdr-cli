@@ -6,7 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const ora_1 = __importDefault(require("ora"));
+const cluster_1 = require("cluster");
 class Console {
+    constructor() {
+        this.defaultPrintOptions = {
+            appendNewLine: true,
+            margin: 2,
+            prependNewLine: false,
+        };
+    }
     async prompt(questions) {
         return inquirer_1.default.prompt(questions);
     }
@@ -16,14 +24,11 @@ class Console {
     async promptList(questions) {
         return inquirer_1.default.prompt(questions);
     }
-    print(content = "", leftSpaces = 0) {
-        console.log(`${" ".repeat(leftSpaces)}${content}`);
-    }
     log(str) {
         console.log(str);
     }
     clear() {
-        console.log("TODO");
+        console.clear();
     }
     error(msg) {
         console.error(chalk_1.default.red(msg));
@@ -37,14 +42,23 @@ class Console {
     succeedSpinner(text) {
         this.spinner.succeed(text);
     }
-    printWithIcon(title, icon) {
-        console.log(`${icon} ${title}`);
-    }
-    printTitle(title, offset = 2) {
+    printTitle(title, options = this.defaultPrintOptions) {
         const styledTitle = chalk_1.default.bold.whiteBright(title);
-        const spaces = " ".repeat(offset);
-        console.log(`${spaces}${styledTitle}`);
-        console.log();
+        this.print(styledTitle, options);
+    }
+    print(msg, options = this.defaultPrintOptions) {
+        const { margin, prependNewLine, appendNewLine } = options;
+        const spaces = " ".repeat(margin ? margin : 0);
+        if (cluster_1.prependListener) {
+            console.log();
+        }
+        console.log(`${spaces}${msg}`);
+        if (appendNewLine) {
+            console.log();
+        }
+    }
+    render() {
+        return;
     }
 }
 exports.default = Console;

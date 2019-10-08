@@ -21,18 +21,20 @@ import {
   CommandNode,
   ListLeafNodes,
   FlatAST,
+  ConsoleInstance,
 } from "../interfaces";
-import { ExplainClient } from "./client";
+import ExplainClient from "./client";
 
-export class Explain extends Console {
+export class Explain {
   private client: ExplainClientInstance;
+  private console: ConsoleInstance;
   private askOnce: boolean = false;
   private showSyntax: boolean = false;
   private showRelated: boolean = false;
 
   constructor(config: ExplainConfig) {
-    super();
     this.client = new ExplainClient();
+    this.console = new Console();
     this.askOnce = config.askOnce;
     this.showRelated = config.showRelated;
     this.showSyntax = config.showSyntax;
@@ -43,17 +45,17 @@ export class Explain extends Console {
       const { query } = await this.promptCommand();
 
       if (query.trim() === "") {
-        this.error("Put a query");
+        this.console.error("Put a query");
         continue;
       }
 
       try {
         let sessionId: string;
 
-        this.startSpinner("Analyzing your command...");
+        this.console.startSpinner("Analyzing your command...");
         const res = await this.client.getExplanation(query);
         sessionId = res.headers["x-kmdr-client-session-id"];
-        this.stopSpinner();
+        this.console.stopSpinner();
 
         const { ast, query: apiQuery } = res.data.explain;
         const serializedAST = AST.serialize(ast);
@@ -62,7 +64,7 @@ export class Explain extends Console {
         if (this.showSyntax) {
           this.printSyntax(apiQuery, flatAST);
         }
-        this.print();
+        this.console.print("");
         this.printExplanation(flatAST);
 
         if (this.showRelated) {
@@ -75,12 +77,12 @@ export class Explain extends Console {
           const { comment } = await this.askFeedback(answer);
           const res = await this.client.sendFeedback(sessionId, answer, comment);
           if (res) {
-            this.print("Your feedback was sent. Thank you!");
+            this.console.print("Your feedback was sent. Thank you!");
           }
         }
       } catch (err) {
-        this.error("There was an error");
-        this.error(err);
+        this.console.error("There was an error");
+        this.console.error(err);
       }
     } while (!this.askOnce);
   }
@@ -232,8 +234,8 @@ export class Explain extends Console {
       }
       help += `\n`;
     }
-    this.printTitle("Explanation");
-    this.print(help);
+    this.console.printTitle("Explanation");
+    this.console.print(help);
   }
 
   private promptCommand(): Promise<any> {
@@ -242,7 +244,7 @@ export class Explain extends Console {
       name: "query",
     };
 
-    return this.promptInput(input);
+    return this.console.promptInput(input);
   }
 
   private promptHelpful(): Promise<any> {
@@ -266,8 +268,8 @@ export class Explain extends Console {
       name: "answer",
       type: "list",
     };
-    this.print();
-    return this.prompt(choices);
+    this.console.print("");
+    return this.console.prompt(choices);
   }
 
   private askFeedback(answer: string): Promise<any> {
@@ -285,26 +287,26 @@ export class Explain extends Console {
       };
     }
 
-    return this.promptInput(input);
+    return this.console.promptInput(input);
   }
 
   private async printRelated(program?: ProgramNode): Promise<void> {
-    this.printTitle("Related Programs");
+    this.console.printTitle("Related Programs");
     if (!program) {
-      this.print("Could not find any related programs");
+      this.console.print("Could not find any related programs");
     } else {
       const res = await this.client.getRelatedPrograms(program.schema.name);
       const relatedPrograms = res.data.relatedPrograms.map(node => node.name).join(", ");
 
-      this.print(relatedPrograms, 4);
+      this.console.print(relatedPrograms, { margin: 4 });
     }
   }
 
   private printSyntax(apiQuery: string, flatAST: FlatAST): void {
     const h = new Highlight();
     const decoratedString = h.decorate(apiQuery, flatAST);
-    this.print();
-    this.printTitle("Syntax Highlight");
-    this.print(decoratedString, 4);
+    this.console.print("");
+    this.console.printTitle("Syntax Highlight");
+    this.console.print(decoratedString, { margin: 4 });
   }
 }
