@@ -1,15 +1,9 @@
 import Console from "../console";
-import { ConsoleInstance, UpgradeClientInstance } from "../interfaces";
 import UpgradeClient from "./client";
 
 export class Upgrade {
-  private client: UpgradeClientInstance;
-  private console: ConsoleInstance;
-
-  constructor() {
-    this.client = new UpgradeClient();
-    this.console = new Console();
-  }
+  private client = new UpgradeClient();
+  private console = new Console();
 
   public async render() {
     const latestVersion = await this.client.getLatestVersion();

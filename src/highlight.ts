@@ -1,21 +1,6 @@
 import Decorator from "./decorator";
 
-import {
-  OptionNode,
-  ArgumentNode,
-  ProgramNode,
-  OperatorNode,
-  Theme,
-  ExplainCommand,
-  OptionWithArgNode,
-  OptionSchema,
-  ProgramSchema,
-  AssignmentNode,
-  ReservedWordNode,
-  PipeNode,
-  RedirectNode,
-  FlatAST,
-} from "./interfaces";
+import { FlatAST } from "kmdr-ast";
 
 const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);

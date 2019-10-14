@@ -1,25 +1,43 @@
 import { AxiosRequestConfig } from "axios";
 import Client from "../client";
-import { mutationCreateExplainFeedback, queryExplain, queryRelated } from "../graphql";
-import {
-  ExplainClientInstance,
-  ExplainFeedbackResponse,
-  ExplainResponse,
-  GraphQLResponse,
-  RelatedProgramsResponse,
-} from "../interfaces";
+import { mutationCreateExplainFeedback } from "../graphql";
+import { ExplainFeedbackResponse, ExplainResponse } from "../interfaces";
 
-export default class ExplainClient extends Client implements ExplainClientInstance {
+const queryExplain = `
+query Explain($query: String!) {
+  explain(query: $query) {
+    query
+    ast
+  }
+}
+`;
+
+const queryExplainWithRelatedPrograms = `
+query Explain($query: String!) {
+  explain(query: $query) {
+    query
+    ast
+    relatedPrograms {
+      name
+    }
+  }
+}
+`;
+
+export default class ExplainClient extends Client {
   constructor() {
     super();
   }
 
-  public async getExplanation(query: string, schema?: string): Promise<ExplainResponse> {
-    return super.doQuery(queryExplain, { query }) as Promise<ExplainResponse>;
-  }
-
-  public async getRelatedPrograms(programName: string): Promise<RelatedProgramsResponse> {
-    return super.doQuery(queryRelated, { programName }) as Promise<RelatedProgramsResponse>;
+  public async getExplanation(
+    query: string,
+    showRelatedPrograms = false,
+  ): Promise<ExplainResponse> {
+    if (!showRelatedPrograms) {
+      return super.doQuery(queryExplain, { query }) as Promise<ExplainResponse>;
+    } else {
+      return super.doQuery(queryExplainWithRelatedPrograms, { query }) as Promise<ExplainResponse>;
+    }
   }
 
   public async sendFeedback(

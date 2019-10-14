@@ -127,6 +127,7 @@ query Explain($query: String!) {
   explain(query: $query) {
     query
     ast
+    relatedPrograms
   }
 }
 `;

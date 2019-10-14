@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const ora_1 = __importDefault(require("ora"));
-const cluster_1 = require("cluster");
 class Console {
     constructor() {
         this.defaultPrintOptions = {
@@ -47,13 +46,16 @@ class Console {
         this.print(styledTitle, options);
     }
     print(msg, options = this.defaultPrintOptions) {
-        const { margin, prependNewLine, appendNewLine } = options;
+        let { margin, prependNewLine, appendNewLine } = options;
+        if (margin === undefined) {
+            margin = 2;
+        }
         const spaces = " ".repeat(margin ? margin : 0);
-        if (cluster_1.prependListener) {
+        if (prependNewLine === true) {
             console.log();
         }
         console.log(`${spaces}${msg}`);
-        if (appendNewLine) {
+        if (appendNewLine === true) {
             console.log();
         }
     }

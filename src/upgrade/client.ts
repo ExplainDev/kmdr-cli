@@ -1,8 +1,8 @@
 import Client from "../client";
 import { queryLatestCliVersion } from "../graphql";
-import { LatestCliReleaseResponse, UpgradeClientInstance } from "../interfaces";
+import { LatestCliReleaseResponse } from "../interfaces";
 
-export default class UpgradeClient extends Client implements UpgradeClientInstance {
+export default class UpgradeClient extends Client {
   constructor() {
     super();
   }

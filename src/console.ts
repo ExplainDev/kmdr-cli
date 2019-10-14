@@ -48,23 +48,27 @@ export default class Console {
     this.spinner.succeed(text);
   }
 
-  public printTitle(title: string, options: ConsolePrintOptions = this.defaultPrintOptions) {
+  public printTitle(title: string, options = this.defaultPrintOptions) {
     const styledTitle = chalk.bold.whiteBright(title);
-
     this.print(styledTitle, options);
   }
 
-  public print(msg: string, options: ConsolePrintOptions = this.defaultPrintOptions) {
-    const { margin, prependNewLine, appendNewLine } = options;
+  public print(msg: string, options = this.defaultPrintOptions) {
+    let { margin, prependNewLine, appendNewLine } = options;
+
+    if (margin === undefined) {
+      margin = 2;
+    }
+
     const spaces = " ".repeat(margin ? margin : 0);
 
-    if (prependListener) {
+    if (prependNewLine === true) {
       console.log();
     }
 
     console.log(`${spaces}${msg}`);
 
-    if (appendNewLine) {
+    if (appendNewLine === true) {
       console.log();
     }
   }

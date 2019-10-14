@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
-const ast_1 = __importDefault(require("./ast"));
+const kmdr_ast_1 = __importDefault(require("kmdr-ast"));
 const HIGHLIGHT_DEFAULTS = {
     argument: chalk_1.default.italic.bold.whiteBright,
     assignmentName: chalk_1.default.green,
@@ -25,13 +25,13 @@ const HIGHLIGHT_DEFAULTS = {
 class Decorator {
     static decorate(word, token) {
         let decoratedString = "";
-        if (ast_1.default.isAssignment(token)) {
+        if (kmdr_ast_1.default.isAssignment(token)) {
             const assignmentToken = token;
             decoratedString = Decorator.color("assignmentName", assignmentToken.name);
             decoratedString += "=";
             decoratedString += Decorator.color("assignmentValue", assignmentToken.value || "");
         }
-        else if (ast_1.default.isRedirect(token)) {
+        else if (kmdr_ast_1.default.isRedirect(token)) {
             const redirectToken = token;
             const { input, output, output_fd, type } = redirectToken;
             if (input !== null) {

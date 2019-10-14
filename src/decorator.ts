@@ -1,23 +1,17 @@
 import chalk from "chalk";
-import AST from "./ast";
-import {
+import AST, {
   ArgumentNode,
   AssignmentNode,
-  ExplainCommand,
   OperatorNode,
   OptionNode,
-  OptionSchema,
   OptionWithArgNode,
   PipeNode,
   ProgramNode,
-  ProgramSchema,
   RedirectNode,
   ReservedWordNode,
-  StickyOptionNode,
   SudoNode,
-  Theme,
   WordNode,
-} from "./interfaces";
+} from "kmdr-ast";
 
 const HIGHLIGHT_DEFAULTS: any = {
   argument: chalk.italic.bold.whiteBright,

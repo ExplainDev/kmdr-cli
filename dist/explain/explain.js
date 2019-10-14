@@ -3,21 +3,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const inquirer_1 = require("inquirer");
-const ast_1 = __importDefault(require("../ast"));
+const kmdr_ast_1 = __importDefault(require("kmdr-ast"));
 const console_1 = __importDefault(require("../console"));
 const decorator_1 = __importDefault(require("../decorator"));
 const highlight_1 = __importDefault(require("../highlight"));
 const client_1 = __importDefault(require("./client"));
 class Explain {
     constructor(config) {
-        this.askOnce = false;
-        this.showSyntax = false;
-        this.showRelated = false;
         this.client = new client_1.default();
         this.console = new console_1.default();
+        this.askOnce = false;
+        this.showSyntax = true;
+        this.showRelatedPrograms = true;
         this.askOnce = config.askOnce;
-        this.showRelated = config.showRelated;
+        this.showRelatedPrograms = config.showRelatedPrograms;
         this.showSyntax = config.showSyntax;
     }
     async render() {
@@ -30,20 +29,18 @@ class Explain {
             try {
                 let sessionId;
                 this.console.startSpinner("Analyzing your command...");
-                const res = await this.client.getExplanation(query);
+                const res = await this.client.getExplanation(query, this.showRelatedPrograms);
                 sessionId = res.headers["x-kmdr-client-session-id"];
                 this.console.stopSpinner();
-                const { ast, query: apiQuery } = res.data.explain;
-                const serializedAST = ast_1.default.serialize(ast);
-                const flatAST = ast_1.default.flatten(serializedAST);
+                const { ast, query: apiQuery, relatedPrograms } = res.data.explain;
+                const serializedAST = kmdr_ast_1.default.serialize(ast);
+                const flatAST = kmdr_ast_1.default.flatten(serializedAST);
                 if (this.showSyntax) {
                     this.printSyntax(apiQuery, flatAST);
                 }
-                this.console.print("");
                 this.printExplanation(flatAST);
-                if (this.showRelated) {
-                    const program = ast_1.default.getCommandProgram(serializedAST);
-                    await this.printRelated(program);
+                if (this.showRelatedPrograms) {
+                    await this.printRelated(relatedPrograms);
                 }
                 const { answer } = await this.promptHelpful();
                 if (answer !== "skip") {
@@ -62,16 +59,17 @@ class Explain {
     }
     printExplanation(leafNodes) {
         let help = "";
-        const offset = 4;
+        const margin = 4;
+        this.console.printTitle("Explanation", { appendNewLine: false });
         for (const node of leafNodes) {
-            if (ast_1.default.isProgram(node)) {
+            if (kmdr_ast_1.default.isProgram(node)) {
                 const programNode = node;
                 const { summary, name } = programNode.schema;
                 const decoratedProgramName = decorator_1.default.decorate(name, programNode);
-                help += `${" ".repeat(offset)}${decoratedProgramName}\n`;
-                help += `${" ".repeat(offset + 2)}${summary}`;
+                help += `${" ".repeat(margin)}${decoratedProgramName}\n`;
+                help += `${" ".repeat(margin + 2)}${summary}`;
             }
-            if (ast_1.default.isOption(node)) {
+            if (kmdr_ast_1.default.isOption(node)) {
                 const optionNode = node;
                 const { summary, long, short } = optionNode.optionSchema;
                 const decoratedOptions = [];
@@ -81,60 +79,60 @@ class Explain {
                 if (long && long.length >= 1) {
                     decoratedOptions.push(decorator_1.default.decorate(long.join(", "), optionNode));
                 }
-                help += `${" ".repeat(offset)}${decoratedOptions.join(", ")}\n`;
-                help += `${" ".repeat(offset + 2)}${summary}`;
+                help += `${" ".repeat(margin)}${decoratedOptions.join(", ")}\n`;
+                help += `${" ".repeat(margin + 2)}${summary}`;
             }
-            if (ast_1.default.isSubcommand(node)) {
+            if (kmdr_ast_1.default.isSubcommand(node)) {
                 const subcommandNode = node;
                 const { name, summary } = subcommandNode.schema;
                 const decoratedSubcommandName = decorator_1.default.decorate(name, subcommandNode);
-                help += `${" ".repeat(offset)}${decoratedSubcommandName}\n`;
-                help += `${" ".repeat(offset + 2)}${summary}`;
+                help += `${" ".repeat(margin)}${decoratedSubcommandName}\n`;
+                help += `${" ".repeat(margin + 2)}${summary}`;
             }
-            if (ast_1.default.isAssignment(node)) {
+            if (kmdr_ast_1.default.isAssignment(node)) {
                 const assignmentNode = node;
                 const { word } = assignmentNode;
                 const decoratedAssignment = decorator_1.default.decorate(word, assignmentNode);
-                help += `${" ".repeat(offset)}${decoratedAssignment}\n`;
-                help += `${" ".repeat(offset + 2)}A variable passed to the program process`;
+                help += `${" ".repeat(margin)}${decoratedAssignment}\n`;
+                help += `${" ".repeat(margin + 2)}A variable passed to the program process`;
             }
-            if (ast_1.default.isOperator(node)) {
+            if (kmdr_ast_1.default.isOperator(node)) {
                 const operatorNode = node;
                 const { op } = operatorNode;
                 const decoratedOperator = decorator_1.default.decorate(op, operatorNode);
                 if (op === "&&") {
-                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
-                    help += `${" ".repeat(offset + 2)}Run the next command if and only if the previous command returns a successful exit status (zero)`;
+                    help += `${" ".repeat(margin)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(margin + 2)}Run the next command if and only if the previous command returns a successful exit status (zero)`;
                 }
                 else if (op === "||") {
-                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
-                    help += `${" ".repeat(offset + 2)}Run the next command if and only if the previous command returns a non-zero exit status`;
+                    help += `${" ".repeat(margin)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(margin + 2)}Run the next command if and only if the previous command returns a non-zero exit status`;
                 }
                 else if (op === ";") {
-                    help += `${" ".repeat(offset)}${decoratedOperator}\n`;
-                    help += `${" ".repeat(offset + 2)}Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
+                    help += `${" ".repeat(margin)}${decoratedOperator}\n`;
+                    help += `${" ".repeat(margin + 2)}Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
                 }
             }
-            if (ast_1.default.isSudo(node)) {
+            if (kmdr_ast_1.default.isSudo(node)) {
                 const sudoNode = node;
                 const { summary } = sudoNode.schema;
                 const decoratedNode = decorator_1.default.decorate("sudo", sudoNode);
-                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}${summary}`;
+                help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}${summary}`;
             }
-            if (ast_1.default.isArgument(node)) {
+            if (kmdr_ast_1.default.isArgument(node)) {
                 const argNode = node;
                 const { word } = argNode;
                 const decoratedNode = decorator_1.default.decorate(word, argNode);
-                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}An argument`;
+                help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}An argument`;
             }
-            if (ast_1.default.isPipe(node)) {
+            if (kmdr_ast_1.default.isPipe(node)) {
                 const pipeNode = node;
                 const { pipe } = pipeNode;
                 const decoratedNode = decorator_1.default.decorate(pipe, pipeNode);
-                help += `${" ".repeat(offset)}${decoratedNode}\n`;
-                help += `${" ".repeat(offset + 2)}A pipe serves the sdout of the previous command as input (stdin) to the next one`;
+                help += `${" ".repeat(margin)}${decoratedNode}\n`;
+                help += `${" ".repeat(margin + 2)}A pipe serves the sdout of the previous command as input (stdin) to the next one`;
             }
-            if (ast_1.default.isRedirect(node)) {
+            if (kmdr_ast_1.default.isRedirect(node)) {
                 const redirectNode = node;
                 const { type, output, input, output_fd } = redirectNode;
                 const decoratedRedirectNode = decorator_1.default.decorate(type, redirectNode);
@@ -143,55 +141,54 @@ class Explain {
                     wordNode = output;
                 }
                 if (type === ">|") {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect stdout to ${wordNode.word} even if the shell has been configured to refuse overwriting`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect stdout to ${wordNode.word} even if the shell has been configured to refuse overwriting`;
                 }
                 else if (type === ">" && input === 2) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect stderr to ${wordNode.word}.`;
                 }
                 else if (type === "&>" || (type === ">&" && output_fd === null)) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect both stdout and stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect both stdout and stderr to ${wordNode.word}.`;
                 }
                 else if (type === ">>" && (input === null || input === 1)) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect and append stdout to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect and append stdout to ${wordNode.word}.`;
                 }
                 else if (type === "&>>") {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect and append both stdout and stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect and append both stdout and stderr to ${wordNode.word}.`;
                 }
                 else if (type === ">&" && input === 2 && output_fd === 1) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect stderr to stdout.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect stderr to stdout.`;
                 }
                 else if (type === ">>" && input === 2) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect and append stderr to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect and append stderr to ${wordNode.word}.`;
                 }
                 else if (type === "<") {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect stdin from ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect stdin from ${wordNode.word}.`;
                 }
                 else if (type === ">" || (type === ">" && input === 1)) {
-                    help += `${" ".repeat(offset)}${decoratedRedirectNode}\n`;
-                    help += `${" ".repeat(offset + 2)}Redirect stdout to ${wordNode.word}.`;
+                    help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
+                    help += `${" ".repeat(margin + 2)}Redirect stdout to ${wordNode.word}.`;
                 }
             }
-            if (ast_1.default.isWord(node)) {
+            if (kmdr_ast_1.default.isWord(node)) {
                 const wordNode = node;
                 const decoratedNode = decorator_1.default.decorate(wordNode.word, wordNode);
-                help += `${" ".repeat(offset)}${decoratedNode}\n${" ".repeat(offset + 2)}An argument`;
+                help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}An argument`;
             }
             help += `\n`;
         }
-        this.console.printTitle("Explanation");
-        this.console.print(help);
+        this.console.print(help, { margin: 0 });
     }
     promptCommand() {
         const input = {
-            message: "Enter your command",
+            message: "Enter your command:",
             name: "query",
         };
         return this.console.promptInput(input);
@@ -200,10 +197,9 @@ class Explain {
         const choices = {
             choices: [
                 {
-                    name: this.askOnce ? "Skip & Exit" : "Ask again (Press Ctrl+c to exit)",
+                    name: this.askOnce ? "Skip & Exit" : "Skip feedback & ask again (Ctrl+c to exit)",
                     value: "skip",
                 },
-                new inquirer_1.Separator(),
                 {
                     name: "Yes",
                     value: "yes",
@@ -217,7 +213,6 @@ class Explain {
             name: "answer",
             type: "list",
         };
-        this.console.print("");
         return this.console.prompt(choices);
     }
     askFeedback(answer) {
@@ -236,23 +231,18 @@ class Explain {
         }
         return this.console.promptInput(input);
     }
-    async printRelated(program) {
-        this.console.printTitle("Related Programs");
-        if (!program) {
-            this.console.print("Could not find any related programs");
-        }
-        else {
-            const res = await this.client.getRelatedPrograms(program.schema.name);
-            const relatedPrograms = res.data.relatedPrograms.map(node => node.name).join(", ");
-            this.console.print(relatedPrograms, { margin: 4 });
+    async printRelated(programs) {
+        this.console.printTitle("Related Programs", { appendNewLine: false });
+        if (programs.length > 0) {
+            const relatedPrograms = programs.map(program => program.name).join(", ");
+            this.console.print(relatedPrograms, { margin: 4, appendNewLine: true });
         }
     }
     printSyntax(apiQuery, flatAST) {
         const h = new highlight_1.default();
         const decoratedString = h.decorate(apiQuery, flatAST);
-        this.console.print("");
-        this.console.printTitle("Syntax Highlight");
-        this.console.print(decoratedString, { margin: 4 });
+        // this.console.printTitle("Syntax Highlight", { prependNewLine: true, margin: 2 });
+        this.console.print(decoratedString, { margin: 4, appendNewLine: true, prependNewLine: true });
     }
 }
 exports.Explain = Explain;

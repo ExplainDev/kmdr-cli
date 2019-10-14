@@ -20,9 +20,9 @@ class KMDR {
             .command("explain")
             .alias("e")
             .description("Explain a shell command")
-            .option("-s, --show-syntax", "Show syntax highlighting")
+            .option("--no-show-syntax", "Do not show syntax highlighting")
             .option("-o, --ask-once", "Ask only once")
-            .option("-r, --show-related", "Show related CLI programs")
+            .option("--no-show-related", "Do not show related CLI programs")
             .action(this.explain);
         this.cli
             .command("upgrade")
@@ -35,8 +35,12 @@ class KMDR {
         }
     }
     async explain(command) {
-        const { askOnce, showSyntax, showRelated } = command;
-        const explain = new explain_1.Explain({ askOnce, showSyntax, showRelated });
+        const { askOnce, noShowSyntax, noShowRelated } = command;
+        const explain = new explain_1.Explain({
+            askOnce,
+            showRelatedPrograms: !noShowRelated,
+            showSyntax: !noShowSyntax,
+        });
         await explain.render();
     }
     async upgrade() {
