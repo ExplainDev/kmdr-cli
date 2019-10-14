@@ -2,15 +2,12 @@ import { InputQuestion, ListQuestion, Separator } from "inquirer";
 import AST, {
   ArgumentNode,
   AssignmentNode,
-  CommandNode,
   FlatAST,
-  ListLeafNodes,
   OperatorNode,
   OptionNode,
   PipeNode,
   ProgramNode,
   RedirectNode,
-  StickyOptionNode,
   SubcommandNode,
   SudoNode,
   WordNode,
@@ -286,6 +283,8 @@ export class Explain {
     if (programs.length > 0) {
       const relatedPrograms = programs.map(program => program.name).join(", ");
       this.console.print(relatedPrograms, { margin: 4, appendNewLine: true });
+    } else {
+      this.console.print("Could not find any related programs", { margin: 4, appendNewLine: true });
     }
   }
 

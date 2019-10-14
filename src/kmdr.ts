@@ -1,8 +1,8 @@
 import cli from "commander";
-import { Settings } from "./interfaces";
-import { Explain } from "./explain";
-import { Upgrade } from "./upgrade";
 import { KMDR_CLI_VERSION } from "./constants";
+import { Explain } from "./explain";
+import { Settings } from "./interfaces";
+import { Upgrade } from "./upgrade";
 
 class KMDR {
   private settings: Settings | undefined;
@@ -14,7 +14,7 @@ class KMDR {
     this.settings = settings;
   }
 
-  public async init() {
+  public init() {
     this.cli.description(this.welcomeMsg).version(KMDR_CLI_VERSION, "-v, --version");
     this.cli
       .command("explain")
@@ -39,7 +39,7 @@ class KMDR {
   }
 
   private async explain(command: any) {
-    const { askOnce, noShowSyntax, noShowRelated } = command;
+    const { askOnce, noShowSyntax = false, noShowRelated = false } = command;
     const explain = new Explain({
       askOnce,
       showRelatedPrograms: !noShowRelated,

@@ -2,7 +2,6 @@ import chalk from "chalk";
 import inquirer, { InputQuestion, ListQuestion } from "inquirer";
 import Spinner from "ora";
 import { ConsolePrintOptions } from "./interfaces";
-import { prependListener } from "cluster";
 
 export default class Console {
   private spinner?: any;

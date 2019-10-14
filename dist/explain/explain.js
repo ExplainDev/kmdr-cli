@@ -237,6 +237,9 @@ class Explain {
             const relatedPrograms = programs.map(program => program.name).join(", ");
             this.console.print(relatedPrograms, { margin: 4, appendNewLine: true });
         }
+        else {
+            this.console.print("Could not find any related programs", { margin: 4, appendNewLine: true });
+        }
     }
     printSyntax(apiQuery, flatAST) {
         const h = new highlight_1.default();

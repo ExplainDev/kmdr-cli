@@ -57,6 +57,11 @@ class Client {
     doMutation(query, variables, config) {
         return this.post({ query, variables }, config);
     }
+    /**
+     * Send a POST request to the HTTP Server
+     * @param data
+     * @param config
+     */
     post(data, config) {
         return this.instance.post("", data, Object.assign({}, config));
     }

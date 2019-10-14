@@ -75,6 +75,11 @@ export default class Client {
     return this.post({ query, variables }, config);
   }
 
+  /**
+   * Send a POST request to the HTTP Server
+   * @param data
+   * @param config
+   */
   private post(data: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post("", data, { ...config });
   }

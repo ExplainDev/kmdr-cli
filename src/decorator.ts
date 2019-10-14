@@ -32,7 +32,7 @@ const HIGHLIGHT_DEFAULTS: any = {
 };
 
 class Decorator {
-  static decorate(
+  public static decorate(
     word: string,
     token:
       | OptionNode
@@ -77,7 +77,7 @@ class Decorator {
     return decoratedString;
   }
 
-  static color(kind: string, word: string) {
+  public static color(kind: string, word: string) {
     return HIGHLIGHT_DEFAULTS[kind](word);
   }
 }

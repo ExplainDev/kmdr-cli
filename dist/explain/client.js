@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = __importDefault(require("../client"));
-const graphql_1 = require("../graphql");
 const queryExplain = `
 query Explain($query: String!) {
   explain(query: $query) {
@@ -21,6 +20,14 @@ query Explain($query: String!) {
     relatedPrograms {
       name
     }
+  }
+}
+`;
+const mutationCreateExplainFeedback = `
+mutation createExplainFeedback($answer: String!, $comment: String) {
+  createExplainFeedback(answer: $answer, comment: $comment) {
+    answer
+    comment
   }
 }
 `;
@@ -42,7 +49,7 @@ class ExplainClient extends client_1.default {
                 "x-kmdr-client-session-id": sessionId,
             },
         };
-        return super.doMutation(graphql_1.mutationCreateExplainFeedback, { answer, comment }, config);
+        return super.doMutation(mutationCreateExplainFeedback, { answer, comment }, config);
     }
 }
 exports.default = ExplainClient;

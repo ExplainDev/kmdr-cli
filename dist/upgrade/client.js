@@ -4,13 +4,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = __importDefault(require("../client"));
-const graphql_1 = require("../graphql");
+const queryLatestCliVersion = `
+query CliVersions($cliVersion: String) {
+  latestCliRelease(cliVersion: $cliVersion) {
+    isCliVersionCurrent
+    latestRelease {
+      url
+			tagName
+      publishedAt
+      body
+    }
+  }
+}
+`;
 class UpgradeClient extends client_1.default {
     constructor() {
         super();
     }
     async getLatestVersion() {
-        return super.doQuery(graphql_1.queryLatestCliVersion);
+        return super.doQuery(queryLatestCliVersion);
     }
 }
 exports.default = UpgradeClient;

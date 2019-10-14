@@ -1,6 +1,5 @@
 import { AxiosRequestConfig } from "axios";
 import Client from "../client";
-import { mutationCreateExplainFeedback } from "../graphql";
 import { ExplainFeedbackResponse, ExplainResponse } from "../interfaces";
 
 const queryExplain = `
@@ -20,6 +19,15 @@ query Explain($query: String!) {
     relatedPrograms {
       name
     }
+  }
+}
+`;
+
+const mutationCreateExplainFeedback = `
+mutation createExplainFeedback($answer: String!, $comment: String) {
+  createExplainFeedback(answer: $answer, comment: $comment) {
+    answer
+    comment
   }
 }
 `;

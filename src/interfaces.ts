@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { InputQuestion } from "inquirer";
 import { ProgramSchema } from "kmdr-parser";
 
 export interface Theme {

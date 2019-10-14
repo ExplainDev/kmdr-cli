@@ -1,6 +1,5 @@
-import Decorator from "./decorator";
-
 import { FlatAST } from "kmdr-ast";
+import Decorator from "./decorator";
 
 const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
