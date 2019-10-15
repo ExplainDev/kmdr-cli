@@ -1,4 +1,7 @@
-src/
+./src/
 tsconfig.json
 tslint.json
 .prettierrc
+.dockerignore
+.prettierrc
+Dockerfile
