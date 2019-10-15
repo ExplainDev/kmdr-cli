@@ -2325,9 +2325,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 kmdr-ast@^1.0.5:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/kmdr-ast/-/kmdr-ast-1.0.6.tgz#1950401a3e239f714129fa4af5cc10a651bd5699"
-  integrity sha512-2KYvS5dMjAST0/sVs6ogTMCCljkF/RoGi6vWeZRpiARcWj9LL0YYIoaQ22JQFilsPIJ+m5OYKAvg8tl7Q/sh7g==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/kmdr-ast/-/kmdr-ast-1.0.8.tgz#fbad136208704fe7e9130d75873649c783b52717"
+  integrity sha512-tYNCcSB8t4pMNyrFKgjZGKnlu2NVoYwp6kzxtgeem2sMseVeU8yekgL8V7uIr/J1npidS+VihMm8P+0crSZU2g==
 
 kmdr-parser@^1.1.4:
   version "1.1.4"
