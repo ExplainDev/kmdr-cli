@@ -39,11 +39,11 @@ class KMDR {
   }
 
   private async explain(command: any) {
-    const { askOnce, noShowSyntax = false, noShowRelated = false } = command;
+    const { askOnce, showSyntax = false, showRelated = false } = command;
     const explain = new Explain({
       askOnce,
-      showRelatedPrograms: !noShowRelated,
-      showSyntax: !noShowSyntax,
+      showRelatedPrograms: showRelated,
+      showSyntax,
     });
     await explain.render();
   }
