@@ -194,12 +194,13 @@ We add new programs every day.
 | Program   | Options/flags coverage | Subcommands coverage |
 | --------- | ---------------------- | -------------------- |
 | `cd`      | -                      |                      |
-| `echo`    | yes                    |                      |
-| `false`   | -                      | -                    |
-| `export`  | yes                    |                      |
-| `history` | yes                    |                      |
-| `true`    | -                      | -                    |
-| `pwd`     | yes                    | -                    |
+| `clear`   | -                      |                      |
+| `command` | -                      |                      |
+| `pwd`     | -                      |                      |
+| `readonly`| -                      |                      |
+| `sleep`   | -                      |                      |
+| `true `   | -                      |                      |
+
 
 #### Containers
 
@@ -207,6 +208,7 @@ We add new programs every day.
 | ---------------- | ---------------------- | -------------------- |
 | `docker`         | yes                    | partial              |
 | `docker-compose` | yes                    | partial              |
+| `dmesg`          | yes                    | -                    |
 | `kubectl`        | yes                    | partial              |
 | `singularity`    | yes                    | no                   |
 
@@ -231,40 +233,47 @@ We add new programs every day.
 
 #### Deployment / Cloud
 
-| Program | Options/flags coverage | Subcommands coverage |
-| ------- | ---------------------- | -------------------- |
-| `now`   | yes                    | partial              |
+| Program              | Options/flags coverage | Subcommands coverage |
+| -------------------- | ---------------------- | -------------------- |
+| `now`                | yes                    | partial              |
+| `ansible`            | yes                    | partial              |
+| `ansible-playbook`   | yes                    | partial              |
 
 #### File and Archiving
 
 | Program    | Options/flags coverage | Subcommands coverage |
 | ---------- | ---------------------- | -------------------- |
 | `basename` | yes                    | -                    |
+| `chgrp`    | yes                    | -                    |
+| `chown`    | yes                    | -                    |
 | `chmod`    | yes                    | -                    |
 | `cmp`      | yes                    | -                    |
 | `cp`       | yes                    | -                    |
-| `diff`     | yes                    | -                    |
+| `dd`       | yes                    | -                    |
 | `df`       | yes                    | -                    |
-| `du`       | yes                    | -                    |
 | `file`     | yes                    | -                    |
 | `find`     | yes                    | -                    |
 | `gunzip`   | yes                    | -                    |
 | `gzip`     | yes                    | -                    |
-| `less`     | yes                    | -                    |
 | `ln`       | yes                    |                      |
 | `ls`       | yes                    | -                    |
-| `md5sum`   | yes                    | -                    |
 | `mkdir`    | yes                    | -                    |
 | `mktemp`   | yes                    | -                    |
 | `more`     | yes                    | -                    |
 | `mv`       | yes                    | -                    |
 | `openssl`  | yes                    | partial              |
+| `realpath` | yes                    | -                    |
 | `rm`       | yes                    | -                    |
 | `rmdir`    | yes                    | -                    |
+| `rsync`    | yes                    | -                    |
+| `scp`      | yes                    | -                    |
+| `split`    | yes                    | -                    |
+| `stat`     | yes                    | -                    |
 | `tar`      | yes                    | -                    |
-| `touch`    | -                      | -                    |
+| `touch`    | yes                    | -                    |
+| `tree`     | yes                    | -                    |
+| `unmask`   | yes                    | -                    |
 | `watch`    | yes                    | -                    |
-| `whereis`  | yes                    | -                    |
 
 #### Media (audio/video)
 
@@ -277,37 +286,44 @@ We add new programs every day.
 
 | Program       | Options/flags coverage | Subcommands coverage |
 | ------------- | ---------------------- | -------------------- |
-| `curl`        | yes                    | -                    |
+| `dig`         | yes                    | -                    |
 | `host`        | yes                    | -                    |
+| `iptables`    | yes                    | -                    |
+| `ifconfig`    | yes                    | -                    |
 | `hostname`    | yes                    | -                    |
 | `netstat`     | yes                    | -                    |
 | `nmap`        | yes                    | -                    |
 | `nslookup`    | yes                    | -                    |
 | `ping`        | yes                    | -                    |
-| `wget`        | yes                    | -                    |
-| `rsync`       | yes                    | -                    |
 | `ssh`         | yes                    | -                    |
 | `ssh-add`     | yes                    | -                    |
 | `ssh-copy-id` | yes                    | -                    |
 | `ssh-keygen`  | yes                    | -                    |
-| `scp`         | yes                    | -                    |
+| `tcpdump`     | yes                    | -                    |
+| `telnet`      | yes                    | -                    |
+| `traceroute`  | yes                    | -                    |
 
 #### Package managers
 
-| Program | Options/flags coverage | Subcommands coverage |
-| ------- | ---------------------- | -------------------- |
-| `dpkg`  | yes                    | -                    |
-| `npm`   | yes                    | partial              |
-| `pip`   | yes                    | yes                  |
-| `yarn`  | yes                    | partial              |
+| Program       | Options/flags coverage | Subcommands coverage |
+| ------------- | ---------------------- | -------------------- |
+| `apt`         | yes                    | -                    |
+| `cargo`       | yes                    | -                    |
+| `dpkg`        | yes                    | -                    |
+| `dpkg-query`  | yes                    | -                    |
+| `gem`         | yes                    | -                    |
+| `npm`         | yes                    | yes                  |
+| `yarn`        | yes                    | yes                  |
 
 #### Programming Languages / Run time environments / Compilers
 
 | Program      | Options/flags coverage | Subcommands coverage |
 | ------------ | ---------------------- | -------------------- |
+| `du`         | yes                    | -                    |
 | `gcc`        | yes                    | -                    |
 | `go`         | yes                    | partial              |
 | `node`       | yes                    | -                    |
+| `pip`        | yes                    | yes                  |
 | `perl`       | no                     | -                    |
 | `python`     | yes                    | -                    |
 | `ruby`       | yes                    | -                    |
@@ -317,24 +333,36 @@ We add new programs every day.
 
 | Program       | Options/flags coverage | Subcommands coverage |
 | ------------- | ---------------------- | -------------------- |
+| `adduser`     | yes                    | -                    |
+| `chroot`      | yes                    | -                    |
+| `chsh`        | yes                    | -                    |
 | `crontab`     | yes                    | -                    |
-| `dmesg`       | yes                    | -                    |
-| `env`         | yes                    | -                    |
+| `df`          | yes                    | -                    |
 | `free`        | yes                    | -                    |
-| `id`          | yes                    | -                    |
+| `groupadd`    | yes                    | -                    |
+| `halt`        | yes                    | -                    |
+| `htop`        | yes                    | -                    |
+| `install`     | yes                    | -                    |
 | `iperf`       | yes                    | -                    |
 | `iperf3`      | yes                    | -                    |
+| `jobs`        | yes                    | -                    |
 | `journalctl`  | yes                    | -                    |
+| `kill`        | yes                    | -                    |
 | `killall`     | yes                    | -                    |
+| `lsof`        | yes                    | -                    |
 | `lsb_release` | yes                    | -                    |
 | `mount`       | yes                    | -                    |
 | `nice`        | yes                    | -                    |
+| `nohup`       | yes                    | -                    |
+| `nproc`       | yes                    | -                    |
 | `ps`          | yes                    | -                    |
+| `shutdown`    | yes                    | -                    |
 | `sudo`        | yes                    | -                    |
 | `systemctl`   | yes                    | -                    |
 | `top`         | yes                    | -                    |
 | `uname`       | yes                    | -                    |
 | `visudo`      | yes                    | -                    |
+| `which`       | yes                    | -                    |
 | `who`         | yes                    | -                    |
 | `whoami`      | yes                    | -                    |
 
@@ -342,6 +370,7 @@ We add new programs every day.
 
 | Program | Options/flags coverage | Subcommands coverage |
 | ------- | ---------------------- | -------------------- |
+| `cal`   | -                      | -                    |
 | `date`  | -                      | -                    |
 | `time`  | -                      | -                    |
 
@@ -353,8 +382,10 @@ We add new programs every day.
 | `cat`    | yes                    | -                    |
 | `column` | yes                    | -                    |
 | `cut`    | yes                    | -                    |
+| `diff`   | yes                    | -                    |
 | `grep`   | yes                    | -                    |
 | `head`   | yes                    | -                    |
+| `less`   | yes                    | -                    |
 | `nl`     | yes                    | -                    |
 | `od`     | yes                    | -                    |
 | `sed`    | yes                    | -                    |
@@ -370,27 +401,68 @@ We add new programs every day.
 | ------- | ---------------------- | -------------------- |
 | `code`  | -                      | -                    |
 | `nano`  | -                      | -                    |
+| `vi`    | -                      | -                    |
 | `vim`   | -                      | -                    |
+
+#### Task Runner
+| Program   | Options/flags coverage | Subcommands coverage |
+| --------- | ---------------------- | -------------------- |
+| `gulp`    | yes                    | -                    |
+
 
 #### Utilities
 
-| Program  | Options/flags coverage | Subcommands coverage |
-| -------- | ---------------------- | -------------------- |
-| `jq`     | yes                    | -                    |
-| `kmdr`   | yes                    | yes                  |
-| `pandoc` | yes                    | -                    |
-| `tree`   | yes                    | -                    |
-| `screen` | yes                    | -                    |
+| Program     | Options/flags coverage | Subcommands coverage |
+| ----------- | ---------------------- | -------------------- |
+| `autossh`   | yes                    | -                    |
+| `base64`    | yes                    | -                    |
+| `curl`      | yes                    | -                    |
+| `echo`      | yes                    |                      |
+| `env`       | yes                    | -                    |
+| `export`    | yes                    |                      |
+| `false`     | yes                    | -                    |
+| `gofmt`     | yes                    | -                    |
+| `history`   | yes                    |                      |
+| `id`        | yes                    | -                    |
+| `jq`        | yes                    | -                    |
+| `kmdr`      | yes                    | yes                  |
+| `md5sum`    | yes                    | -                    |
+| `openssl`   | yes                    | partial              |
+| `pandoc`    | yes                    | -                    |
+| `printf`    | yes                    | -                    |
+| `read`      | yes                    | -                    |
+| `screen`    | yes                    | -                    |
+| `seq`       | yes                    | -                    |
+| `sha1sum`   | yes                    | -                    |
+| `sha256sum` | yes                    | -                    |
+| `strings`   | yes                    | -                    |
+| `timeout`   | yes                    | -                    |
+| `uptime`    | yes                    | -                    |
+| `wget`      | yes                    | -                    |
+| `whereis`   | yes                    | -                    |
+
+#### Virtualization
+
+| Program   | Options/flags coverage | Subcommands coverage |
+| --------- | ---------------------- | -------------------- |
+| `vagrant` | yes                    | -                    |
+
+#### Version Control
+
+| Program   | Options/flags coverage | Subcommands coverage |
+| --------- | ---------------------- | -------------------- |
+| `hg`      | yes                    | -                    |
 
 #### Miscellaneous
 
 | Program   | Options/flags coverage | Subcommands coverage |
 | --------- | ---------------------- | -------------------- |
-| `base64`  | yes                    | -                    |
 | `bash`    | yes                    | -                    |
-| `chgrp`   | yes                    | -                    |
-| `openssl` | yes                    | partial              |
-| `timeout` | yes                    | -                    |
+| `bash/sh` | yes                    | -                    |
+| `conda`   | yes                    | -                    |
+| `gpg`     | yes                    | -                    |
+| `tty`     | yes                    | -                    |
+
 
 ## Stay tuned for more updates
 
