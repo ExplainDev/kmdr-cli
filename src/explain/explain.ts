@@ -64,11 +64,21 @@ export class Explain {
         }
 
         const { answer } = await this.promptHelpful();
-        if (answer !== "skip") {
-          const { comment } = await this.askFeedback(answer);
+        if (answer === "no" || answer === "yes") {
+          let comment = "";
+
+          if (answer === "no") {
+            const userComment = await this.askFeedback(answer);
+            comment = userComment.comment;
+          }
+
+          this.console.startSpinner("Sending your feedback...");
           const res = await this.client.sendFeedback(sessionId, answer, comment);
-          if (res) {
-            this.console.print("Your feedback was sent. Thank you!");
+
+          if (res.data) {
+            this.console.succeedSpinner("Your feedback was saved. Thank you!");
+          } else {
+            this.console.failSpinner("Your feedback wasn't saved. Please try again!");
           }
         }
       } catch (err) {
@@ -263,17 +273,10 @@ export class Explain {
   private askFeedback(answer: string): Promise<any> {
     let input: InputQuestion;
 
-    if (answer === "yes") {
-      input = {
-        message: "Awesome! What did you like about this explanation?",
-        name: "comment",
-      };
-    } else {
-      input = {
-        message: "What's wrong with the explanation?",
-        name: "comment",
-      };
-    }
+    input = {
+      message: "What's wrong with the explanation?",
+      name: "comment",
+    };
 
     return this.console.promptInput(input);
   }

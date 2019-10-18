@@ -41,6 +41,7 @@ export default class Console {
 
   public stopSpinner() {
     this.spinner.stop();
+    this.spinner.clear();
   }
 
   public succeedSpinner(text?: string) {
