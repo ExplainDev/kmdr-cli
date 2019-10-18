@@ -47,6 +47,10 @@ export default class Console {
     this.spinner.succeed(text);
   }
 
+  public failSpinner(text?: string) {
+    this.spinner.fail(text);
+  }
+
   public printTitle(title: string, options = this.defaultPrintOptions) {
     const styledTitle = chalk.bold.whiteBright(title);
     this.print(styledTitle, options);

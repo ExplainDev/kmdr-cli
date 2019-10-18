@@ -87,3 +87,15 @@ export interface ConsolePrintOptions {
 export interface GraphQLResponse {
   data: any;
 }
+
+export interface FeedbackResponse extends AxiosResponse {
+  data: FeedbackData;
+}
+
+interface FeedbackData {
+  createFeedback: Feedback;
+}
+
+interface Feedback {
+  message: string;
+}

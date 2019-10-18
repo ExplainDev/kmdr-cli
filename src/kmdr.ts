@@ -3,6 +3,7 @@ import { KMDR_CLI_VERSION } from "./constants";
 import { Explain } from "./explain";
 import { Settings } from "./interfaces";
 import { Upgrade } from "./upgrade";
+import { Feedback } from "./feedback";
 
 class KMDR {
   private settings: Settings | undefined;
@@ -31,6 +32,12 @@ class KMDR {
       .description("Check for newer releases")
       .action(this.upgrade);
 
+    this.cli
+      .command("feedback")
+      .alias("f")
+      .description("Send feedback :)")
+      .action(this.feedback);
+
     this.cli.parse(process.argv);
 
     if (process.argv.length < 3) {
@@ -51,6 +58,11 @@ class KMDR {
   private async upgrade() {
     const upgrade = new Upgrade();
     await upgrade.render();
+  }
+
+  private async feedback() {
+    const feedback = new Feedback();
+    await feedback.render();
   }
 }
 

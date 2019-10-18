@@ -72,7 +72,10 @@ export default class Client {
    * @param config
    */
   protected doMutation(query: string, variables?: {}, config?: AxiosRequestConfig) {
-    return this.post({ query, variables }, config);
+    return this.post(
+      { query, variables },
+      { transformResponse: this.transformGQLResponse, ...config },
+    );
   }
 
   /**

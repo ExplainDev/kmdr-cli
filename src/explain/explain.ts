@@ -17,7 +17,7 @@ import Console from "../console";
 import Decorator from "../decorator";
 import Highlight from "../highlight";
 import { ExplainConfig } from "../interfaces";
-import ExplainClient from "./client";
+import ExplainClient from "./explainClient";
 
 export class Explain {
   private client = new ExplainClient();
