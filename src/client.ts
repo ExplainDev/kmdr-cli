@@ -1,26 +1,26 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { Agent } from "http";
 import os from "os";
 import Tunnel, { ProxyOptions } from "tunnel";
 import Url from "url";
-import uuid from "uuid/v1";
+import { KMDR_CLI_VERSION } from "./constants";
+import { GraphQLResponse } from "./interfaces";
 
-class Client {
+export default class Client {
+  protected instance: AxiosInstance;
+
   private baseURL: string = process.env.KMDR_API_URL || "https://api.kmdr.sh/api/graphql";
   private shell: string;
   private term: string;
   private os: string;
-  private sessionId: string;
-  private instance: AxiosInstance;
   private version: string;
   private isHttps: boolean;
 
-  constructor(version: string, axiosInstance?: AxiosInstance) {
-    this.sessionId = uuid();
+  constructor(axiosInstance?: AxiosInstance) {
     this.shell = process.env.SHELL || "";
     this.os = `${os.platform()} ${os.release()}`;
     this.term = `${process.env.TERM};${process.env.TERM_PROGRAM}`;
-    this.version = version;
+    this.version = KMDR_CLI_VERSION;
     this.isHttps = this.baseURL.startsWith("https:");
 
     const axiosConfig: AxiosRequestConfig = {
@@ -28,7 +28,6 @@ class Client {
       headers: {
         "Content-Type": "application/json",
         "X-kmdr-client-os": this.os,
-        "X-kmdr-client-session-id": this.sessionId,
         "X-kmdr-client-shell": this.shell,
         "X-kmdr-client-term": this.term,
         "X-kmdr-client-version": this.version,
@@ -57,17 +56,45 @@ class Client {
 
     this.instance = axiosInstance || axios.create(axiosConfig);
   }
+
   protected doQuery(query: string, variables?: {}, config?: AxiosRequestConfig) {
-    return this.post({ query, variables }, config);
+    return this.post(
+      { query, variables },
+      { transformResponse: this.transformGQLResponse, ...config },
+    );
   }
 
-  protected doMutation(query: string, variables?: {}) {
-    return this.post({ query, variables });
+  /**
+   * Send GraphQL mutation to the API server
+   *
+   * @param query
+   * @param variables
+   * @param config
+   */
+  protected doMutation(query: string, variables?: {}, config?: AxiosRequestConfig) {
+    return this.post(
+      { query, variables },
+      { transformResponse: this.transformGQLResponse, ...config },
+    );
   }
 
-  private post(data: any, config?: AxiosRequestConfig) {
+  /**
+   * Send a POST request to the HTTP Server
+   * @param data
+   * @param config
+   */
+  private post(data: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post("", data, { ...config });
   }
-}
 
-export default Client;
+  private transformGQLResponse(res: string) {
+    if (res) {
+      try {
+        const obj = JSON.parse(res) as GraphQLResponse;
+        return obj.data;
+      } catch (err) {
+        throw err;
+      }
+    }
+  }
+}

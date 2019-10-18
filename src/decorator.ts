@@ -1,24 +1,17 @@
 import chalk from "chalk";
-import {
-  RootNodeAST,
-  OptionNodeAST,
-  ArgumentNodeAST,
-  ProgramNodeAST,
-  OperatorNodeAST,
-  Theme,
-  ExplainCommand,
-  OptionWithArgNodeAST,
-  OptionSchema,
-  ProgramSchema,
-  AssignmentNodeAST,
-  PipeNodeAST,
-  StickyOptionNodeAST,
-  SudoNodeAST,
-  ReservedWordNodeAST,
-  RedirectNodeAST,
-  WordNodeAST,
-} from "../interfaces";
-import AST from "../ast";
+import AST, {
+  ArgumentNode,
+  AssignmentNode,
+  OperatorNode,
+  OptionNode,
+  OptionWithArgNode,
+  PipeNode,
+  ProgramNode,
+  RedirectNode,
+  ReservedWordNode,
+  SudoNode,
+  WordNode,
+} from "kmdr-ast";
 
 const HIGHLIGHT_DEFAULTS: any = {
   argument: chalk.italic.bold.whiteBright,
@@ -39,31 +32,31 @@ const HIGHLIGHT_DEFAULTS: any = {
 };
 
 class Decorator {
-  static decorate(
+  public static decorate(
     word: string,
     token:
-      | OptionNodeAST
-      | ProgramNodeAST
-      | OptionWithArgNodeAST
-      | ArgumentNodeAST
-      | OperatorNodeAST
-      | AssignmentNodeAST
-      | PipeNodeAST
-      | SudoNodeAST
-      | ReservedWordNodeAST
-      | RedirectNodeAST
-      | WordNodeAST,
+      | OptionNode
+      | ProgramNode
+      | OptionWithArgNode
+      | ArgumentNode
+      | OperatorNode
+      | AssignmentNode
+      | PipeNode
+      | SudoNode
+      | ReservedWordNode
+      | RedirectNode
+      | WordNode,
   ): string {
     let decoratedString: string = "";
 
     if (AST.isAssignment(token)) {
-      const assignmentToken = token as AssignmentNodeAST;
+      const assignmentToken = token as AssignmentNode;
 
       decoratedString = Decorator.color("assignmentName", assignmentToken.name);
       decoratedString += "=";
       decoratedString += Decorator.color("assignmentValue", assignmentToken.value || "");
     } else if (AST.isRedirect(token)) {
-      const redirectToken = token as RedirectNodeAST;
+      const redirectToken = token as RedirectNode;
       const { input, output, output_fd, type } = redirectToken;
 
       if (input !== null) {
@@ -84,7 +77,7 @@ class Decorator {
     return decoratedString;
   }
 
-  static color(kind: string, word: string) {
+  public static color(kind: string, word: string) {
     return HIGHLIGHT_DEFAULTS[kind](word);
   }
 }

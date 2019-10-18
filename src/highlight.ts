@@ -1,47 +1,16 @@
+import { FlatAST } from "kmdr-ast";
 import Decorator from "./decorator";
-
-import {
-  RootNodeAST,
-  OptionNodeAST,
-  ArgumentNodeAST,
-  ProgramNodeAST,
-  OperatorNodeAST,
-  Theme,
-  ExplainCommand,
-  OptionWithArgNodeAST,
-  OptionSchema,
-  ProgramSchema,
-  AssignmentNodeAST,
-  ReservedWordNodeAST,
-  PipeNodeAST,
-  RedirectNodeAST,
-} from "../interfaces";
 
 const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
 
 class Highlight {
-  public decorate(
-    query: string,
-    leafNodes: Array<
-      Array<
-        | OptionNodeAST
-        | ProgramNodeAST
-        | OptionWithArgNodeAST
-        | ArgumentNodeAST
-        | OperatorNodeAST
-        | AssignmentNodeAST
-        | PipeNodeAST
-        | ReservedWordNodeAST
-        | RedirectNodeAST
-      >
-    >,
-  ): string {
+  public decorate(query: string, leafNodes: FlatAST): string {
     let decoratedString: string = "";
     let currentToken = 0;
     let wordInRange = "";
     let inRange = false;
-    const tokens = flatten(leafNodes);
+    const tokens = leafNodes;
 
     for (let pos = 0; pos < query.length; pos++) {
       const char = query[pos];
