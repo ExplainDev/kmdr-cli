@@ -16,12 +16,22 @@ subcommands:
     aliases:
       - e
     options:
-      - short:
+      - long:
+          - "--no-show-syntax"
+        summary: Do not show syntax highlighting
+      - long:
+          - "--no-show-related"
+        summary: Do not show related CLI programs
+      - long:
+          - "--help"
+        short:
           - "-h"
-        long:
-          - "--highlight"
-    summary: Show syntax highlighting
-  - name: config
-    summary: Configure kmdr on this computer
+        summary: "output usage information"
+  - name: upgrade
+    summary: Check for newer releases
     aliases:
-      - c
+      - u
+  - name: feedback
+    aliases:
+      - f
+    summary: "Send feedback :)"
