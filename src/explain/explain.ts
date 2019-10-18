@@ -45,11 +45,15 @@ export class Explain {
         let sessionId: string;
 
         this.console.startSpinner("Analyzing your command...");
-        const res = await this.client.getExplanation(query, this.showRelatedPrograms);
-        sessionId = res.headers["x-kmdr-client-session-id"];
-        this.console.stopSpinner();
+        const { headers, data } = await this.client.getExplanation(query, this.showRelatedPrograms);
+        sessionId = headers["x-kmdr-client-session-id"];
 
-        const { ast, query: apiQuery, relatedPrograms } = res.data.explain;
+        if (data.explain === null) {
+          this.console.failSpinner("An error occurred. Please try again.");
+          continue;
+        }
+        this.console.stopSpinner();
+        const { ast, query: apiQuery, relatedPrograms } = data.explain;
         const serializedAST = AST.serialize(ast);
         const flatAST = AST.flatten(serializedAST);
 

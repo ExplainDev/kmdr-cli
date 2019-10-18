@@ -17,7 +17,7 @@ export interface ExplainResponse extends AxiosResponse {
 }
 
 interface ExplainData {
-  explain: Explain;
+  explain: Explain | null;
 }
 
 export interface Explain {
