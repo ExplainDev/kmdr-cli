@@ -251,6 +251,7 @@ We add new programs every day.
 | `cp`       | yes                    | -                    |
 | `dd`       | yes                    | -                    |
 | `df`       | yes                    | -                    |
+| `du`         | yes                    | -                    |
 | `file`     | yes                    | -                    |
 | `find`     | yes                    | -                    |
 | `gunzip`   | yes                    | -                    |
@@ -313,17 +314,16 @@ We add new programs every day.
 | `dpkg-query`  | yes                    | -                    |
 | `gem`         | yes                    | -                    |
 | `npm`         | yes                    | yes                  |
+| `pip`         | yes                    | yes                  |
 | `yarn`        | yes                    | yes                  |
 
 #### Programming Languages / Run time environments / Compilers
 
 | Program      | Options/flags coverage | Subcommands coverage |
 | ------------ | ---------------------- | -------------------- |
-| `du`         | yes                    | -                    |
 | `gcc`        | yes                    | -                    |
 | `go`         | yes                    | partial              |
 | `node`       | yes                    | -                    |
-| `pip`        | yes                    | yes                  |
 | `perl`       | no                     | -                    |
 | `python`     | yes                    | -                    |
 | `ruby`       | yes                    | -                    |
