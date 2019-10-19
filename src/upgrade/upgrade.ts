@@ -7,7 +7,6 @@ export class Upgrade {
 
   public async render() {
     const latestVersion = await this.client.getLatestVersion();
-
     const {
       latestCliRelease: { isCliVersionCurrent, latestRelease },
     } = latestVersion.data;

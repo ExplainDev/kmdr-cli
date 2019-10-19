@@ -1,5 +1,6 @@
 import Client from "../client";
 import { LatestCliReleaseResponse } from "../interfaces";
+import { KMDR_CLI_VERSION } from "../constants";
 
 const queryLatestCliVersion = `
 query CliVersions($cliVersion: String) {
@@ -21,6 +22,8 @@ export default class UpgradeClient extends Client {
   }
 
   public async getLatestVersion(): Promise<LatestCliReleaseResponse> {
-    return super.doQuery(queryLatestCliVersion) as Promise<LatestCliReleaseResponse>;
+    return super.doQuery(queryLatestCliVersion, { cliVersion: KMDR_CLI_VERSION }) as Promise<
+      LatestCliReleaseResponse
+    >;
   }
 }
