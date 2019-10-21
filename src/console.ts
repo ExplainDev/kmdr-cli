@@ -58,6 +58,7 @@ export default class Console {
   }
 
   public print(msg: string, options = this.defaultPrintOptions) {
+    // tslint:disable-next-line: prefer-const
     let { margin, prependNewLine, appendNewLine } = options;
 
     if (margin === undefined) {
