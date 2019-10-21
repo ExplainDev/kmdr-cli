@@ -2,7 +2,9 @@ import { InputQuestion, ListQuestion, Separator } from "inquirer";
 import AST, {
   ArgumentNode,
   AssignmentNode,
+  CommandNode,
   FlatAST,
+  NodeAST,
   OperatorNode,
   OptionNode,
   PipeNode,
@@ -61,7 +63,11 @@ export class Explain {
           this.printSyntax(apiQuery, flatAST);
         }
 
-        this.printExplanation(flatAST);
+        if (flatAST.length === 0) {
+          this.printUnavailableExplanation(serializedAST);
+        } else {
+          this.printExplanation(flatAST);
+        }
 
         if (this.showRelatedPrograms) {
           await this.printRelated(relatedPrograms);
@@ -96,7 +102,6 @@ export class Explain {
     let help = "";
     const margin = 4;
 
-    this.console.printTitle("Explanation", { appendNewLine: false });
     for (const node of leafNodes) {
       if (AST.isProgram(node)) {
         const programNode = node as ProgramNode;
@@ -239,7 +244,26 @@ export class Explain {
       }
       help += `\n`;
     }
+    this.console.printTitle("Explanation", { appendNewLine: false });
     this.console.print(help, { margin: 0 });
+  }
+
+  private printUnavailableExplanation(ast: NodeAST) {
+    this.console.printTitle("Explanation", { appendNewLine: false });
+
+    if (
+      AST.isCommand(ast) &&
+      AST.getCommandProgram(ast as CommandNode) === undefined &&
+      ast.parts
+    ) {
+      const wordNodes = ast.parts.filter(part => AST.isWord(part)) as WordNode[];
+      if (wordNodes.length > 0) {
+        const firstWordNode = wordNodes[0];
+        this.console.print(`Could not any explanation for ${firstWordNode.word}`, { margin: 4 });
+      } else {
+        this.console.print(`Could not any explanation for your query`, { margin: 4 });
+      }
+    }
   }
 
   private promptCommand(): Promise<any> {
