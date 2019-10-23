@@ -461,6 +461,7 @@ We add new programs every day.
 | `bash/sh` | yes                    | -                    |
 | `conda`   | yes                    | -                    |
 | `gpg`     | yes                    | -                    |
+| `lsblk`   | yes                    | -                    |
 | `tty`     | yes                    | -                    |
 
 
