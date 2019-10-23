@@ -1,91 +1,12 @@
 # kmdr.sh ![npm](https://img.shields.io/npm/v/kmdr?color=green&style=flat-square)![npm](https://img.shields.io/npm/dt/kmdr?color=blue&style=flat-square)
 
-**The CLI client for explaining shell commands from your terminal**
-
-`kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
+> The CLI client for explaining commands from your terminal
 
 <p align="center">
   <img src="kmdr-explain.gif">
 </p>
 
-## Examples
-
-### Explaining commands with subcommands
-
-```
-$ kmdr explain
-💡 Enter your command: sudo npm install kmdr@latest --global
-
-  sudo
-    execute a command as another user
-  npm
-    javascript package manager
-  install
-    Install a package
-  kmdr@latest
-    An argument of the previous option
-  -g, --global
-    Argument will cause npm to install the package globally rather than locally.
-```
-
-### Explanining commands with grouped options
-
-```
-$ kmdr explain
-💡 Enter your command: rsync -anv dir1 dir2
-
-  rsync
-    A fast, versatile, remote (and local) file-copying tool
-  -a, --archive
-    This is equivalent to -rlptgoD.
-  -n, --dry-run
-    This makes rsync perform a trial run that doesn’t make any changes (and produces mostly the same output as a real run).
-  -v, --verbose
-    This option increases the amount of information you are given during the transfer.
-  dir1
-    An argument
-  dir2
-    An argument
-```
-
-### Explaining commands with redireciton
-
-```
-$ kmdr explain
-💡 Enter your command: ls -alh > contents.txt
-
-  ls
-    List directory contents
-  -a, --all
-    Do not ignore entries starting with .
-  -l
-    Use a long listing format
-  -h, --human-readable
-    With -l and/or -s, print human readable sizes (e.g., 1K 234M 2G)
-  > contents.txt
-    Redirect stdout to contents.txt.
-```
-
-### Explaining list of commands
-
-```
-$ kmdr explain
-💡 Enter your command: cd git/ && git clone git@github.com:ediardo/kmdr.sh.git && git log
-
-  cd
-    Change working directory
-  git/
-    An argument of the previous option
-  &&
-    Command2 is executed if, and only if, command1 returns an exit status of zero
-
-  git
-    The stupid content tracker
-  clone
-    Clone a repository into a new directory
-  git@github.com:ediardo/kmdr.sh.git
-    An argument of the previous option
-```
+`kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
 
 ## Installation
 
@@ -94,16 +15,16 @@ $ kmdr explain
 - Node.js v8.x and above
 - A package manager like `yarn` or `npm`
 
-**With yarn**
+### With yarn
 
 ```bash
 yarn global add kmdr@latest
 ```
 
-**With npm**
+### With npm
 
 ```bash
-npm install kmdr --global
+npm install kmdr@latest --global
 ```
 
 ### Check installation
@@ -119,11 +40,13 @@ The CLI client for explaining complex shell commands.
 kmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.
 
 Options:
-  -v, --version  output the version number
-  -h, --help     output usage information
+  -v, --version        output the version number
+  -h, --help           output usage information
 
 Commands:
-  explain|e      Explain a shell command
+  explain|e [options]  Explain a shell command
+  upgrade|u            Check for newer releases
+  feedback|f           Send feedback :)
 ```
 
 #### Troubleshooting installation
@@ -154,318 +77,393 @@ export PATH="$(yarn global bin):$PATH"
 
 ### Explain a command
 
-Once kmdr is installed on your system, enter `kmdr explain` to return a prompt for entering the command you would like explained.
+Once `kmdr-cli` is installed on your system, enter `kmdr explain` to return a prompt for entering the command you would like explained.
 
 When the `Enter your command:` prompt is returned, enter the command you would like explained and hit the `Enter` key.
 
-kmdr will return syntax highlighting to assist you in differentiating parts of the command followed by the explanation of each of these parts.
+`kmdr` will return syntax highlighting to assist you in differentiating parts of the command followed by the explanation of each of these parts.
 
 An example explanation of `git commit -am "Initial commit"` can be seen below.
 
-```bash
+```
 $ kmdr explain
-💡 Enter your command:  git commit -am "Initial commit"
+? Enter your command: git commit -am "Initial commit"
 
-  git commit -am "Initial commit"
+    git commit -am "Initial commit"
 
-  git
-    The stupid content tracker
-  commit
-    Record changes to the repository
-  -a, --all
-    Tell the command to automatically stage files that have been modified and deleted
-  -m, --message
-    Use the given <msg> as the commit message
-  Initial commit
-    An argument
+  Explanation
+    git
+      The stupid content tracker
+    commit
+      Record changes to the repository
+    -a, --all
+      Tell the command to automatically stage files that have been modified and deleted
+    -m, --message
+      Use the given <msg> as the commit message
+    Initial commit
+      An argument
 
-🤖 Is this helpful? Yes
-🔥 Awesome! What did you like about this explanation?
-✔ Your feedback was saved. Thank you!
-Learn more at https://github.com/ediardo/kmdr.sh
+  Related Programs
+    hg, lsof, systemctl, aria2c, dmesg, make
 ```
 
-### Supported programs
+### Examples
 
-We add new programs every day.
+#### Explaining commands with subcommands
 
-#### Bash/Bourne Shell Builtins
+```
+$ kmdr explain
+? Enter your command: sudo npm install kmdr@latest --global
 
-| Program   | Options/flags coverage | Subcommands coverage |
-| --------- | ---------------------- | -------------------- |
-| `cd`      | -                      |                      |
-| `clear`   | -                      |                      |
-| `command` | -                      |                      |
-| `pwd`     | -                      |                      |
-| `readonly`| -                      |                      |
-| `sleep`   | -                      |                      |
-| `true `   | -                      |                      |
+  ? Enter your command: sudo npm install kmdr@latest --global
 
+    sudo npm install kmdr@latest --global
 
-#### Containers
+  Explanation
+    sudo
+      Execute a command with the privileges of a different user without switching environments
+    npm
+      javascript package manager
+    install
+      Install a package
+    kmdr@latest
+      An operand
+    -g, --global
+      Argument will cause npm to install the package globally rather than locally.
 
-| Program          | Options/flags coverage | Subcommands coverage |
-| ---------------- | ---------------------- | -------------------- |
-| `docker`         | yes                    | partial              |
-| `docker-compose` | yes                    | partial              |
-| `dmesg`          | yes                    | -                    |
-| `kubectl`        | yes                    | partial              |
-| `singularity`    | yes                    | no                   |
+  Related Programs
+    dpkg, pip, gem, node, cargo, install, systemctl
+```
 
-#### Version Control
+#### Explanining commands with grouped options
 
-| Program | Options/flags coverage | Subcommands coverage |
-| ------- | ---------------------- | -------------------- |
-| `git`   | yes                    | partial              |
+```
+$ kmdr explain
+? Enter your command: rsync -anv file1 file2
 
-#### Database server and clients
+    rsync -anv file1 file2
 
-| Program      | Options/flags coverage | Subcommands coverage |
-| ------------ | ---------------------- | -------------------- |
-| `mongod`     | yes                    | -                    |
-| `mongodump`  | yes                    | -                    |
-| `mysql`      | yes                    | -                    |
-| `mysqldump`  | yes                    | -                    |
-| `pg_ctl`     | yes                    | -                    |
-| `pg_dump`    | yes                    | -                    |
-| `pg_restore` | yes                    | -                    |
-| `sqlite3`    | yes                    | -                    |
+  Explanation
+    rsync
+      A fast, versatile, remote (and local) file-copying tool
+    -a, --archive
+      This is equivalent to -rlptgoD.
+    -n, --dry-run
+      This makes rsync perform a trial run that doesn’t make any changes (and produces mostly the same output as a real run).
+    -v, --verbose
+      This option increases the amount of information you are given during the transfer.
+    file1
+      An operand
+    file2
+      An operand
 
-#### Deployment / Cloud
+  Related Programs
+    ssh, ssh-copy-id, hostname, ansible-playbook, ansible, scp, lxc
+```
 
-| Program              | Options/flags coverage | Subcommands coverage |
-| -------------------- | ---------------------- | -------------------- |
-| `now`                | yes                    | partial              |
-| `ansible`            | yes                    | partial              |
-| `ansible-playbook`   | yes                    | partial              |
+#### Explaining commands with redireciton
 
-#### File and Archiving
+```
+$ kmdr explain
+? Enter your command: ls -alh > contents.txt
 
-| Program    | Options/flags coverage | Subcommands coverage |
-| ---------- | ---------------------- | -------------------- |
-| `basename` | yes                    | -                    |
-| `chgrp`    | yes                    | -                    |
-| `chown`    | yes                    | -                    |
-| `chmod`    | yes                    | -                    |
-| `cmp`      | yes                    | -                    |
-| `cp`       | yes                    | -                    |
-| `dd`       | yes                    | -                    |
-| `df`       | yes                    | -                    |
-| `du`         | yes                    | -                    |
-| `file`     | yes                    | -                    |
-| `find`     | yes                    | -                    |
-| `gunzip`   | yes                    | -                    |
-| `gzip`     | yes                    | -                    |
-| `ln`       | yes                    |                      |
-| `ls`       | yes                    | -                    |
-| `mkdir`    | yes                    | -                    |
-| `mktemp`   | yes                    | -                    |
-| `more`     | yes                    | -                    |
-| `mv`       | yes                    | -                    |
-| `openssl`  | yes                    | partial              |
-| `realpath` | yes                    | -                    |
-| `rm`       | yes                    | -                    |
-| `rmdir`    | yes                    | -                    |
-| `rsync`    | yes                    | -                    |
-| `scp`      | yes                    | -                    |
-| `split`    | yes                    | -                    |
-| `stat`     | yes                    | -                    |
-| `tar`      | yes                    | -                    |
-| `touch`    | yes                    | -                    |
-| `tree`     | yes                    | -                    |
-| `unmask`   | yes                    | -                    |
-| `watch`    | yes                    | -                    |
+    ls -alh > contents.txt
 
-#### Media (audio/video)
+  Explanation
+    ls
+      List directory contents
+    -a, --all
+      Do not ignore entries starting with .
+    -l
+      Use a long listing format
+    -h, --human-readable
+      With -l and/or -s, print human readable sizes (e.g., 1K 234M 2G)
+    > contents.txt
+      Redirect stdout to contents.txt.
+  Related Programs
+    dir, sort, pwd, tree, find, mkdir, rmdir
+```
 
-| Program      | Options/flags coverage | Subcommands coverage |
-| ------------ | ---------------------- | -------------------- |
-| `ffmpeg`     | yes                    | -                    |
-| `youtube-dl` | yes                    | -                    |
+#### Explaining list of commands
 
-#### Network/Communication
+```
+$ kmdr explain
+? Enter your command: dmesg | grep 'usb' > output.log 2>error.log
 
-| Program       | Options/flags coverage | Subcommands coverage |
-| ------------- | ---------------------- | -------------------- |
-| `dig`         | yes                    | -                    |
-| `host`        | yes                    | -                    |
-| `iptables`    | yes                    | -                    |
-| `ifconfig`    | yes                    | -                    |
-| `hostname`    | yes                    | -                    |
-| `netstat`     | yes                    | -                    |
-| `nmap`        | yes                    | -                    |
-| `nslookup`    | yes                    | -                    |
-| `ping`        | yes                    | -                    |
-| `ssh`         | yes                    | -                    |
-| `ssh-add`     | yes                    | -                    |
-| `ssh-copy-id` | yes                    | -                    |
-| `ssh-keygen`  | yes                    | -                    |
-| `tcpdump`     | yes                    | -                    |
-| `telnet`      | yes                    | -                    |
-| `traceroute`  | yes                    | -                    |
+    dmesg | grep 'usb' > output.log 2> error.log
 
-#### Package managers
+  Explanation
+    dmesg
+      Print or control the kernel ring buffer
+    |
+      A pipe serves the sdout of the previous command as input (stdin) to the next one
+    grep
+      Print lines matching a pattern
+    usb
+      An operand
+    > output.log
+      Redirect stdout to output.log.
+    2> error.log
+      Redirect stderr to error.log.
 
-| Program       | Options/flags coverage | Subcommands coverage |
-| ------------- | ---------------------- | -------------------- |
-| `apt`         | yes                    | -                    |
-| `cargo`       | yes                    | -                    |
-| `dpkg`        | yes                    | -                    |
-| `dpkg-query`  | yes                    | -                    |
-| `gem`         | yes                    | -                    |
-| `npm`         | yes                    | yes                  |
-| `pip`         | yes                    | yes                  |
-| `yarn`        | yes                    | yes                  |
+  Related Programs
+    ifconfig, systemctl, iptables, make, git, ssh, passwd, nl, uniq, paste, sort, tee, base32, base64
+```
 
-#### Programming Languages / Run time environments / Compilers
+### Sending feedback
 
-| Program      | Options/flags coverage | Subcommands coverage |
-| ------------ | ---------------------- | -------------------- |
-| `gcc`        | yes                    | -                    |
-| `go`         | yes                    | partial              |
-| `node`       | yes                    | -                    |
-| `perl`       | no                     | -                    |
-| `python`     | yes                    | -                    |
-| `ruby`       | yes                    | -                    |
-| `virtualenv` | yes                    | -                    |
+```
+$ kmdr feedback                                                                                                                                                   README*
+? How can we help? Support for printing explanantions with different colors :)
+? Email address: eddie@kmdr.sh
+✔ Your feedback was saved. Thank you!
+```
 
-#### Sysadmin / Monitoring
+### Checking for updates
 
-| Program       | Options/flags coverage | Subcommands coverage |
-| ------------- | ---------------------- | -------------------- |
-| `adduser`     | yes                    | -                    |
-| `chroot`      | yes                    | -                    |
-| `chsh`        | yes                    | -                    |
-| `crontab`     | yes                    | -                    |
-| `df`          | yes                    | -                    |
-| `free`        | yes                    | -                    |
-| `groupadd`    | yes                    | -                    |
-| `halt`        | yes                    | -                    |
-| `htop`        | yes                    | -                    |
-| `install`     | yes                    | -                    |
-| `iperf`       | yes                    | -                    |
-| `iperf3`      | yes                    | -                    |
-| `jobs`        | yes                    | -                    |
-| `journalctl`  | yes                    | -                    |
-| `kill`        | yes                    | -                    |
-| `killall`     | yes                    | -                    |
-| `lsof`        | yes                    | -                    |
-| `lsb_release` | yes                    | -                    |
-| `mount`       | yes                    | -                    |
-| `nice`        | yes                    | -                    |
-| `nohup`       | yes                    | -                    |
-| `nproc`       | yes                    | -                    |
-| `ps`          | yes                    | -                    |
-| `shutdown`    | yes                    | -                    |
-| `sudo`        | yes                    | -                    |
-| `systemctl`   | yes                    | -                    |
-| `top`         | yes                    | -                    |
-| `uname`       | yes                    | -                    |
-| `visudo`      | yes                    | -                    |
-| `which`       | yes                    | -                    |
-| `who`         | yes                    | -                    |
-| `whoami`      | yes                    | -                    |
+```
+$ kmdr upgrade                                                                                                                                                    README*
+  You have the latest version of kmdr-cli
+```
 
-#### Time/Date
+## Supported programs
 
-| Program | Options/flags coverage | Subcommands coverage |
-| ------- | ---------------------- | -------------------- |
-| `cal`   | -                      | -                    |
-| `date`  | -                      | -                    |
-| `time`  | -                      | -                    |
+We add new programs every day!
 
-#### Text Processing
+### Bash/Bourne Shell Builtins
 
-| Program  | Options/flags coverage | Subcommands coverage |
-| -------- | ---------------------- | -------------------- |
-| `awk`    | -                      | -                    |
-| `cat`    | yes                    | -                    |
-| `column` | yes                    | -                    |
-| `cut`    | yes                    | -                    |
-| `diff`   | yes                    | -                    |
-| `grep`   | yes                    | -                    |
-| `head`   | yes                    | -                    |
-| `less`   | yes                    | -                    |
-| `nl`     | yes                    | -                    |
-| `od`     | yes                    | -                    |
-| `sed`    | yes                    | -                    |
-| `sort`   | yes                    | -                    |
-| `tail`   | yes                    | -                    |
-| `tr`     | yes                    | -                    |
-| `uniq`   | yes                    | -                    |
-| `wc`     | yes                    | -                    |
+- `cd`
+- `clear`
+- `command`
+- `pwd`
+- `readonly`
+- `sleep`
+- `true`
 
-#### Text editors
+### Containers
 
-| Program | Options/flags coverage | Subcommands coverage |
-| ------- | ---------------------- | -------------------- |
-| `code`  | -                      | -                    |
-| `nano`  | -                      | -                    |
-| `vi`    | -                      | -                    |
-| `vim`   | -                      | -                    |
+- `docker`
+- `docker-compose`
+- `dmesg`
+- `kubectl`
+- `singularity`
 
-#### Task Runner
-| Program   | Options/flags coverage | Subcommands coverage |
-| --------- | ---------------------- | -------------------- |
-| `gulp`    | yes                    | -                    |
+### Database server and clients
 
+- `mongod`
+- `mongodump`
+- `mysql`
+- `mysqldump`
+- `pg_ctl`
+- `pg_dump`
+- `pg_restore`
+- `sqlite3`
 
-#### Utilities
+### Deployment / Cloud
 
-| Program     | Options/flags coverage | Subcommands coverage |
-| ----------- | ---------------------- | -------------------- |
-| `autossh`   | yes                    | -                    |
-| `base64`    | yes                    | -                    |
-| `curl`      | yes                    | -                    |
-| `echo`      | yes                    |                      |
-| `env`       | yes                    | -                    |
-| `export`    | yes                    |                      |
-| `false`     | yes                    | -                    |
-| `gofmt`     | yes                    | -                    |
-| `history`   | yes                    |                      |
-| `id`        | yes                    | -                    |
-| `jq`        | yes                    | -                    |
-| `kmdr`      | yes                    | yes                  |
-| `md5sum`    | yes                    | -                    |
-| `openssl`   | yes                    | partial              |
-| `pandoc`    | yes                    | -                    |
-| `printf`    | yes                    | -                    |
-| `read`      | yes                    | -                    |
-| `screen`    | yes                    | -                    |
-| `seq`       | yes                    | -                    |
-| `sha1sum`   | yes                    | -                    |
-| `sha256sum` | yes                    | -                    |
-| `strings`   | yes                    | -                    |
-| `timeout`   | yes                    | -                    |
-| `uptime`    | yes                    | -                    |
-| `wget`      | yes                    | -                    |
-| `whereis`   | yes                    | -                    |
+- `now`
+- `ansible`
+- `ansible-playbook`
 
-#### Virtualization
+### File and Archiving
 
-| Program   | Options/flags coverage | Subcommands coverage |
-| --------- | ---------------------- | -------------------- |
-| `vagrant` | yes                    | -                    |
+- `basename`
+- `chgrp`
+- `chown`
+- `chmod`
+- `cmp`
+- `cp`
+- `dd`
+- `df`
+- `du`
+- `file`
+- `find`
+- `gunzip`
+- `gzip`
+- `ln`
+- `ls`
+- `mkdir`
+- `mktemp`
+- `more`
+- `mv`
+- `openssl`
+- `realpath`
+- `rm`
+- `rmdir`
+- `rsync`
+- `scp`
+- `split`
+- `stat`
+- `tar`
+- `touch`
+- `tree`
+- `unmask`
+- `watch`
 
-#### Version Control
+### Media (audio/video)
 
-| Program   | Options/flags coverage | Subcommands coverage |
-| --------- | ---------------------- | -------------------- |
-| `hg`      | yes                    | -                    |
+- `ffmpeg`
+- `youtube-dl`
 
-#### Miscellaneous
+### Network/Communication
 
-| Program   | Options/flags coverage | Subcommands coverage |
-| --------- | ---------------------- | -------------------- |
-| `bash`    | yes                    | -                    |
-| `bash/sh` | yes                    | -                    |
-| `conda`   | yes                    | -                    |
-| `gpg`     | yes                    | -                    |
-| `lsblk`   | yes                    | -                    |
-| `tty`     | yes                    | -                    |
+- `curl`
+- `dig`
+- `host`
+- `iptables`
+- `ifconfig`
+- `hostname`
+- `netstat`
+- `nmap`
+- `nslookup`
+- `ping`
+- `ssh`
+- `ssh-add`
+- `ssh-copy-id`
+- `ssh-keygen`
+- `tcpdump`
+- `telnet`
+- `traceroute`
+- `wget`
 
+### Package managers
+
+- `apt`
+- `cargo`
+- `dpkg`
+- `dpkg-query`
+- `gem`
+- `npm`
+- `pip`
+- `yarn`
+
+### Programming Languages / Run time environments / Compilers
+
+- `gcc`
+- `go`
+- `node`
+- `perl`
+- `python`
+- `ruby`
+- `virtualenv`
+
+### Sysadmin / Monitoring
+
+- `adduser`
+- `chroot`
+- `chsh`
+- `crontab`
+- `df`
+- `free`
+- `groupadd`
+- `halt`
+- `htop`
+- `install`
+- `iperf`
+- `iperf3`
+- `jobs`
+- `journalctl`
+- `kill`
+- `killall`
+- `lsof`
+- `lsb_release`
+- `mount`
+- `nice`
+- `nohup`
+- `nproc`
+- `ps`
+- `shutdown`
+- `sudo`
+- `systemctl`
+- `top`
+- `uname`
+- `visudo`
+- `which`
+- `who`
+- `whoami`
+
+### Time/Date
+
+- `cal`
+- `date`
+- `time`
+
+### Text Processing
+
+- `awk`
+- `cat`
+- `column`
+- `cut`
+- `diff`
+- `grep`
+- `head`
+- `less`
+- `nl`
+- `od`
+- `sed`
+- `sort`
+- `tail`
+- `tr`
+- `uniq`
+- `wc`
+
+### Text editors
+
+- `code`
+- `nano`
+- `vi`
+- `vim`
+
+### Task Runner
+
+- `gulp`
+
+### Utilities
+
+- `autossh`
+- `base64`
+- `echo`
+- `env`
+- `export`
+- `false`
+- `gofmt`
+- `history`
+- `id`
+- `jq`
+- `kmdr`
+- `md5sum`
+- `openssl`
+- `pandoc`
+- `printf`
+- `read`
+- `screen`
+- `seq`
+- `sha1sum`
+- `sha256sum`
+- `strings`
+- `timeout`
+- `uptime`
+- `whereis`
+
+### Virtualization
+
+- `vagrant`
+
+### Version Control
+
+- `git`
+- `hg`
+
+### Miscellaneous
+
+- `bash`
+- `bash/sh`
+- `conda`
+- `gpg`
+- `lsblk`
+- `tty`
 
 ## Stay tuned for more updates
 
-- Visit our website https://kmdr.sh/
-- Follow us on twitter http://twitter.com/kmdr_sh
+- Visit our website <https://kmdr.sh/>
+- Follow us on twitter <http://twitter.com/kmdr_sh>
