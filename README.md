@@ -180,6 +180,7 @@ $ kmdr explain
       With -l and/or -s, print human readable sizes (e.g., 1K 234M 2G)
     > contents.txt
       Redirect stdout to contents.txt.
+
   Related Programs
     dir, sort, pwd, tree, find, mkdir, rmdir
 ```
