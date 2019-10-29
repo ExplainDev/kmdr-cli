@@ -383,6 +383,7 @@ We add new programs every day.
 | `column` | yes                    | -                    |
 | `cut`    | yes                    | -                    |
 | `diff`   | yes                    | -                    |
+| `egrep`  | yes                    | -                    |
 | `grep`   | yes                    | -                    |
 | `head`   | yes                    | -                    |
 | `less`   | yes                    | -                    |
@@ -460,10 +461,19 @@ We add new programs every day.
 | `bash`    | yes                    | -                    |
 | `bash/sh` | yes                    | -                    |
 | `conda`   | yes                    | -                    |
+| `dh`      | yes                    | -                    |
+| `fuser`   | yes                    | -                    |
 | `gpg`     | yes                    | -                    |
+| `gpart`   | yes                    | -                    |
+| `header`  | yes                    | -                    |
 | `lsblk`   | yes                    | -                    |
+| `logout`  | yes                    | -                    |
+| `nc`      | yes                    | -                    |
+| `pv`      | yes                    | -                    |
 | `tty`     | yes                    | -                    |
-
+| `tcsh`    | yes                    | -                    |
+| `useradd` | yes                    | -                    |
+| `whois`   | yes                    | -                    |
 
 ## Stay tuned for more updates
 
