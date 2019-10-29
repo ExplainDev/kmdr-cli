@@ -339,6 +339,7 @@ We add new programs every day.
 | `crontab`     | yes                    | -                    |
 | `df`          | yes                    | -                    |
 | `free`        | yes                    | -                    |
+| `fusermount`  | yes                    | -                    |
 | `groupadd`    | yes                    | -                    |
 | `halt`        | yes                    | -                    |
 | `htop`        | yes                    | -                    |
@@ -349,6 +350,7 @@ We add new programs every day.
 | `journalctl`  | yes                    | -                    |
 | `kill`        | yes                    | -                    |
 | `killall`     | yes                    | -                    |
+| `lsmod`       | yes                    | -                    |
 | `lsof`        | yes                    | -                    |
 | `lsb_release` | yes                    | -                    |
 | `mount`       | yes                    | -                    |
@@ -415,6 +417,7 @@ We add new programs every day.
 
 | Program     | Options/flags coverage | Subcommands coverage |
 | ----------- | ---------------------- | -------------------- |
+| `apt-get`   | yes                    | -                    |
 | `autossh`   | yes                    | -                    |
 | `base64`    | yes                    | -                    |
 | `curl`      | yes                    | -                    |
