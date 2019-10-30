@@ -233,13 +233,24 @@ We add new programs every day!
 
 ### Bash/Bourne Shell Builtins
 
+- `bg`
 - `cd`
 - `clear`
 - `command`
+- `echo`
+- `eval`
+- `false`
+- `fg`
+- `history`
+- `jobs`
+- `kill`
+- `printf`
 - `pwd`
+- `read`
 - `readonly`
 - `sleep`
 - `true`
+- `umask`
 
 ### Containers
 
@@ -362,9 +373,7 @@ We add new programs every day!
 - `install`
 - `iperf`
 - `iperf3`
-- `jobs`
 - `journalctl`
-- `kill`
 - `killall`
 - `lsof`
 - `lsb_release`
@@ -423,20 +432,15 @@ We add new programs every day!
 
 - `autossh`
 - `base64`
-- `echo`
 - `env`
 - `export`
-- `false`
 - `gofmt`
-- `history`
 - `id`
 - `jq`
 - `kmdr`
 - `md5sum`
 - `openssl`
 - `pandoc`
-- `printf`
-- `read`
 - `screen`
 - `seq`
 - `sha1sum`
