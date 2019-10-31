@@ -237,13 +237,16 @@ We add new programs every day!
 - `cd`
 - `clear`
 - `command`
+- `disown`
 - `echo`
 - `eval`
+- `export`
 - `false`
 - `fg`
 - `history`
 - `jobs`
 - `kill`
+- `logout`
 - `printf`
 - `pwd`
 - `read`
@@ -325,6 +328,8 @@ We add new programs every day!
 - `iptables`
 - `ifconfig`
 - `hostname`
+- `nc`
+- `ncat`
 - `netstat`
 - `nmap`
 - `nslookup`
@@ -341,6 +346,7 @@ We add new programs every day!
 ### Package managers
 
 - `apt`
+- `apt-get`
 - `cargo`
 - `dpkg`
 - `dpkg-query`
@@ -367,6 +373,7 @@ We add new programs every day!
 - `crontab`
 - `df`
 - `free`
+- `fusermount`
 - `groupadd`
 - `halt`
 - `htop`
@@ -377,6 +384,7 @@ We add new programs every day!
 - `killall`
 - `lsof`
 - `lsb_release`
+- `lsmod`
 - `mount`
 - `nice`
 - `nohup`
@@ -387,9 +395,11 @@ We add new programs every day!
 - `systemctl`
 - `top`
 - `uname`
+- `useradd`
 - `visudo`
 - `which`
 - `who`
+- `whois`
 - `whoami`
 
 ### Time/Date
@@ -405,6 +415,7 @@ We add new programs every day!
 - `column`
 - `cut`
 - `diff`
+- `egrep`
 - `grep`
 - `head`
 - `less`
@@ -433,7 +444,6 @@ We add new programs every day!
 - `autossh`
 - `base64`
 - `env`
-- `export`
 - `gofmt`
 - `id`
 - `jq`
@@ -464,7 +474,10 @@ We add new programs every day!
 - `bash`
 - `bash/sh`
 - `conda`
+- `dh`
+- `gpart`
 - `gpg`
+- `header`
 - `lsblk`
 - `tty`
 
