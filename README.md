@@ -115,8 +115,6 @@ $ kmdr explain
 $ kmdr explain
 ? Enter your command: sudo npm install kmdr@latest --global
 
-  ? Enter your command: sudo npm install kmdr@latest --global
-
     sudo npm install kmdr@latest --global
 
   Explanation
