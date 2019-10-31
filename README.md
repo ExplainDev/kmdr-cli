@@ -196,6 +196,7 @@ We add new programs every day.
 | `cd`      | -                      |                      |
 | `clear`   | -                      |                      |
 | `command` | -                      |                      |
+| `disdown` | -                      |                      |
 | `pwd`     | -                      |                      |
 | `readonly`| -                      |                      |
 | `sleep`   | -                      |                      |
