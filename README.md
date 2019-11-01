@@ -265,266 +265,299 @@ $ kmdr feedback                                                                 
 ✔ Your feedback was saved. Thank you!
 ```
 
-### Checking for updates
+### Supported programs
 
-```
-$ kmdr upgrade                                                                                                                                                    README*
-  You have the latest version of kmdr-cli
-```
+We add new programs every day.
 
-## Supported programs
+#### Bash/Bourne Shell Builtins
 
-We add new programs every day!
+| Program    | Options/flags coverage | Subcommands coverage |
+| ---------- | ---------------------- | -------------------- |
+| `cd`       | -                      |                      |
+| `clear`    | -                      |                      |
+| `command`  | -                      |                      |
+| `disdown`  | -                      |                      |
+| `pwd`      | -                      |                      |
+| `readonly` | -                      |                      |
+| `sleep`    | -                      |                      |
+| `true`     | -                      |                      |
 
-### Bash/Bourne Shell Builtins
+#### Containers
 
-- `bg`
-- `cd`
-- `clear`
-- `command`
-- `disown`
-- `echo`
-- `eval`
-- `export`
-- `false`
-- `fg`
-- `history`
-- `jobs`
-- `kill`
-- `logout`
-- `printf`
-- `pwd`
-- `read`
-- `readonly`
-- `sleep`
-- `true`
-- `umask`
+| Program          | Options/flags coverage | Subcommands coverage |
+| ---------------- | ---------------------- | -------------------- |
+| `docker`         | yes                    | partial              |
+| `docker-compose` | yes                    | partial              |
+| `dmesg`          | yes                    | -                    |
+| `kubectl`        | yes                    | partial              |
+| `singularity`    | yes                    | no                   |
 
-### Containers
+#### Version Control
 
-- `docker`
-- `docker-compose`
-- `dmesg`
-- `kubectl`
-- `singularity`
+| Program | Options/flags coverage | Subcommands coverage |
+| ------- | ---------------------- | -------------------- |
+| `git`   | yes                    | partial              |
 
-### Database server and clients
+#### Database server and clients
 
-- `mongod`
-- `mongodump`
-- `mysql`
-- `mysqldump`
-- `pg_ctl`
-- `pg_dump`
-- `pg_restore`
-- `sqlite3`
+| Program      | Options/flags coverage | Subcommands coverage |
+| ------------ | ---------------------- | -------------------- |
+| `mongod`     | yes                    | -                    |
+| `mongodump`  | yes                    | -                    |
+| `mysql`      | yes                    | -                    |
+| `mysqldump`  | yes                    | -                    |
+| `pg_ctl`     | yes                    | -                    |
+| `pg_dump`    | yes                    | -                    |
+| `pg_restore` | yes                    | -                    |
+| `sqlite3`    | yes                    | -                    |
 
-### Deployment / Cloud
+#### Deployment / Cloud
 
-- `now`
-- `ansible`
-- `ansible-playbook`
+| Program            | Options/flags coverage | Subcommands coverage |
+| ------------------ | ---------------------- | -------------------- |
+| `now`              | yes                    | partial              |
+| `ansible`          | yes                    | partial              |
+| `ansible-playbook` | yes                    | partial              |
 
-### File and Archiving
+#### File and Archiving
 
-- `basename`
-- `chgrp`
-- `chown`
-- `chmod`
-- `cmp`
-- `cp`
-- `dd`
-- `df`
-- `du`
-- `file`
-- `find`
-- `gunzip`
-- `gzip`
-- `ln`
-- `ls`
-- `mkdir`
-- `mktemp`
-- `more`
-- `mv`
-- `openssl`
-- `realpath`
-- `rm`
-- `rmdir`
-- `rsync`
-- `scp`
-- `split`
-- `stat`
-- `tar`
-- `touch`
-- `tree`
-- `unmask`
-- `watch`
+| Program    | Options/flags coverage | Subcommands coverage |
+| ---------- | ---------------------- | -------------------- |
+| `basename` | yes                    | -                    |
+| `chgrp`    | yes                    | -                    |
+| `chown`    | yes                    | -                    |
+| `chmod`    | yes                    | -                    |
+| `cmp`      | yes                    | -                    |
+| `cp`       | yes                    | -                    |
+| `dd`       | yes                    | -                    |
+| `df`       | yes                    | -                    |
+| `file`     | yes                    | -                    |
+| `find`     | yes                    | -                    |
+| `gunzip`   | yes                    | -                    |
+| `gzip`     | yes                    | -                    |
+| `ln`       | yes                    |                      |
+| `ls`       | yes                    | -                    |
+| `mkdir`    | yes                    | -                    |
+| `mktemp`   | yes                    | -                    |
+| `more`     | yes                    | -                    |
+| `mv`       | yes                    | -                    |
+| `openssl`  | yes                    | partial              |
+| `realpath` | yes                    | -                    |
+| `rm`       | yes                    | -                    |
+| `rmdir`    | yes                    | -                    |
+| `rsync`    | yes                    | -                    |
+| `scp`      | yes                    | -                    |
+| `split`    | yes                    | -                    |
+| `stat`     | yes                    | -                    |
+| `tar`      | yes                    | -                    |
+| `touch`    | yes                    | -                    |
+| `tree`     | yes                    | -                    |
+| `unmask`   | yes                    | -                    |
+| `watch`    | yes                    | -                    |
 
-### Media (audio/video)
+#### Media (audio/video)
 
-- `ffmpeg`
-- `youtube-dl`
+| Program      | Options/flags coverage | Subcommands coverage |
+| ------------ | ---------------------- | -------------------- |
+| `ffmpeg`     | yes                    | -                    |
+| `youtube-dl` | yes                    | -                    |
 
-### Network/Communication
+#### Network/Communication
 
-- `curl`
-- `dig`
-- `host`
-- `iptables`
-- `ifconfig`
-- `hostname`
-- `nc`
-- `ncat`
-- `netstat`
-- `nmap`
-- `nslookup`
-- `ping`
-- `ssh`
-- `ssh-add`
-- `ssh-copy-id`
-- `ssh-keygen`
-- `tcpdump`
-- `telnet`
-- `traceroute`
-- `wget`
+| Program       | Options/flags coverage | Subcommands coverage |
+| ------------- | ---------------------- | -------------------- |
+| `dig`         | yes                    | -                    |
+| `host`        | yes                    | -                    |
+| `iptables`    | yes                    | -                    |
+| `ifconfig`    | yes                    | -                    |
+| `hostname`    | yes                    | -                    |
+| `netstat`     | yes                    | -                    |
+| `nmap`        | yes                    | -                    |
+| `nslookup`    | yes                    | -                    |
+| `ping`        | yes                    | -                    |
+| `ss`          | yes                    | -                    |
+| `ssh`         | yes                    | -                    |
+| `ssh-add`     | yes                    | -                    |
+| `ssh-copy-id` | yes                    | -                    |
+| `ssh-keygen`  | yes                    | -                    |
+| `tcpdump`     | yes                    | -                    |
+| `telnet`      | yes                    | -                    |
+| `traceroute`  | yes                    | -                    |
 
-### Package managers
+#### Package managers
 
-- `apt`
-- `apt-get`
-- `cargo`
-- `dpkg`
-- `dpkg-query`
-- `gem`
-- `npm`
-- `pip`
-- `yarn`
+| Program      | Options/flags coverage | Subcommands coverage |
+| ------------ | ---------------------- | -------------------- |
+| `apt`        | yes                    | -                    |
+| `cargo`      | yes                    | -                    |
+| `dpkg`       | yes                    | -                    |
+| `dpkg-query` | yes                    | -                    |
+| `gem`        | yes                    | -                    |
+| `npm`        | yes                    | yes                  |
+| `yarn`       | yes                    | yes                  |
 
-### Programming Languages / Run time environments / Compilers
+#### Programming Languages / Run time environments / Compilers
 
-- `gcc`
-- `go`
-- `node`
-- `perl`
-- `python`
-- `ruby`
-- `virtualenv`
+| Program      | Options/flags coverage | Subcommands coverage |
+| ------------ | ---------------------- | -------------------- |
+| `du`         | yes                    | -                    |
+| `gcc`        | yes                    | -                    |
+| `go`         | yes                    | partial              |
+| `node`       | yes                    | -                    |
+| `pip`        | yes                    | yes                  |
+| `perl`       | no                     | -                    |
+| `python`     | yes                    | -                    |
+| `ruby`       | yes                    | -                    |
+| `virtualenv` | yes                    | -                    |
 
-### Sysadmin / Monitoring
+#### Sysadmin / Monitoring
 
-- `adduser`
-- `chroot`
-- `chsh`
-- `crontab`
-- `df`
-- `free`
-- `fusermount`
-- `groupadd`
-- `halt`
-- `htop`
-- `install`
-- `iperf`
-- `iperf3`
-- `journalctl`
-- `killall`
-- `lsof`
-- `lsb_release`
-- `lsmod`
-- `mount`
-- `nice`
-- `nohup`
-- `nproc`
-- `ps`
-- `shutdown`
-- `sudo`
-- `systemctl`
-- `top`
-- `uname`
-- `useradd`
-- `visudo`
-- `which`
-- `who`
-- `whois`
-- `whoami`
+| Program       | Options/flags coverage | Subcommands coverage |
+| ------------- | ---------------------- | -------------------- |
+| `adduser`     | yes                    | -                    |
+| `chroot`      | yes                    | -                    |
+| `chsh`        | yes                    | -                    |
+| `crontab`     | yes                    | -                    |
+| `df`          | yes                    | -                    |
+| `free`        | yes                    | -                    |
+| `fusermount`  | yes                    | -                    |
+| `groupadd`    | yes                    | -                    |
+| `halt`        | yes                    | -                    |
+| `htop`        | yes                    | -                    |
+| `install`     | yes                    | -                    |
+| `iperf`       | yes                    | -                    |
+| `iperf3`      | yes                    | -                    |
+| `jobs`        | yes                    | -                    |
+| `journalctl`  | yes                    | -                    |
+| `kill`        | yes                    | -                    |
+| `killall`     | yes                    | -                    |
+| `lsmod`       | yes                    | -                    |
+| `lsof`        | yes                    | -                    |
+| `lsb_release` | yes                    | -                    |
+| `mount`       | yes                    | -                    |
+| `nice`        | yes                    | -                    |
+| `nohup`       | yes                    | -                    |
+| `nproc`       | yes                    | -                    |
+| `ps`          | yes                    | -                    |
+| `shutdown`    | yes                    | -                    |
+| `sudo`        | yes                    | -                    |
+| `systemctl`   | yes                    | -                    |
+| `top`         | yes                    | -                    |
+| `uname`       | yes                    | -                    |
+| `visudo`      | yes                    | -                    |
+| `which`       | yes                    | -                    |
+| `who`         | yes                    | -                    |
+| `whoami`      | yes                    | -                    |
 
-### Time/Date
+#### Time/Date
 
-- `cal`
-- `date`
-- `time`
+| Program | Options/flags coverage | Subcommands coverage |
+| ------- | ---------------------- | -------------------- |
+| `cal`   | -                      | -                    |
+| `date`  | -                      | -                    |
+| `time`  | -                      | -                    |
 
-### Text Processing
+#### Text Processing
 
-- `awk`
-- `cat`
-- `column`
-- `cut`
-- `diff`
-- `egrep`
-- `grep`
-- `head`
-- `less`
-- `nl`
-- `od`
-- `sed`
-- `sort`
-- `tail`
-- `tr`
-- `uniq`
-- `wc`
+| Program  | Options/flags coverage | Subcommands coverage |
+| -------- | ---------------------- | -------------------- |
+| `awk`    | -                      | -                    |
+| `cat`    | yes                    | -                    |
+| `column` | yes                    | -                    |
+| `cut`    | yes                    | -                    |
+| `diff`   | yes                    | -                    |
+| `egrep`  | yes                    | -                    |
+| `grep`   | yes                    | -                    |
+| `head`   | yes                    | -                    |
+| `less`   | yes                    | -                    |
+| `nl`     | yes                    | -                    |
+| `od`     | yes                    | -                    |
+| `sed`    | yes                    | -                    |
+| `sort`   | yes                    | -                    |
+| `tail`   | yes                    | -                    |
+| `tr`     | yes                    | -                    |
+| `uniq`   | yes                    | -                    |
+| `wc`     | yes                    | -                    |
 
-### Text editors
+#### Text editors
 
-- `code`
-- `nano`
-- `vi`
-- `vim`
+| Program | Options/flags coverage | Subcommands coverage |
+| ------- | ---------------------- | -------------------- |
+| `code`  | -                      | -                    |
+| `nano`  | -                      | -                    |
+| `vi`    | -                      | -                    |
+| `vim`   | -                      | -                    |
 
-### Task Runner
+#### Task Runner
 
-- `gulp`
+| Program | Options/flags coverage | Subcommands coverage |
+| ------- | ---------------------- | -------------------- |
+| `gulp`  | yes                    | -                    |
 
-### Utilities
+#### Utilities
 
-- `autossh`
-- `base64`
-- `env`
-- `gofmt`
-- `id`
-- `jq`
-- `kmdr`
-- `md5sum`
-- `openssl`
-- `pandoc`
-- `screen`
-- `seq`
-- `sha1sum`
-- `sha256sum`
-- `strings`
-- `timeout`
-- `uptime`
-- `whereis`
+| Program     | Options/flags coverage | Subcommands coverage |
+| ----------- | ---------------------- | -------------------- |
+| `apt-get`   | yes                    | -                    |
+| `autossh`   | yes                    | -                    |
+| `base64`    | yes                    | -                    |
+| `curl`      | yes                    | -                    |
+| `echo`      | yes                    |                      |
+| `env`       | yes                    | -                    |
+| `export`    | yes                    |                      |
+| `false`     | yes                    | -                    |
+| `gofmt`     | yes                    | -                    |
+| `history`   | yes                    |                      |
+| `id`        | yes                    | -                    |
+| `jq`        | yes                    | -                    |
+| `kmdr`      | yes                    | yes                  |
+| `md5sum`    | yes                    | -                    |
+| `openssl`   | yes                    | partial              |
+| `pandoc`    | yes                    | -                    |
+| `printf`    | yes                    | -                    |
+| `read`      | yes                    | -                    |
+| `screen`    | yes                    | -                    |
+| `seq`       | yes                    | -                    |
+| `sha1sum`   | yes                    | -                    |
+| `sha256sum` | yes                    | -                    |
+| `strings`   | yes                    | -                    |
+| `timeout`   | yes                    | -                    |
+| `uptime`    | yes                    | -                    |
+| `wget`      | yes                    | -                    |
+| `whereis`   | yes                    | -                    |
 
-### Virtualization
+#### Virtualization
 
-- `vagrant`
+| Program   | Options/flags coverage | Subcommands coverage |
+| --------- | ---------------------- | -------------------- |
+| `vagrant` | yes                    | -                    |
 
-### Version Control
+#### Version Control
 
-- `git`
-- `hg`
+| Program | Options/flags coverage | Subcommands coverage |
+| ------- | ---------------------- | -------------------- |
+| `hg`    | yes                    | -                    |
 
-### Miscellaneous
+#### Miscellaneous
 
-- `bash`
-- `bash/sh`
-- `conda`
-- `dh`
-- `gpart`
-- `gpg`
-- `header`
-- `lsblk`
-- `tty`
+| Program   | Options/flags coverage | Subcommands coverage |
+| --------- | ---------------------- | -------------------- |
+| `bash`    | yes                    | -                    |
+| `bash/sh` | yes                    | -                    |
+| `conda`   | yes                    | -                    |
+| `dh`      | yes                    | -                    |
+| `fuser`   | yes                    | -                    |
+| `gpg`     | yes                    | -                    |
+| `gpart`   | yes                    | -                    |
+| `header`  | yes                    | -                    |
+| `lsblk`   | yes                    | -                    |
+| `logout`  | yes                    | -                    |
+| `nc`      | yes                    | -                    |
+| `pv`      | yes                    | -                    |
+| `tty`     | yes                    | -                    |
+| `tcsh`    | yes                    | -                    |
+| `useradd` | yes                    | -                    |
+| `whois`   | yes                    | -                    |
 
 ## Stay tuned for more updates
 
