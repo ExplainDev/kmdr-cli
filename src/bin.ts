@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --no-deprecation
 
 import KMDR from "./kmdr";
 const kmdr = new KMDR();
