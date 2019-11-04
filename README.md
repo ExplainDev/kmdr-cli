@@ -383,12 +383,14 @@ We add new programs every day.
 | `tcpdump`     | yes                    | -                    |
 | `telnet`      | yes                    | -                    |
 | `traceroute`  | yes                    | -                    |
+| `ufw`         | yes                    | -                    |
 
 #### Package managers
 
 | Program      | Options/flags coverage | Subcommands coverage |
 | ------------ | ---------------------- | -------------------- |
 | `apt`        | yes                    | -                    |
+| `apt-key`    | yes                    | -                    |
 | `cargo`      | yes                    | -                    |
 | `dpkg`       | yes                    | -                    |
 | `dpkg-query` | yes                    | -                    |
