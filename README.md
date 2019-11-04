@@ -13,18 +13,24 @@
 ### Requirements
 
 - Node.js v8.x and above
-- A package manager like `yarn` or `npm`
+- A package manager like `npm` or `yarn`
 
-### With yarn
+#### With `npm`
+
+```bash
+npm install kmdr@latest --global
+```
+
+#### With `yarn`
 
 ```bash
 yarn global add kmdr@latest
 ```
 
-### With npm
+#### With Homebrew 🍺 (only macOS)
 
 ```bash
-npm install kmdr@latest --global
+brew install kommandr/tap/kmdr
 ```
 
 ### Check installation
