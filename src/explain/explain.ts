@@ -20,6 +20,7 @@ import Decorator from "../decorator";
 import Highlight from "../highlight";
 import { ExplainConfig } from "../interfaces";
 import ExplainClient from "./explainClient";
+import { OperandNode } from "kmdr-ast/dist/interfaces";
 
 export class Explain {
   private client = new ExplainClient();
@@ -27,11 +28,13 @@ export class Explain {
   private askOnce = false;
   private showSyntax = true;
   private showRelatedPrograms = true;
+  private showExamples = true;
 
   constructor(config: ExplainConfig) {
     this.askOnce = config.askOnce;
     this.showRelatedPrograms = config.showRelatedPrograms;
     this.showSyntax = config.showSyntax;
+    this.showExamples = config.showExamples;
   }
 
   public async render() {
@@ -58,7 +61,6 @@ export class Explain {
         const { ast, query: apiQuery, relatedPrograms } = data.explain;
         const serializedAST = AST.serialize(ast);
         const flatAST = AST.flatten(serializedAST);
-
         if (this.showSyntax) {
           this.printSyntax(apiQuery, flatAST);
         }
@@ -70,7 +72,7 @@ export class Explain {
         }
 
         if (this.showRelatedPrograms) {
-          await this.printRelated(relatedPrograms);
+          this.printRelated(relatedPrograms);
         }
 
         const { answer } = await this.promptHelpful();
@@ -102,20 +104,24 @@ export class Explain {
     let help = "";
     const margin = 4;
 
-    for (const node of leafNodes) {
+    for (const [idx, node] of leafNodes.entries()) {
       if (AST.isProgram(node)) {
         const programNode = node as ProgramNode;
         const { summary, name } = programNode.schema;
         const decoratedProgramName = Decorator.decorate(name, programNode);
         help += `${" ".repeat(margin)}${decoratedProgramName}\n`;
         help += `${" ".repeat(margin + 2)}${summary}`;
-      }
-
-      if (AST.isOption(node)) {
+      } else if (AST.isOption(node)) {
         const optionNode = node as OptionNode;
-        const { summary, long, short } = optionNode.optionSchema;
-        const decoratedOptions = [];
+        const { summary } = optionNode.optionSchema;
+        let decoratedOption = Decorator.decorate(optionNode.opt, optionNode);
 
+        if (optionNode.optionSchema.expectsArg && AST.isArgument(leafNodes[idx + 1])) {
+          const argNode = leafNodes[idx + 1] as ArgumentNode;
+          const { word } = argNode;
+          decoratedOption += ` ${Decorator.decorate(word, argNode)}`;
+        }
+        /*
         if (short && short.length >= 1) {
           decoratedOptions.push(Decorator.decorate(short.join(", "), optionNode));
         }
@@ -123,30 +129,25 @@ export class Explain {
         if (long && long.length >= 1) {
           decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
         }
+        */
 
-        help += `${" ".repeat(margin)}${decoratedOptions.join(", ")}\n`;
+        help += `${" ".repeat(margin)}${decoratedOption}\n`;
         help += `${" ".repeat(margin + 2)}${summary}`;
-      }
-
-      if (AST.isSubcommand(node)) {
+      } else if (AST.isSubcommand(node)) {
         const subcommandNode = node as SubcommandNode;
         const { name, summary } = subcommandNode.schema;
         const decoratedSubcommandName = Decorator.decorate(name, subcommandNode);
 
         help += `${" ".repeat(margin)}${decoratedSubcommandName}\n`;
         help += `${" ".repeat(margin + 2)}${summary}`;
-      }
-
-      if (AST.isAssignment(node)) {
+      } else if (AST.isAssignment(node)) {
         const assignmentNode = node as AssignmentNode;
         const { word } = assignmentNode;
         const decoratedAssignment = Decorator.decorate(word, assignmentNode);
 
         help += `${" ".repeat(margin)}${decoratedAssignment}\n`;
         help += `${" ".repeat(margin + 2)}A variable passed to the program process`;
-      }
-
-      if (AST.isOperator(node)) {
+      } else if (AST.isOperator(node)) {
         const operatorNode = node as OperatorNode;
         const { op } = operatorNode;
         const decoratedOperator = Decorator.decorate(op, operatorNode);
@@ -167,23 +168,12 @@ export class Explain {
             margin + 2,
           )}Commands separated by a 0; are executed sequentially; the shell waits for each command to terminate in turn. The return status is the exit status of the last command executed.`;
         }
-      }
-
-      if (AST.isSudo(node)) {
+      } else if (AST.isSudo(node)) {
         const sudoNode = node as SudoNode;
         const { summary } = sudoNode.schema;
         const decoratedNode = Decorator.decorate("sudo", sudoNode);
         help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}${summary}`;
-      }
-
-      if (AST.isArgument(node)) {
-        const argNode = node as ArgumentNode;
-        const { word } = argNode;
-        const decoratedNode = Decorator.decorate(word, argNode);
-        help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}An argument`;
-      }
-
-      if (AST.isPipe(node)) {
+      } else if (AST.isPipe(node)) {
         const pipeNode = node as PipeNode;
         const { pipe } = pipeNode;
         const decoratedNode = Decorator.decorate(pipe, pipeNode);
@@ -191,9 +181,7 @@ export class Explain {
         help += `${" ".repeat(
           margin + 2,
         )}A pipe serves the sdout of the previous command as input (stdin) to the next one`;
-      }
-
-      if (AST.isRedirect(node)) {
+      } else if (AST.isRedirect(node)) {
         const redirectNode = node as RedirectNode;
         const { type, output, input, output_fd } = redirectNode;
         const decoratedRedirectNode = Decorator.decorate(type, redirectNode);
@@ -235,12 +223,16 @@ export class Explain {
           help += `${" ".repeat(margin)}${decoratedRedirectNode}\n`;
           help += `${" ".repeat(margin + 2)}Redirect stdout to ${wordNode.word}.`;
         }
-      }
-
-      if (AST.isWord(node)) {
+      } else if (AST.isWord(node)) {
         const wordNode = node as WordNode;
         const decoratedNode = Decorator.decorate(wordNode.word, wordNode);
         help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}An argument`;
+      } else if (AST.isOperand(node)) {
+        const operandNode = node as OperandNode;
+        const decoratedNode = Decorator.decorate(operandNode.word, operandNode);
+        help += `${" ".repeat(margin)}${decoratedNode}\n${" ".repeat(margin + 2)}An operand`;
+      } else if (AST.isArgument(node)) {
+        continue;
       }
       help += `\n`;
     }

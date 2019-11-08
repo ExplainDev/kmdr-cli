@@ -12,12 +12,15 @@ import AST, {
   SudoNode,
   WordNode,
 } from "kmdr-ast";
+import { Option } from "kmdr-parser";
+import { OperandNode } from "kmdr-ast/dist/interfaces";
 
 const HIGHLIGHT_DEFAULTS: any = {
   argument: chalk.italic.bold.whiteBright,
   assignmentName: chalk.green,
   assignmentValue: chalk.whiteBright,
   fileDescriptor: chalk.magenta.bold,
+  operand: chalk.white.bold,
   operator: chalk.yellowBright.bold,
   option: chalk.bold.greenBright,
   optionWithArg: chalk.cyan,
@@ -45,11 +48,22 @@ class Decorator {
       | SudoNode
       | ReservedWordNode
       | RedirectNode
-      | WordNode,
+      | WordNode
+      | OperandNode,
   ): string {
     let decoratedString: string = "";
 
-    if (AST.isAssignment(token)) {
+    if (AST.isOptionWithArg(token as OptionWithArgNode)) {
+      console.log("isOptionWithArg");
+      const optionWithArgNode = token as OptionWithArgNode;
+
+      const optionNode = optionWithArgNode.option;
+      const argNode = optionWithArgNode.arg;
+
+      decoratedString = Decorator.color("option", optionNode.word);
+      decoratedString += "=";
+      decoratedString += Decorator.color("argument", argNode.word);
+    } else if (AST.isAssignment(token)) {
       const assignmentToken = token as AssignmentNode;
 
       decoratedString = Decorator.color("assignmentName", assignmentToken.name);

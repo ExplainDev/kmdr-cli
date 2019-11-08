@@ -39,6 +39,7 @@ export interface ExplainConfig {
   askOnce: boolean;
   showRelatedPrograms: boolean;
   showSyntax: boolean;
+  showExamples: boolean;
 }
 
 export interface ExplainFeedbackResponse extends AxiosResponse {

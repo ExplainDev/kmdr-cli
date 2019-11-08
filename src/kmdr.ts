@@ -24,6 +24,7 @@ class KMDR {
       .option("--no-show-syntax", "Do not show syntax highlighting")
       .option("-o, --ask-once", "Ask only once")
       .option("--no-show-related", "Do not show related CLI programs")
+      .option("--no-show-examples", "Do not show examples")
       .action(this.explain);
 
     this.cli
@@ -46,11 +47,12 @@ class KMDR {
   }
 
   private async explain(command: any) {
-    const { askOnce, showSyntax = false, showRelated = false } = command;
+    const { askOnce, showSyntax = false, showRelated = false, showExamples = false } = command;
     const explain = new Explain({
       askOnce,
       showRelatedPrograms: showRelated,
       showSyntax,
+      showExamples,
     });
     await explain.render();
   }
