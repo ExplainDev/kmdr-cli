@@ -5,6 +5,7 @@ import AST, {
   CommandNode,
   FlatAST,
   NodeAST,
+  OperandNode,
   OperatorNode,
   OptionNode,
   PipeNode,
@@ -20,7 +21,6 @@ import Decorator from "../decorator";
 import Highlight from "../highlight";
 import { ExplainConfig } from "../interfaces";
 import ExplainClient from "./explainClient";
-import { OperandNode } from "kmdr-ast/dist/interfaces";
 
 export class Explain {
   private client = new ExplainClient();
@@ -113,15 +113,10 @@ export class Explain {
         help += `${" ".repeat(margin + 2)}${summary}`;
       } else if (AST.isOption(node)) {
         const optionNode = node as OptionNode;
-        const { summary } = optionNode.optionSchema;
-        let decoratedOption = Decorator.decorate(optionNode.opt, optionNode);
+        const { summary, short, long } = optionNode.optionSchema;
+        const decoratedOptions = [];
+        let decoratedArg = "";
 
-        if (optionNode.optionSchema.expectsArg && AST.isArgument(leafNodes[idx + 1])) {
-          const argNode = leafNodes[idx + 1] as ArgumentNode;
-          const { word } = argNode;
-          decoratedOption += ` ${Decorator.decorate(word, argNode)}`;
-        }
-        /*
         if (short && short.length >= 1) {
           decoratedOptions.push(Decorator.decorate(short.join(", "), optionNode));
         }
@@ -129,9 +124,14 @@ export class Explain {
         if (long && long.length >= 1) {
           decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
         }
-        */
 
-        help += `${" ".repeat(margin)}${decoratedOption}\n`;
+        if (optionNode.optionSchema.expectsArg && AST.isArgument(leafNodes[idx + 1])) {
+          const argNode = leafNodes[idx + 1] as ArgumentNode;
+          const { word } = argNode;
+          decoratedArg = Decorator.decorate(word, argNode);
+        }
+
+        help += `${" ".repeat(margin)}${decoratedOptions.join(", ")} ${decoratedArg}\n`;
         help += `${" ".repeat(margin + 2)}${summary}`;
       } else if (AST.isSubcommand(node)) {
         const subcommandNode = node as SubcommandNode;
@@ -301,7 +301,7 @@ export class Explain {
     return this.console.promptInput(input);
   }
 
-  private async printRelated(programs: ProgramSchema[]) {
+  private printRelated(programs: ProgramSchema[]) {
     this.console.printTitle("Related Programs", { appendNewLine: false });
     if (programs.length > 0) {
       const relatedPrograms = programs.map(program => program.name).join(", ");

@@ -54,7 +54,6 @@ class Decorator {
     let decoratedString: string = "";
 
     if (AST.isOptionWithArg(token as OptionWithArgNode)) {
-      console.log("isOptionWithArg");
       const optionWithArgNode = token as OptionWithArgNode;
 
       const optionNode = optionWithArgNode.option;
