@@ -1,12 +1,12 @@
 import cli from "commander";
 import { KMDR_CLI_VERSION } from "./constants";
 import { Explain } from "./explain";
+import { Feedback } from "./feedback";
 import { Settings } from "./interfaces";
 import { Upgrade } from "./upgrade";
-import { Feedback } from "./feedback";
 
 class KMDR {
-  private settings: Settings | undefined;
+  private settings?: Settings;
   private cli = cli;
   // tslint:disable-next-line: max-line-length
   private welcomeMsg = `The CLI client for explaining complex shell commands.\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.`;
@@ -21,16 +21,17 @@ class KMDR {
       .command("explain")
       .alias("e")
       .description("Explain a shell command")
-      .option("--no-show-syntax", "Do not show syntax highlighting")
-      .option("-o, --ask-once", "Ask only once")
-      .option("--no-show-related", "Do not show related CLI programs")
-      .option("--no-show-examples", "Do not show examples")
+      .option("--test <asd>")
+      .option("--no-show-syntax", "Hide syntax highlighting")
+      .option("--no-prompt-again", "Do not return prompt for additional explanantions")
+      .option("--no-show-related", "Hide related CLI programs")
+      .option("--no-show-examples", "Hide command examples")
       .action(this.explain);
 
     this.cli
       .command("upgrade")
       .alias("u")
-      .description("Check for newer releases")
+      .description("Check for new releases")
       .action(this.upgrade);
 
     this.cli
@@ -46,13 +47,18 @@ class KMDR {
     }
   }
 
-  private async explain(command: any) {
-    const { askOnce, showSyntax = false, showRelated = false, showExamples = false } = command;
+  private async explain(command: any, opt: any) {
+    const {
+      promptAgain = false,
+      showSyntax = false,
+      showRelated = false,
+      showExamples = false,
+    } = command;
     const explain = new Explain({
-      askOnce,
+      promptAgain,
+      showExamples,
       showRelatedPrograms: showRelated,
       showSyntax,
-      showExamples,
     });
     await explain.render();
   }

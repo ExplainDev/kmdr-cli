@@ -7,6 +7,11 @@ query Explain($query: String!) {
   explain(query: $query) {
     query
     ast
+    examples {
+      title
+      rawContent
+      ast
+    }
   }
 }
 `;
@@ -16,6 +21,11 @@ query Explain($query: String!) {
   explain(query: $query) {
     query
     ast
+    examples {
+      title
+      rawContent
+      ast
+    }
     relatedPrograms {
       name
     }

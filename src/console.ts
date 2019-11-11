@@ -2,6 +2,7 @@ import chalk from "chalk";
 import inquirer, { InputQuestion, ListQuestion } from "inquirer";
 import Spinner from "ora";
 import { ConsolePrintOptions } from "./interfaces";
+import WordWrap from "word-wrap";
 
 export default class Console {
   private spinner?: any;
@@ -10,6 +11,7 @@ export default class Console {
     margin: 2,
     prependNewLine: false,
   };
+  private width = process.stdout.columns;
 
   public async prompt(questions: any): Promise<any> {
     return inquirer.prompt(questions);
@@ -59,7 +61,7 @@ export default class Console {
 
   public print(msg: string, options = this.defaultPrintOptions) {
     // tslint:disable-next-line: prefer-const
-    let { margin, prependNewLine, appendNewLine } = options;
+    let { margin, prependNewLine, appendNewLine, wrap } = options;
 
     if (margin === undefined) {
       margin = 2;
@@ -71,7 +73,12 @@ export default class Console {
       console.log();
     }
 
-    console.log(`${spaces}${msg}`);
+    if (wrap) {
+      const wrappedMsg = WordWrap(msg, { indent: spaces, width: this.width - margin * 2 });
+      console.log(wrappedMsg);
+    } else {
+      console.log(`${spaces}${msg}`);
+    }
 
     if (appendNewLine === true) {
       console.log();

@@ -12,8 +12,7 @@ import AST, {
   SudoNode,
   WordNode,
 } from "kmdr-ast";
-import { Option } from "kmdr-parser";
-import { OperandNode } from "kmdr-ast/dist/interfaces";
+import { OperandNode } from "kmdr-ast";
 
 const HIGHLIGHT_DEFAULTS: any = {
   argument: chalk.italic.bold.whiteBright,
