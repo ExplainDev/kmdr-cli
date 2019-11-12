@@ -3,7 +3,7 @@
 > The CLI client for explaining commands from your terminal
 
 <p align="center">
-  <img src="kmdr-explain.gif">
+  <img src="screenshot.png">
 </p>
 
 `kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
