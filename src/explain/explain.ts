@@ -130,13 +130,19 @@ export class Explain {
           decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
         }
 
-        if (optionNode.optionSchema.expectsArg && AST.isArgument(leafNodes[idx + 1])) {
+        if (
+          leafNodes[idx + 1] !== undefined &&
+          optionNode.optionSchema.expectsArg &&
+          AST.isArgument(leafNodes[idx + 1])
+        ) {
           const argNode = leafNodes[idx + 1] as ArgumentNode;
           const { word } = argNode;
           decoratedArg = Decorator.decorate(word, argNode);
+          this.console.print(`${decoratedOptions.join(", ")} ${decoratedArg}`, { margin });
+        } else {
+          this.console.print(`${decoratedOptions.join(", ")}`, { margin });
         }
 
-        this.console.print(`${decoratedOptions.join(", ")} ${decoratedArg}`, { margin });
         this.console.print(summary, { margin: margin + 2, wrap: true });
       } else if (AST.isSubcommand(node)) {
         const subcommandNode = node as SubcommandNode;
