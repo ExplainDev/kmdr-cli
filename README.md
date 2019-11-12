@@ -3,7 +3,7 @@
 > The CLI client for explaining commands from your terminal
 
 <p align="center">
-  <img src="kmdr-explain.gif">
+  <img src="screenshot.png">
 </p>
 
 `kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
@@ -41,9 +41,10 @@ Run the command `kmdr` to check if it was correctly installed on your system.
 $ kmdr
 Usage: kmdr [options] [command]
 
-The CLI client for explaining complex shell commands.
+The ultimate CLI learning tool for explaining commands from your terminal
 
-kmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.
+kmdr provides command explanations for hundreds of programs including git,
+docker, kubectl, npm, go and more straight forward programs such as bash builtins.
 
 Options:
   -v, --version        output the version number
@@ -51,7 +52,7 @@ Options:
 
 Commands:
   explain|e [options]  Explain a shell command
-  upgrade|u            Check for newer releases
+  upgrade|u            Check for new releases
   feedback|f           Send feedback :)
 ```
 
@@ -97,19 +98,27 @@ $ kmdr explain
 
     git commit -am "Initial commit"
 
-  Explanation
+  EXPLANATION
     git
       The stupid content tracker
     commit
       Record changes to the repository
     -a, --all
       Tell the command to automatically stage files that have been modified and deleted
-    -m, --message
+    -m, --message Initial commit
       Use the given <msg> as the commit message
-    Initial commit
-      An argument
 
-  Related Programs
+  EXAMPLES
+    git reset HEAD~1
+      Undo the most recent commit, keeping its changes in the filesystem
+
+    git commit -m "Initial commit"
+      Commit staged files to the repository with message "Initial commit"
+
+    git log -n 3 --oneline
+      Show only the first line of the last three commit messages
+
+  RELATED PROGRAMS
     hg, lsof, systemctl, aria2c, dmesg, make
 ```
 
@@ -119,13 +128,11 @@ $ kmdr explain
 
 ```
 $ kmdr explain
-? Enter your command: sudo npm install kmdr@latest --global
+? Enter your command: npm install kmdr@latest --global
 
-    sudo npm install kmdr@latest --global
+    npm install kmdr@latest --global
 
-  Explanation
-    sudo
-      Execute a command with the privileges of a different user without switching environments
+  EXPLANATION
     npm
       javascript package manager
     install
@@ -135,8 +142,18 @@ $ kmdr explain
     -g, --global
       Argument will cause npm to install the package globally rather than locally.
 
-  Related Programs
-    dpkg, pip, gem, node, cargo, install, systemctl
+  EXAMPLES
+    npm install kmdr@latest --global
+      Install kmdr on your machine
+
+    npm install
+      Download all the packages listed as dependencies in package.json
+
+    npm list -g --depth=0
+      List all top-level globally installed modules on the system
+
+  RELATED PROGRAMS
+    dpkg, pip, gem, node, cargo, install
 ```
 
 #### Explanining commands with grouped options
@@ -147,22 +164,32 @@ $ kmdr explain
 
     rsync -anv file1 file2
 
-  Explanation
+  EXPLANATION
     rsync
       A fast, versatile, remote (and local) file-copying tool
     -a, --archive
       This is equivalent to -rlptgoD.
     -n, --dry-run
-      This makes rsync perform a trial run that doesn’t make any changes (and produces mostly the same output as a real run).
+      This makes rsync perform a trial run that doesn’t make any changes
+      (and produces mostly the same output as a real run).
     -v, --verbose
-      This option increases the amount of information you are given during the transfer.
+      This option increases the amount of information you are given during
+      the transfer.
     file1
       An operand
     file2
       An operand
 
-  Related Programs
-    ssh, ssh-copy-id, hostname, ansible-playbook, ansible, scp, lxc
+  EXAMPLES
+    rsync -av --progress sourceDir user@host:remotedDir
+      Synchronize the remote folder "remoteDir" with directory "sourceDir"
+      including file permissions and ownership
+
+    rsync -ru remoteHost:remoteDir localDir
+      Synchronize only updated files from remote host
+
+  RELATED PROGRAMS
+    ssh, ssh-copy-id, hostname, ansible-playbook, ansible, scp
 ```
 
 #### Explaining commands with redireciton
@@ -173,7 +200,7 @@ $ kmdr explain
 
     ls -alh > contents.txt
 
-  Explanation
+  EXPLANATION
     ls
       List directory contents
     -a, --all
@@ -185,8 +212,19 @@ $ kmdr explain
     > contents.txt
       Redirect stdout to contents.txt.
 
-  Related Programs
-    dir, sort, pwd, tree, find, mkdir, rmdir
+  EXAMPLES
+    ls -a
+      List all files, including hidden files
+
+    ls -lh
+      Long format list with size displayed using human readable
+      units (KB, MB, GB)
+
+    ls -lS
+      Long format list sorted by size (descending)
+
+  RELATED PROGRAMS
+    dir, sort, pwd, tree, find, mkdir
 ```
 
 #### Explaining list of commands
@@ -197,10 +235,10 @@ $ kmdr explain
 
     dmesg | grep 'usb' > output.log 2> error.log
 
-  Explanation
+  EXPLANATION
     dmesg
       Print or control the kernel ring buffer
-    |
+  |
       A pipe serves the sdout of the previous command as input (stdin) to the next one
     grep
       Print lines matching a pattern
@@ -211,8 +249,11 @@ $ kmdr explain
     2> error.log
       Redirect stderr to error.log.
 
-  Related Programs
-    ifconfig, systemctl, iptables, make, git, ssh, passwd, nl, uniq, paste, sort, tee, base32, base64
+  EXAMPLES
+    Could not find any example
+
+  RELATED PROGRAMS
+    ifconfig, systemctl, iptables, ssh, nl, uniq, paste, sort,
 ```
 
 ### Sending feedback

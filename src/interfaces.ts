@@ -23,6 +23,7 @@ interface ExplainData {
 export interface Explain {
   query: string;
   ast: string;
+  examples: Command[];
   relatedPrograms: ProgramSchema[];
 }
 
@@ -36,9 +37,10 @@ export interface AuthCredentials {
 }
 
 export interface ExplainConfig {
-  askOnce: boolean;
+  promptAgain: boolean;
   showRelatedPrograms: boolean;
   showSyntax: boolean;
+  showExamples: boolean;
 }
 
 export interface ExplainFeedbackResponse extends AxiosResponse {
@@ -82,6 +84,7 @@ export interface ConsolePrintOptions {
   margin?: number;
   appendNewLine?: boolean;
   prependNewLine?: boolean;
+  wrap?: boolean;
 }
 
 export interface GraphQLResponse {
@@ -98,4 +101,10 @@ interface FeedbackData {
 
 interface Feedback {
   message: string;
+}
+
+export interface Command {
+  title: string;
+  rawContent: string;
+  ast: string;
 }

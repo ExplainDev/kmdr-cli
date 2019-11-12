@@ -1,6 +1,6 @@
 {
   "name": "kmdr",
-  "version": "0.2.5",
+  "version": "0.3.0-4",
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "@types/node-emoji": "^1.8.1",
     "@types/tunnel": "0.0.1",
     "@types/uuid": "^3.4.5",
+    "@types/word-wrap": "^1.2.1",
     "jest": "^24.8.0",
     "kmdr-parser": "^1.1.4",
     "prettier": "^1.17.1",
@@ -65,8 +66,9 @@
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "inquirer": "^7.0.0",
-    "kmdr-ast": "^1.0.5",
+    "kmdr-ast": "^1.0.12",
     "ora": "^3.4.0",
-    "tunnel": "^0.0.6"
+    "tunnel": "^0.0.6",
+    "word-wrap": "^1.2.3"
   }
 }
