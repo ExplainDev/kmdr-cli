@@ -107,7 +107,7 @@ export class Explain {
 
   private printExplanation(leafNodes: FlatAST) {
     const margin = 4;
-    this.console.printTitle("Explanation", { appendNewLine: false });
+    this.console.printTitle("EXPLANATION", { appendNewLine: false });
 
     for (const [idx, node] of leafNodes.entries()) {
       if (AST.isProgram(node)) {
@@ -230,7 +230,7 @@ export class Explain {
   }
 
   private printUnavailableExplanation(ast: NodeAST) {
-    this.console.printTitle("Explanation", { appendNewLine: false });
+    this.console.printTitle("EXPLANATION", { appendNewLine: false });
 
     if (
       AST.isCommand(ast) &&
@@ -291,7 +291,7 @@ export class Explain {
   }
 
   private printRelated(programs: ProgramSchema[]) {
-    this.console.printTitle("Related Programs", { appendNewLine: false });
+    this.console.printTitle("RELATED PROGRAMS", { appendNewLine: false });
     if (programs.length === 0) {
       this.console.print("Could not find any related programs", { margin: 4, appendNewLine: true });
     } else {
@@ -313,7 +313,7 @@ export class Explain {
   }
 
   private printExamples(examples: Command[]) {
-    this.console.printTitle("Examples", { appendNewLine: false });
+    this.console.printTitle("EXAMPLES", { appendNewLine: false });
 
     if (examples.length === 0) {
       this.console.print("Could not find any example", { margin: 4, appendNewLine: true });
