@@ -185,7 +185,7 @@ export class Explain {
         const pipeNode = node as PipeNode;
         const { pipe } = pipeNode;
         const decoratedNode = Decorator.decorate(pipe, pipeNode);
-        this.console.print(decoratedNode);
+        this.console.print(decoratedNode, { margin });
         this.console.print(
           "A pipe serves the sdout of the previous command as input (stdin) to the next one",
           { margin: margin + 2, wrap: true },
