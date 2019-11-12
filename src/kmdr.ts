@@ -21,9 +21,8 @@ class KMDR {
       .command("explain")
       .alias("e")
       .description("Explain a shell command")
-      .option("--test <asd>")
       .option("--no-show-syntax", "Hide syntax highlighting")
-      .option("--no-prompt-again", "Do not return prompt for additional explanantions")
+      .option("--no-prompt-again", "Do not return prompt for additional explanations")
       .option("--no-show-related", "Hide related CLI programs")
       .option("--no-show-examples", "Hide command examples")
       .action(this.explain);

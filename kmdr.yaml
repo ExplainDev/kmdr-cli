@@ -1,0 +1,52 @@
+---
+name: kmdr
+summary: The ultimate CLI learning tool
+link: https://kmdr.sh
+description:
+  kmdr provides command explanations for hundreds of programs including
+  git, docker, kubectl,npm, go and more straight forward programs such as those built
+  into bash
+version: 0.2.5
+locale: en
+options:
+  - short:
+      - "-v"
+    long:
+      - "--version"
+    summary: Output the version number
+  - short:
+      - "-h"
+    long:
+      - "--help"
+    summary: Output usage information
+subcommands:
+  - name: explain
+    summary: Explain a command
+    aliases:
+      - e
+    options:
+      - long:
+          - "--no-show-syntax"
+        summary: Hide syntax highlighting
+      - long:
+          - "--no-prompt-again"
+        summary: Do not return prompt for additional explanations
+      - long:
+          - "--no-show-related"
+        summary: Hide related CLI programs
+      - long:
+          - "--no-show-examples"
+        summary: Hide command examples
+      - long:
+          - "--help"
+        short:
+          - "-h"
+        summary: Output usage information
+  - name: upgrade
+    summary: Check for new releases
+    aliases:
+      - u
+  - name: feedback
+    summary: Send feedback :)
+    aliases:
+      - f
