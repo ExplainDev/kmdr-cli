@@ -9,7 +9,7 @@ class KMDR {
   private settings?: Settings;
   private cli = cli;
   // tslint:disable-next-line: max-line-length
-  private welcomeMsg = `The CLI client for explaining complex shell commands.\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.`;
+  private welcomeMsg = `The ultimate CLI learning tool for explaining commands from your terminal\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl,npm, go and more straight forward programs such as those built into bash.`;
 
   constructor(settings?: Settings) {
     this.settings = settings;
