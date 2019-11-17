@@ -45,7 +45,7 @@ export default class Client {
       const proxy: ProxyOptions = {
         host: parsedProxyUrl.hostname || "",
         port: parseInt(parsedProxyUrl.port || "", 10),
-        proxyAuth: parsedProxyUrl.auth,
+        proxyAuth: parsedProxyUrl.auth ?? undefined,
       };
 
       let httpsAgent: Agent;
