@@ -1,6 +1,6 @@
-# kmdr.sh ![npm](https://img.shields.io/npm/v/kmdr?color=green&style=flat-square)![npm](https://img.shields.io/npm/dt/kmdr?color=blue&style=flat-square)
+# kmdr-cli ![npm](https://img.shields.io/npm/v/kmdr?color=green&style=flat-square)![npm](https://img.shields.io/npm/dt/kmdr?color=blue&style=flat-square)
 
-> The CLI client for explaining commands from your terminal
+> The ultimate CLI learning tool for explaining commands from your terminal
 
 <p align="center">
   <img src="screenshot.png">
@@ -238,7 +238,7 @@ $ kmdr explain
   EXPLANATION
     dmesg
       Print or control the kernel ring buffer
-  |
+    |
       A pipe serves the sdout of the previous command as input (stdin) to the next one
     grep
       Print lines matching a pattern
@@ -376,6 +376,7 @@ We add new programs every day!
 - `nc`
 - `ncat`
 - `netstat`
+- `nmcli`
 - `nmap`
 - `nslookup`
 - `ping`
@@ -391,6 +392,7 @@ We add new programs every day!
 ### Package managers
 
 - `apt`
+- `apt-key`
 - `apt-get`
 - `cargo`
 - `dpkg`
@@ -435,6 +437,7 @@ We add new programs every day!
 - `nohup`
 - `nproc`
 - `ps`
+- `parted`
 - `shutdown`
 - `sudo`
 - `systemctl`
