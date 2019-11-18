@@ -5,6 +5,12 @@ const flatten = (list: any) =>
   list.reduce((a: any, b: any) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
 
 class Highlight {
+  public static inRange(pos: number, range: number[]): boolean {
+    const [start, stop] = range;
+
+    return pos >= start && pos < stop;
+  }
+
   public decorate(query: string, leafNodes: FlatAST): string {
     let decoratedString: string = "";
     let currentToken = 0;
@@ -14,7 +20,7 @@ class Highlight {
 
     for (let pos = 0; pos < query.length; pos++) {
       const char = query[pos];
-      if (currentToken < tokens.length && this.inRange(pos, tokens[currentToken].pos)) {
+      if (currentToken < tokens.length && Highlight.inRange(pos, tokens[currentToken].pos)) {
         inRange = true;
         wordInRange += char;
         // if there's a token that spans till the end of the string
@@ -37,15 +43,6 @@ class Highlight {
     }
 
     return decoratedString;
-  }
-
-  private inRange(pos: number, range: number[]): boolean {
-    const [start, stop] = range;
-    if (pos >= start && pos < stop) {
-      return true;
-    }
-
-    return false;
   }
 }
 

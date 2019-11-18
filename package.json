@@ -26,6 +26,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/inquirer": "^6.0.3",
+    "@types/jest": "^24.0.23",
     "@types/node": "^12.7.8",
     "@types/node-emoji": "^1.8.1",
     "@types/tunnel": "0.0.1",
@@ -47,19 +48,26 @@
     }
   ],
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
+    "testPathIgnorePatterns": [
+      "dist/",
+      "build/",
+      "src/",
+      "node_modules/"
     ],
+    "testEnvironment": "node",
+    "testRegex": "tests/.*\\.(ts|tsx|js)$",
     "transform": {
       "\\.(ts|tsx)$": "ts-jest"
     },
-    "testPathIgnorePatterns": [
-      "dist/",
-      "tests/data/"
-    ],
-    "testRegex": "tests/.*\\.(ts|tsx|js)$"
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "ignoreCodes": [
+            2345
+          ]
+        }
+      }
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
