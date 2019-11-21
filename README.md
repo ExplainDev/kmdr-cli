@@ -480,6 +480,7 @@ We add new programs every day!
 
 - `code`
 - `nano`
+- `pgrep`
 - `vi`
 - `vim`
 
@@ -523,6 +524,7 @@ We add new programs every day!
 - `bash/sh`
 - `conda`
 - `dh`
+- `fzf`
 - `gpart`
 - `gpg`
 - `header`
