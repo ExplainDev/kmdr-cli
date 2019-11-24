@@ -15,11 +15,11 @@ import AST, {
   SudoNode,
   WordNode,
 } from "kmdr-ast";
-import { ProgramSchema } from "kmdr-parser";
+import { Command, ProgramSchema } from "kmdr-parser";
 import Console from "../console";
 import Decorator from "../decorator";
 import Highlight from "../highlight";
-import { Command, ExplainConfig } from "../interfaces";
+import { ExplainConfig } from "../interfaces";
 import ExplainClient from "./explainClient";
 
 export class Explain {
@@ -246,9 +246,11 @@ export class Explain {
       const wordNodes = ast.parts.filter(part => AST.isWord(part)) as WordNode[];
       if (wordNodes.length > 0) {
         const firstWordNode = wordNodes[0];
-        this.console.print(`Could not any explanation for ${firstWordNode.word}`, { margin: 4 });
+        this.console.print(`Could not find any explanation for ${firstWordNode.word}`, {
+          margin: 4,
+        });
       } else {
-        this.console.print(`Could not any explanation for your query`, { margin: 4 });
+        this.console.print(`Could not find any explanation for your query`, { margin: 4 });
       }
     }
   }
@@ -327,17 +329,24 @@ export class Explain {
       const highlight = new Highlight();
 
       for (const example of examples) {
-        const { title, rawContent, ast } = example;
-        const serializedAST = AST.serialize(ast);
-        const flatAST = AST.flatten(serializedAST);
-        const decoratedString = highlight.decorate(rawContent, flatAST);
+        const { summary, command, ast } = example;
 
-        this.console.print(decoratedString, {
+        let decoratedCommand: string = "";
+
+        if (ast) {
+          const serializedAST = AST.serialize(ast);
+          const flatAST = AST.flatten(serializedAST);
+          decoratedCommand = highlight.decorate(command, flatAST);
+        } else {
+          decoratedCommand = command;
+        }
+
+        this.console.print(decoratedCommand ?? command, {
           appendNewLine: false,
           margin: 4,
           prependNewLine: false,
         });
-        this.console.print(title, {
+        this.console.print(summary, {
           appendNewLine: true,
           margin: 6,
           prependNewLine: false,

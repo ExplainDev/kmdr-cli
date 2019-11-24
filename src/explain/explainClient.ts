@@ -8,8 +8,8 @@ query Explain($query: String!) {
     query
     ast
     examples {
-      title
-      rawContent
+      summary
+      command
       ast
     }
   }
@@ -22,8 +22,8 @@ query Explain($query: String!) {
     query
     ast
     examples {
-      title
-      rawContent
+      summary
+      command
       ast
     }
     relatedPrograms {
