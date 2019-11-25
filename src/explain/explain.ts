@@ -248,6 +248,7 @@ export class Explain {
         const firstWordNode = wordNodes[0];
         this.console.print(`Could not find any explanation for ${firstWordNode.word}`, {
           margin: 4,
+          appendNewLine: true,
         });
       } else {
         this.console.print(`Could not find any explanation for your query`, { margin: 4 });
@@ -331,14 +332,12 @@ export class Explain {
       for (const example of examples) {
         const { summary, command, ast } = example;
 
-        let decoratedCommand: string = "";
+        let decoratedCommand: string | undefined;
 
         if (ast) {
           const serializedAST = AST.serialize(ast);
           const flatAST = AST.flatten(serializedAST);
           decoratedCommand = highlight.decorate(command, flatAST);
-        } else {
-          decoratedCommand = command;
         }
 
         this.console.print(decoratedCommand ?? command, {
@@ -347,12 +346,14 @@ export class Explain {
           prependNewLine: false,
         });
         this.console.print(summary, {
-          appendNewLine: true,
+          appendNewLine: false,
           margin: 6,
           prependNewLine: false,
           wrap: true,
         });
       }
+
+      this.console.printNewLine();
     }
   }
 }

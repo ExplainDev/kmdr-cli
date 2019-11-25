@@ -81,6 +81,7 @@ interface CliVersion {
 }
 
 export interface ConsolePrintOptions {
+  color?: string;
   margin?: number;
   appendNewLine?: boolean;
   prependNewLine?: boolean;

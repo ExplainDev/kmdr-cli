@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import inquirer, { InputQuestion, ListQuestion } from "inquirer";
 import Spinner from "ora";
-import { ConsolePrintOptions } from "./interfaces";
 import WordWrap from "word-wrap";
+import { ConsolePrintOptions } from "./interfaces";
 
 export default class Console {
   private spinner?: any;
@@ -10,6 +10,7 @@ export default class Console {
     appendNewLine: true,
     margin: 2,
     prependNewLine: false,
+    wrap: true,
   };
   private width = process.stdout.columns;
 
@@ -67,7 +68,7 @@ export default class Console {
       margin = 2;
     }
 
-    const spaces = " ".repeat(margin ? margin : 0);
+    const spaces = " ".repeat(margin);
 
     if (prependNewLine === true) {
       console.log();
@@ -83,6 +84,10 @@ export default class Console {
     if (appendNewLine === true) {
       console.log();
     }
+  }
+
+  public printNewLine() {
+    this.print("", { appendNewLine: false, prependNewLine: false });
   }
 
   public render() {
