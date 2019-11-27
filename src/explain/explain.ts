@@ -4,6 +4,7 @@ import AST, {
   AssignmentNode,
   CommandNode,
   FlatAST,
+  Highlight,
   NodeAST,
   OperandNode,
   OperatorNode,
@@ -17,10 +18,9 @@ import AST, {
 } from "kmdr-ast";
 import { Command, ProgramSchema } from "kmdr-parser";
 import Console from "../console";
-import Decorator from "../decorator";
-import Highlight from "../highlight";
 import { ExplainConfig } from "../interfaces";
 import ExplainClient from "./explainClient";
+import { decorators } from "../theme";
 
 export class Explain {
   private client = new ExplainClient();
@@ -63,7 +63,7 @@ export class Explain {
         const flatAST = AST.flatten(serializedAST);
 
         if (this.showSyntax) {
-          this.printSyntax(apiQuery, flatAST);
+          this.printSyntax(apiQuery, serializedAST);
         }
 
         if (flatAST.length === 0) {
@@ -108,12 +108,13 @@ export class Explain {
   private printExplanation(leafNodes: FlatAST) {
     const margin = 4;
     this.console.printTitle("EXPLANATION", { appendNewLine: false });
+    const highlight = new Highlight(decorators);
 
     for (const [idx, node] of leafNodes.entries()) {
       if (AST.isProgram(node)) {
         const programNode = node as ProgramNode;
         const { summary, name } = programNode.schema;
-        const decoratedProgramName = Decorator.decorate(name, programNode);
+        const decoratedProgramName = highlight.token(programNode);
         this.console.print(decoratedProgramName, { margin });
         this.console.print(summary, { margin: margin + 2, wrap: true });
       } else if (AST.isOption(node)) {
@@ -123,11 +124,11 @@ export class Explain {
         let decoratedArg = "";
 
         if (short && short.length >= 1) {
-          decoratedOptions.push(Decorator.decorate(short.join(", "), optionNode));
+          decoratedOptions.push(highlight.token(optionNode));
         }
 
         if (long && long.length >= 1) {
-          decoratedOptions.push(Decorator.decorate(long.join(", "), optionNode));
+          decoratedOptions.push(highlight.token(optionNode));
         }
 
         if (
@@ -137,7 +138,7 @@ export class Explain {
         ) {
           const argNode = leafNodes[idx + 1] as ArgumentNode;
           const { word } = argNode;
-          decoratedArg = Decorator.decorate(word, argNode);
+          decoratedArg = highlight.token(argNode);
           this.console.print(`${decoratedOptions.join(", ")} ${decoratedArg}`, { margin });
         } else {
           this.console.print(`${decoratedOptions.join(", ")}`, { margin });
@@ -147,14 +148,14 @@ export class Explain {
       } else if (AST.isSubcommand(node)) {
         const subcommandNode = node as SubcommandNode;
         const { name, summary } = subcommandNode.schema;
-        const decoratedSubcommandName = Decorator.decorate(name, subcommandNode);
+        const decoratedSubcommandName = highlight.token(subcommandNode);
 
         this.console.print(decoratedSubcommandName, { margin });
         this.console.print(summary, { margin: margin + 2, wrap: true });
       } else if (AST.isAssignment(node)) {
         const assignmentNode = node as AssignmentNode;
         const { word } = assignmentNode;
-        const decoratedAssignment = Decorator.decorate(word, assignmentNode);
+        const decoratedAssignment = highlight.token(assignmentNode);
 
         this.console.print(decoratedAssignment, { margin });
         this.console.print("A variable passed to the program process", {
@@ -164,7 +165,7 @@ export class Explain {
       } else if (AST.isOperator(node)) {
         const operatorNode = node as OperatorNode;
         const { op } = operatorNode;
-        const decoratedOperator = Decorator.decorate(op, operatorNode);
+        const decoratedOperator = highlight.token(operatorNode);
         this.console.print(decoratedOperator, { margin });
         let help = "";
         if (op === "&&") {
@@ -178,13 +179,13 @@ export class Explain {
       } else if (AST.isSudo(node)) {
         const sudoNode = node as SudoNode;
         const { summary } = sudoNode.schema;
-        const decoratedNode = Decorator.decorate("sudo", sudoNode);
+        const decoratedNode = highlight.token(sudoNode);
         this.console.print(decoratedNode, { margin });
         this.console.print(summary, { margin: margin + 2, wrap: true });
       } else if (AST.isPipe(node)) {
         const pipeNode = node as PipeNode;
         const { pipe } = pipeNode;
-        const decoratedNode = Decorator.decorate(pipe, pipeNode);
+        const decoratedNode = highlight.token(pipeNode);
         this.console.print(decoratedNode, { margin });
         this.console.print(
           "A pipe serves the sdout of the previous command as input (stdin) to the next one",
@@ -193,7 +194,7 @@ export class Explain {
       } else if (AST.isRedirect(node)) {
         const redirectNode = node as RedirectNode;
         const { type, output, input, output_fd } = redirectNode;
-        const decoratedRedirectNode = Decorator.decorate(type, redirectNode);
+        const decoratedRedirectNode = highlight.token(redirectNode);
         let wordNode: any;
 
         if (typeof output === "object") {
@@ -225,7 +226,7 @@ export class Explain {
         this.console.print(help, { margin: margin + 2, wrap: true });
       } else if (AST.isOperand(node)) {
         const operandNode = node as OperandNode;
-        const decoratedNode = Decorator.decorate(operandNode.word, operandNode);
+        const decoratedNode = highlight.token(operandNode);
         this.console.print(decoratedNode, { margin });
         this.console.print("An operand", { margin: margin + 2, wrap: true });
       } else if (AST.isArgument(node)) {
@@ -309,9 +310,9 @@ export class Explain {
     }
   }
 
-  private printSyntax(apiQuery: string, flatAST: FlatAST): void {
-    const h = new Highlight();
-    const decoratedString = h.decorate(apiQuery, flatAST);
+  private printSyntax(apiQuery: string, ast: NodeAST): void {
+    const h = new Highlight(decorators);
+    const decoratedString = h.query(apiQuery, ast).join("");
 
     this.console.print(decoratedString, {
       appendNewLine: true,
@@ -327,7 +328,7 @@ export class Explain {
     if (examples.length === 0) {
       this.console.print("Could not find any example", { margin: 4, appendNewLine: true });
     } else {
-      const highlight = new Highlight();
+      const highlight = new Highlight(decorators);
 
       for (const example of examples) {
         const { summary, command, ast } = example;
@@ -336,8 +337,7 @@ export class Explain {
 
         if (ast) {
           const serializedAST = AST.serialize(ast);
-          const flatAST = AST.flatten(serializedAST);
-          decoratedCommand = highlight.decorate(command, flatAST);
+          decoratedCommand = highlight.query(command, serializedAST).join("");
         }
 
         this.console.print(decoratedCommand ?? command, {
