@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ProgramSchema } from "kmdr-parser";
+import { Command, Program } from "kmdr-parser";
 
 export interface Theme {
   node: string;
@@ -24,7 +24,7 @@ export interface Explain {
   query: string;
   ast: string;
   examples: Command[];
-  relatedPrograms: ProgramSchema[];
+  relatedPrograms: Program[];
 }
 
 export interface ConsoleAnswers {
@@ -57,7 +57,7 @@ export interface RelatedProgramsResponse extends AxiosResponse {
 }
 
 interface RelatedProgramsData {
-  relatedPrograms: ProgramSchema[];
+  relatedPrograms: Program[];
 }
 
 export interface LatestCliReleaseResponse extends AxiosResponse {
@@ -81,6 +81,7 @@ interface CliVersion {
 }
 
 export interface ConsolePrintOptions {
+  color?: string;
   margin?: number;
   appendNewLine?: boolean;
   prependNewLine?: boolean;
@@ -101,10 +102,4 @@ interface FeedbackData {
 
 interface Feedback {
   message: string;
-}
-
-export interface Command {
-  title: string;
-  rawContent: string;
-  ast: string;
 }
