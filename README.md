@@ -352,6 +352,7 @@ We add new programs every day!
 - `rmdir`
 - `rsync`
 - `scp`
+- `shred`
 - `split`
 - `stat`
 - `tar`
@@ -399,6 +400,7 @@ We add new programs every day!
 - `dpkg-query`
 - `gem`
 - `npm`
+- `makepkg`
 - `pip`
 - `yarn`
 
@@ -429,6 +431,7 @@ We add new programs every day!
 - `iperf3`
 - `journalctl`
 - `killall`
+- `localectl`
 - `lsof`
 - `lsb_release`
 - `lsmod`
