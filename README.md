@@ -496,7 +496,9 @@ We add new programs every day!
 - `autossh`
 - `base64`
 - `env`
+- `exa`
 - `gofmt`
+- `gradlew`
 - `id`
 - `jq`
 - `kmdr`
