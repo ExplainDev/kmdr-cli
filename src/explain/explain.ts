@@ -19,8 +19,8 @@ import AST, {
 import { Command, ProgramSchema } from "kmdr-parser";
 import Console from "../console";
 import { ExplainConfig } from "../interfaces";
-import ExplainClient from "./explainClient";
 import { decorators } from "../theme";
+import ExplainClient from "./explainClient";
 
 export class Explain {
   private client = new ExplainClient();
@@ -52,7 +52,6 @@ export class Explain {
         this.console.startSpinner("Analyzing your command...");
         const { headers, data } = await this.client.getExplanation(query, this.showRelatedPrograms);
         sessionId = headers["x-kmdr-client-session-id"];
-
         if (data.explain === null) {
           this.console.failSpinner("An error occurred. Please try again.");
           continue;
@@ -81,13 +80,20 @@ export class Explain {
         }
 
         const { answer } = await this.promptHelpful();
-        if (answer === "no" || answer === "yes") {
-          let comment = "";
+        if (answer === "publish") {
+          const { summary } = await this.promptCommandSummary();
 
-          if (answer === "no") {
-            const userComment = await this.askFeedback(answer);
-            comment = userComment.comment;
+          const res = await this.client.saveCommand(sessionId, query, summary);
+
+          if (res.data) {
+            this.console.succeedSpinner(
+              `Your command was saved at https://explain.kmdr.sh/s/${sessionId}`,
+            );
+          } else {
+            this.console.failSpinner("Your command wasn't saved. Please try again.");
           }
+        } else if (answer === "feedback") {
+          const { comment } = await this.promptFeedback(answer);
 
           this.console.startSpinner("Sending your feedback...");
           const res = await this.client.sendFeedback(sessionId, answer, comment);
@@ -95,7 +101,7 @@ export class Explain {
           if (res.data) {
             this.console.succeedSpinner("Your feedback was saved. Thank you!");
           } else {
-            this.console.failSpinner("Your feedback wasn't saved. Please try again!");
+            this.console.failSpinner("Your feedback wasn't saved. Please try again.");
           }
         }
       } catch (err) {
@@ -124,11 +130,14 @@ export class Explain {
         let decoratedArg = "";
 
         if (short && short.length >= 1) {
-          decoratedOptions.push(highlight.token(optionNode));
+          const shortOptions = short.map(opt => highlight.token(optionNode, opt));
+          decoratedOptions.push(...shortOptions);
+          // decoratedOptions.push();
         }
 
         if (long && long.length >= 1) {
-          decoratedOptions.push(highlight.token(optionNode));
+          const longOptions = long.map(opt => highlight.token(optionNode, opt));
+          decoratedOptions.push(...longOptions);
         }
 
         if (
@@ -270,31 +279,42 @@ export class Explain {
     const choices: ListQuestion = {
       choices: [
         {
-          name: !this.promptAgain ? "Skip & Exit" : "Skip feedback & ask again (Ctrl+c to exit)",
+          name: !this.promptAgain ? "Exit" : "Ask again (Ctrl+c to exit)",
           value: "skip",
         },
         {
-          name: "Yes",
-          value: "yes",
+          name: "Publish to kmdr.sh",
+          value: "publish",
         },
         {
-          name: "No",
-          value: "no",
+          name: "Send Feedback",
+          value: "feedback",
         },
       ],
-      message: "Did we help you better understand this command?",
+      message: "What do you want do next?",
       name: "answer",
       type: "list",
     };
     return this.console.prompt(choices);
   }
 
-  private askFeedback(answer: string): Promise<any> {
+  private promptFeedback(answer: string): Promise<any> {
     let input: InputQuestion;
 
     input = {
-      message: "What's wrong with the explanation?",
+      message: "How did we do?",
       name: "comment",
+    };
+
+    return this.console.promptInput(input);
+  }
+
+  private promptCommandSummary(): Promise<any> {
+    let input: InputQuestion;
+
+    input = {
+      message: "What does this command do?",
+      name: "summary",
     };
 
     return this.console.promptInput(input);

@@ -23,12 +23,10 @@ const THEMES: any = {
     operand: chalk.white.bold,
     operator: chalk.yellowBright.bold,
     option: chalk.bold.greenBright,
-    optionWithArg: chalk.cyan,
     pipe: chalk.bold.magentaBright,
     program: chalk.bold.cyan,
     redirect: chalk.bold.blueBright,
     reservedword: chalk.bold.gray,
-    stickyOption: chalk.cyan,
     subcommand: chalk.bold.blue,
     sudo: chalk.bold.redBright,
     word: chalk.bold.white,
@@ -60,9 +58,10 @@ export const decorators: any = {
     const { op } = node;
     return THEMES[DEFAULT_THEME].operator(op);
   },
-  option: (node: OptionNode) => {
-    const { word } = node;
-    return THEMES[DEFAULT_THEME].option(word);
+  option: (node: OptionNode, fromPropName?: string) => {
+    const targetString = fromPropName ? fromPropName : node.word;
+
+    return THEMES[DEFAULT_THEME].option(targetString);
   },
 
   optionWithArg: (node: OptionWithArgNode) => {

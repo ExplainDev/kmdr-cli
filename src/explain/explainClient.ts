@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import Client from "../client";
-import { ExplainFeedbackResponse, ExplainResponse } from "../interfaces";
+import { ExplainFeedbackResponse, ExplainResponse, CommandResponse } from "../interfaces";
 
 const queryExplain = `
 query Explain($query: String!) {
@@ -42,6 +42,16 @@ mutation createExplainFeedback($answer: String!, $comment: String) {
 }
 `;
 
+const mutationCreateCommand = `
+mutation createCommand($command: String!, $summary: String) {
+  createCommand(command: $command, summary: $summary) {
+    command
+    summary
+    totalViews
+  }
+}
+`;
+
 export default class ExplainClient extends Client {
   constructor() {
     super();
@@ -69,5 +79,19 @@ export default class ExplainClient extends Client {
       },
     };
     return super.doMutation(mutationCreateExplainFeedback, { answer, comment }, config);
+  }
+
+  public async saveCommand(
+    sessionId: string,
+    command: string,
+    summary: string,
+  ): Promise<CommandResponse> {
+    const config: AxiosRequestConfig = {
+      headers: {
+        "x-kmdr-client-session-id": sessionId,
+      },
+    };
+
+    return super.doMutation(mutationCreateCommand, { command, summary }, config);
   }
 }
