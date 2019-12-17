@@ -293,6 +293,7 @@ We add new programs every day!
 - `kill`
 - `logout`
 - `printf`
+- `popd`
 - `pwd`
 - `read`
 - `readonly`
@@ -513,6 +514,7 @@ We add new programs every day!
 - `timeout`
 - `uptime`
 - `whereis`
+- `zsh`
 
 ### Virtualization
 
@@ -535,6 +537,7 @@ We add new programs every day!
 - `header`
 - `lsblk`
 - `tty`
+- `yes`
 
 ## Stay tuned for more updates
 
