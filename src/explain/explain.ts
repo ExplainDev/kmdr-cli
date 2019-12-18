@@ -22,6 +22,9 @@ import { ExplainConfig } from "../interfaces";
 import { decorators } from "../theme";
 import ExplainClient from "./explainClient";
 
+const explainSessionBaseUrl =
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://explain.kmdr.sh";
+
 export class Explain {
   private client = new ExplainClient();
   private console = new Console();
@@ -87,7 +90,7 @@ export class Explain {
 
           if (res.data) {
             this.console.succeedSpinner(
-              `Your command was saved at https://explain.kmdr.sh/s/${sessionId}`,
+              `Your command was saved at ${explainSessionBaseUrl}/s/${sessionId}`,
             );
           } else {
             this.console.failSpinner("Your command wasn't saved. Please try again.");
@@ -283,7 +286,7 @@ export class Explain {
           value: "skip",
         },
         {
-          name: "Publish to kmdr.sh",
+          name: "Share this explain session",
           value: "publish",
         },
         {
@@ -313,7 +316,7 @@ export class Explain {
     let input: InputQuestion;
 
     input = {
-      message: "What does this command do?",
+      message: "Summary of command (used for title)",
       name: "summary",
     };
 

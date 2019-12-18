@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest --verbose",
-    "start:prod": "node dist/index.js",
-    "start:dev": "KMDR_API_URL=http://localhost:8081/api/graphql node dist/index.js"
+    "start:prod": " NODE_ENV=production node dist/index.js",
+    "start:dev": "KMDR_API_URL=http://localhost:8081/api/graphql NODE_ENV=development node dist/index.js"
   },
   "bin": {
     "kmdr": "dist/bin.js"
