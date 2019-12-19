@@ -295,6 +295,7 @@ We add new programs every day!
 - `logout`
 - `printf`
 - `popd`
+- `pushd`
 - `pwd`
 - `read`
 - `readonly`
