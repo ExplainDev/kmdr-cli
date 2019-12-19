@@ -285,6 +285,7 @@ We add new programs every day!
 - `disown`
 - `echo`
 - `eval`
+- `exit`
 - `export`
 - `false`
 - `fg`
@@ -306,6 +307,7 @@ We add new programs every day!
 - `docker`
 - `docker-compose`
 - `dmesg`
+- `kata-runtime`
 - `kubectl`
 - `singularity`
 
@@ -318,6 +320,7 @@ We add new programs every day!
 - `pg_ctl`
 - `pg_dump`
 - `pg_restore`
+- `q`
 - `sqlite3`
 
 ### Deployment / Cloud
@@ -475,6 +478,7 @@ We add new programs every day!
 - `od`
 - `sed`
 - `sort`
+- `shuf`
 - `tail`
 - `tr`
 - `uniq`
@@ -511,9 +515,11 @@ We add new programs every day!
 - `sha1sum`
 - `sha256sum`
 - `strings`
+- `terminator`
 - `timeout`
 - `uptime`
 - `whereis`
+- `xxd`
 - `zsh`
 
 ### Virtualization
