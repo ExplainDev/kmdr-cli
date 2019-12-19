@@ -52,6 +52,17 @@ interface ExplainFeedbackData {
   comment: string;
 }
 
+export interface CommandResponse extends AxiosResponse {
+  data: CommandData;
+}
+
+interface CommandData {
+  summary: string;
+  command: string;
+  totalViews: number;
+  createdAt: string;
+}
+
 export interface RelatedProgramsResponse extends AxiosResponse {
   data: RelatedProgramsData;
 }
