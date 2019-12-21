@@ -93,7 +93,7 @@ export const decorators: any = {
     if (output === null && output_fd) {
       decoratedNode += THEMES[DEFAULT_THEME].fileDescriptor(output_fd.toString());
     } else if (typeof output === "object" && output.kind === "word") {
-      decoratedNode += ` ${THEMES[DEFAULT_THEME].word(output)}`;
+      decoratedNode += ` ${THEMES[DEFAULT_THEME].word(output.word)}`;
     }
     return decoratedNode;
   },
