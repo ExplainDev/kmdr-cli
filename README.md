@@ -285,6 +285,7 @@ We add new programs every day!
 - `disown`
 - `echo`
 - `eval`
+- `exit`
 - `export`
 - `false`
 - `fg`
@@ -293,6 +294,8 @@ We add new programs every day!
 - `kill`
 - `logout`
 - `printf`
+- `popd`
+- `pushd`
 - `pwd`
 - `read`
 - `readonly`
@@ -305,6 +308,7 @@ We add new programs every day!
 - `docker`
 - `docker-compose`
 - `dmesg`
+- `kata-runtime`
 - `kubectl`
 - `singularity`
 
@@ -317,6 +321,7 @@ We add new programs every day!
 - `pg_ctl`
 - `pg_dump`
 - `pg_restore`
+- `q`
 - `sqlite3`
 
 ### Deployment / Cloud
@@ -352,6 +357,7 @@ We add new programs every day!
 - `rmdir`
 - `rsync`
 - `scp`
+- `shred`
 - `split`
 - `stat`
 - `tar`
@@ -399,6 +405,7 @@ We add new programs every day!
 - `dpkg-query`
 - `gem`
 - `npm`
+- `makepkg`
 - `pip`
 - `yarn`
 
@@ -429,6 +436,7 @@ We add new programs every day!
 - `iperf3`
 - `journalctl`
 - `killall`
+- `localectl`
 - `lsof`
 - `lsb_release`
 - `lsmod`
@@ -471,6 +479,7 @@ We add new programs every day!
 - `od`
 - `sed`
 - `sort`
+- `shuf`
 - `tail`
 - `tr`
 - `uniq`
@@ -480,6 +489,7 @@ We add new programs every day!
 
 - `code`
 - `nano`
+- `pgrep`
 - `vi`
 - `vim`
 
@@ -492,7 +502,9 @@ We add new programs every day!
 - `autossh`
 - `base64`
 - `env`
+- `exa`
 - `gofmt`
+- `gradlew`
 - `id`
 - `jq`
 - `kmdr`
@@ -504,9 +516,12 @@ We add new programs every day!
 - `sha1sum`
 - `sha256sum`
 - `strings`
+- `terminator`
 - `timeout`
 - `uptime`
 - `whereis`
+- `xxd`
+- `zsh`
 
 ### Virtualization
 
@@ -523,11 +538,13 @@ We add new programs every day!
 - `bash/sh`
 - `conda`
 - `dh`
+- `fzf`
 - `gpart`
 - `gpg`
 - `header`
 - `lsblk`
 - `tty`
+- `yes`
 
 ## Stay tuned for more updates
 
