@@ -307,7 +307,6 @@ We add new programs every day!
 
 - `docker`
 - `docker-compose`
-- `dmesg`
 - `kata-runtime`
 - `kubectl`
 - `singularity`
@@ -426,6 +425,7 @@ We add new programs every day!
 - `chsh`
 - `crontab`
 - `df`
+- `dmesg`
 - `free`
 - `fusermount`
 - `groupadd`
