@@ -340,6 +340,7 @@ We add new programs every day!
 - `dd`
 - `df`
 - `du`
+- `fdupes`
 - `file`
 - `find`
 - `gunzip`
