@@ -340,6 +340,7 @@ We add new programs every day!
 - `dd`
 - `df`
 - `du`
+- `fdupes`
 - `file`
 - `find`
 - `gunzip`
@@ -399,6 +400,7 @@ We add new programs every day!
 - `apt`
 - `apt-key`
 - `apt-get`
+- `apt-mark`
 - `cargo`
 - `dpkg`
 - `dpkg-query`
@@ -430,6 +432,7 @@ We add new programs every day!
 - `fusermount`
 - `groupadd`
 - `halt`
+- `hostnamectl`
 - `htop`
 - `install`
 - `iperf`
@@ -444,10 +447,12 @@ We add new programs every day!
 - `nice`
 - `nohup`
 - `nproc`
-- `ps`
 - `parted`
+- `ps`
+- `pstree`
 - `shutdown`
 - `sudo`
+- `swapoff`
 - `systemctl`
 - `top`
 - `uname`
