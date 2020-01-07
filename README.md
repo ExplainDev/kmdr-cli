@@ -415,6 +415,7 @@ We add new programs every day!
 - `gcc`
 - `go`
 - `node`
+- `nvm`
 - `perl`
 - `python`
 - `ruby`
@@ -506,6 +507,7 @@ We add new programs every day!
 
 - `autossh`
 - `base64`
+- `chrpath`
 - `env`
 - `exa`
 - `gofmt`
