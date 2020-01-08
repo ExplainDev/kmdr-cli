@@ -343,6 +343,7 @@ We add new programs every day!
 - `fdupes`
 - `file`
 - `find`
+- `fsarchiver`
 - `gunzip`
 - `gzip`
 - `ln`
@@ -444,10 +445,12 @@ We add new programs every day!
 - `lsof`
 - `lsb_release`
 - `lsmod`
+- `lspci`
 - `mount`
 - `nice`
 - `nohup`
 - `nproc`
+- `numactl`
 - `parted`
 - `ps`
 - `pstree`
@@ -510,6 +513,7 @@ We add new programs every day!
 - `chrpath`
 - `env`
 - `exa`
+- `gnome-terminal`
 - `gofmt`
 - `gradlew`
 - `id`
@@ -517,6 +521,7 @@ We add new programs every day!
 - `kmdr`
 - `md5sum`
 - `openssl`
+- `openvt`
 - `pandoc`
 - `screen`
 - `seq`
@@ -550,6 +555,7 @@ We add new programs every day!
 - `gpg`
 - `header`
 - `lsblk`
+- `rgh`
 - `tty`
 - `yes`
 
