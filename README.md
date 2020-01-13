@@ -365,6 +365,7 @@ We add new programs every day!
 - `touch`
 - `tree`
 - `unmask`
+- `unlink`
 - `watch`
 
 ### Media (audio/video)
@@ -446,6 +447,7 @@ We add new programs every day!
 - `lsb_release`
 - `lsmod`
 - `lspci`
+- `lsusb`
 - `mount`
 - `nice`
 - `nohup`
@@ -461,6 +463,7 @@ We add new programs every day!
 - `top`
 - `uname`
 - `useradd`
+- `usermod`
 - `visudo`
 - `which`
 - `who`
@@ -530,9 +533,11 @@ We add new programs every day!
 - `strings`
 - `terminator`
 - `timeout`
+- `tput`
 - `uptime`
 - `whereis`
 - `xxd`
+- `xdg-open`
 - `zsh`
 
 ### Virtualization
