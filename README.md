@@ -411,6 +411,7 @@ We add new programs every day!
 - `makepkg`
 - `pip`
 - `yarn`
+- `yum`
 
 ### Programming Languages / Run time environments / Compilers
 
@@ -512,6 +513,7 @@ We add new programs every day!
 ### Utilities
 
 - `autossh`
+- `age`
 - `base64`
 - `chrpath`
 - `env`
@@ -520,12 +522,14 @@ We add new programs every day!
 - `gofmt`
 - `gradlew`
 - `id`
+- `inxi`
 - `jq`
 - `kmdr`
 - `md5sum`
 - `openssl`
 - `openvt`
 - `pandoc`
+- `pbcopy`
 - `screen`
 - `seq`
 - `sha1sum`
@@ -538,6 +542,7 @@ We add new programs every day!
 - `whereis`
 - `xxd`
 - `xdg-open`
+- `xdg-mime`
 - `zsh`
 
 ### Virtualization
