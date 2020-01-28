@@ -325,6 +325,8 @@ We add new programs every day!
 
 ### Deployment / Cloud
 
+- `aws`
+- `az`
 - `now`
 - `ansible`
 - `ansible-playbook`
@@ -410,6 +412,7 @@ We add new programs every day!
 - `npm`
 - `makepkg`
 - `pip`
+- `stack`
 - `yarn`
 - `yum`
 
