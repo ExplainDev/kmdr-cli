@@ -327,6 +327,7 @@ We add new programs every day!
 
 - `aws`
 - `az`
+- `gcloud`
 - `now`
 - `ansible`
 - `ansible-playbook`
@@ -346,6 +347,7 @@ We add new programs every day!
 - `file`
 - `find`
 - `fsarchiver`
+- `ftp`
 - `gunzip`
 - `gzip`
 - `ln`
@@ -414,12 +416,14 @@ We add new programs every day!
 - `pip`
 - `stack`
 - `yarn`
+- `yay`
 - `yum`
 
 ### Programming Languages / Run time environments / Compilers
 
 - `gcc`
 - `go`
+- `java`
 - `node`
 - `nvm`
 - `perl`
@@ -460,6 +464,8 @@ We add new programs every day!
 - `parted`
 - `ps`
 - `pstree`
+- `pkill`
+- `Reboot`
 - `shutdown`
 - `sudo`
 - `swapoff`
