@@ -465,7 +465,7 @@ We add new programs every day!
 - `ps`
 - `pstree`
 - `pkill`
-- `Reboot`
+- `reboot`
 - `shutdown`
 - `sudo`
 - `swapoff`
