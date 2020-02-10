@@ -327,12 +327,15 @@ We add new programs every day!
 
 - `aws`
 - `az`
+- `gcloud`
 - `now`
 - `ansible`
 - `ansible-playbook`
 
 ### File and Archiving
 
+- `7z`
+- `7zr`
 - `basename`
 - `chgrp`
 - `chown`
@@ -342,12 +345,15 @@ We add new programs every day!
 - `dd`
 - `df`
 - `du`
+- `duplicity`
 - `fdupes`
 - `file`
 - `find`
 - `fsarchiver`
+- `ftp`
 - `gunzip`
 - `gzip`
+- `link`
 - `ln`
 - `ls`
 - `mkdir`
@@ -391,9 +397,11 @@ We add new programs every day!
 - `nslookup`
 - `ping`
 - `ssh`
+- `sshd`
 - `ssh-add`
 - `ssh-copy-id`
 - `ssh-keygen`
+- `sshutle`
 - `tcpdump`
 - `telnet`
 - `traceroute`
@@ -414,29 +422,36 @@ We add new programs every day!
 - `pip`
 - `stack`
 - `yarn`
+- `yay`
 - `yum`
 
 ### Programming Languages / Run time environments / Compilers
 
+- `cobra`
 - `gcc`
 - `go`
+- `java`
 - `node`
 - `nvm`
 - `perl`
 - `python`
 - `ruby`
+- `rails`
 - `virtualenv`
 
 ### Sysadmin / Monitoring
 
 - `adduser`
+- `bmon`
 - `chroot`
 - `chsh`
 - `crontab`
 - `df`
 - `dmesg`
+- `finger`
 - `free`
 - `fusermount`
+- `fsav`
 - `groupadd`
 - `halt`
 - `hostnamectl`
@@ -460,6 +475,8 @@ We add new programs every day!
 - `parted`
 - `ps`
 - `pstree`
+- `pkill`
+- `reboot`
 - `shutdown`
 - `sudo`
 - `swapoff`
@@ -485,6 +502,7 @@ We add new programs every day!
 - `awk`
 - `cat`
 - `column`
+- `code`
 - `cut`
 - `diff`
 - `egrep`
@@ -521,6 +539,8 @@ We add new programs every day!
 - `chrpath`
 - `env`
 - `exa`
+- `fd`
+- `fish`
 - `gnome-terminal`
 - `gofmt`
 - `gradlew`
@@ -550,6 +570,7 @@ We add new programs every day!
 
 ### Virtualization
 
+- `esxcli`
 - `vagrant`
 
 ### Version Control
@@ -563,13 +584,18 @@ We add new programs every day!
 - `bash/sh`
 - `conda`
 - `dh`
+- `firejail`
 - `fzf`
 - `gpart`
 - `gpg`
+- `ncdu`
 - `header`
+- `hyperfine`
 - `lsblk`
 - `rgh`
+- `smbclient`
 - `tty`
+- `ttyd`
 - `yes`
 
 ## Stay tuned for more updates
