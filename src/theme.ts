@@ -66,8 +66,8 @@ export const decorators: any = {
 
   optionWithArg: (node: OptionWithArgNode) => {
     const { arg, option } = node;
-    const decoratedOption = THEMES[DEFAULT_THEME].option(option);
-    const decoratedArgument = THEMES[DEFAULT_THEME].argument(arg);
+    const decoratedOption = THEMES[DEFAULT_THEME].option(option.word);
+    const decoratedArgument = THEMES[DEFAULT_THEME].argument(arg.word);
     return `${decoratedOption}=${decoratedArgument}`;
   },
   pipe: (node: PipeNode) => {
