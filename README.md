@@ -278,6 +278,7 @@ We add new programs every day!
 
 ### Bash/Bourne Shell Builtins
 
+- `alias`
 - `bg`
 - `cd`
 - `clear`
@@ -301,7 +302,9 @@ We add new programs every day!
 - `readonly`
 - `sleep`
 - `true`
+- `unalias`
 - `umask`
+
 
 ### Containers
 
@@ -326,11 +329,13 @@ We add new programs every day!
 ### Deployment / Cloud
 
 - `aws`
+- `ansible`
+- `ansible-playbook`
 - `az`
 - `gcloud`
 - `now`
-- `ansible`
-- `ansible-playbook`
+- `swift`
+
 
 ### File and Archiving
 
@@ -435,6 +440,7 @@ We add new programs every day!
 - `nvm`
 - `perl`
 - `python`
+- `rbenv`
 - `ruby`
 - `rails`
 - `virtualenv`
@@ -506,6 +512,7 @@ We add new programs every day!
 - `cut`
 - `diff`
 - `egrep`
+- `fold`
 - `grep`
 - `head`
 - `less`
@@ -549,6 +556,7 @@ We add new programs every day!
 - `jq`
 - `kmdr`
 - `md5sum`
+- `npx`
 - `openssl`
 - `openvt`
 - `pandoc`
@@ -577,6 +585,7 @@ We add new programs every day!
 
 - `git`
 - `hg`
+- `repo`
 
 ### Miscellaneous
 
