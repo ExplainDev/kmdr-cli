@@ -290,6 +290,7 @@ We add new programs every day!
 - `export`
 - `false`
 - `fg`
+- `hash`
 - `history`
 - `jobs`
 - `kill`
@@ -299,6 +300,7 @@ We add new programs every day!
 - `pushd`
 - `pwd`
 - `read`
+- `return`
 - `readonly`
 - `sleep`
 - `true`
@@ -548,6 +550,7 @@ We add new programs every day!
 - `exa`
 - `fd`
 - `fish`
+- `gh`
 - `gnome-terminal`
 - `gofmt`
 - `gradlew`
