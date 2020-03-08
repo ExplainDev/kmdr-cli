@@ -283,6 +283,7 @@ We add new programs every day!
 - `cd`
 - `clear`
 - `command`
+- `declare`
 - `disown`
 - `echo`
 - `eval`
@@ -420,13 +421,16 @@ We add new programs every day!
 - `apt-key`
 - `apt-get`
 - `apt-mark`
+- `aptitude`
 - `cargo`
+- `chcon`
 - `dpkg`
 - `dpkg-query`
 - `gem`
 - `npm`
 - `makepkg`
 - `pip`
+- `pkg`
 - `stack`
 - `yarn`
 - `yay`
@@ -558,12 +562,14 @@ We add new programs every day!
 - `inxi`
 - `jq`
 - `kmdr`
+- `neofetch`
 - `md5sum`
 - `npx`
 - `openssl`
 - `openvt`
 - `pandoc`
 - `pbcopy`
+- `reflector`
 - `screen`
 - `seq`
 - `sha1sum`
@@ -574,6 +580,7 @@ We add new programs every day!
 - `tput`
 - `uptime`
 - `whereis`
+- `w3m`
 - `xxd`
 - `xdg-open`
 - `xdg-mime`
