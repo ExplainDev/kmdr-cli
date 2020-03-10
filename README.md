@@ -278,10 +278,12 @@ We add new programs every day!
 
 ### Bash/Bourne Shell Builtins
 
+- `alias`
 - `bg`
 - `cd`
 - `clear`
 - `command`
+- `declare`
 - `disown`
 - `echo`
 - `eval`
@@ -289,6 +291,7 @@ We add new programs every day!
 - `export`
 - `false`
 - `fg`
+- `hash`
 - `history`
 - `jobs`
 - `kill`
@@ -298,10 +301,13 @@ We add new programs every day!
 - `pushd`
 - `pwd`
 - `read`
+- `return`
 - `readonly`
 - `sleep`
 - `true`
+- `unalias`
 - `umask`
+
 
 ### Containers
 
@@ -326,11 +332,13 @@ We add new programs every day!
 ### Deployment / Cloud
 
 - `aws`
+- `ansible`
+- `ansible-playbook`
 - `az`
 - `gcloud`
 - `now`
-- `ansible`
-- `ansible-playbook`
+- `swift`
+
 
 ### File and Archiving
 
@@ -413,13 +421,16 @@ We add new programs every day!
 - `apt-key`
 - `apt-get`
 - `apt-mark`
+- `aptitude`
 - `cargo`
+- `chcon`
 - `dpkg`
 - `dpkg-query`
 - `gem`
 - `npm`
 - `makepkg`
 - `pip`
+- `pkg`
 - `stack`
 - `yarn`
 - `yay`
@@ -435,6 +446,7 @@ We add new programs every day!
 - `nvm`
 - `perl`
 - `python`
+- `rbenv`
 - `ruby`
 - `rails`
 - `virtualenv`
@@ -506,6 +518,7 @@ We add new programs every day!
 - `cut`
 - `diff`
 - `egrep`
+- `fold`
 - `grep`
 - `head`
 - `less`
@@ -541,6 +554,7 @@ We add new programs every day!
 - `exa`
 - `fd`
 - `fish`
+- `gh`
 - `gnome-terminal`
 - `gofmt`
 - `gradlew`
@@ -548,11 +562,14 @@ We add new programs every day!
 - `inxi`
 - `jq`
 - `kmdr`
+- `neofetch`
 - `md5sum`
+- `npx`
 - `openssl`
 - `openvt`
 - `pandoc`
 - `pbcopy`
+- `reflector`
 - `screen`
 - `seq`
 - `sha1sum`
@@ -563,6 +580,7 @@ We add new programs every day!
 - `tput`
 - `uptime`
 - `whereis`
+- `w3m`
 - `xxd`
 - `xdg-open`
 - `xdg-mime`
@@ -577,6 +595,7 @@ We add new programs every day!
 
 - `git`
 - `hg`
+- `repo`
 
 ### Miscellaneous
 
