@@ -422,15 +422,19 @@ We add new programs every day!
 - `apt-get`
 - `apt-mark`
 - `aptitude`
+- `bpkg`
 - `cargo`
 - `chcon`
+- `dnf`
 - `dpkg`
 - `dpkg-query`
 - `gem`
 - `npm`
 - `makepkg`
 - `pip`
+- `port`
 - `pkg`
+- `synaptic`
 - `stack`
 - `yarn`
 - `yay`
@@ -558,12 +562,14 @@ We add new programs every day!
 - `gnome-terminal`
 - `gofmt`
 - `gradlew`
+- `gv`
 - `id`
 - `inxi`
 - `jq`
 - `kmdr`
 - `neofetch`
 - `md5sum`
+- `mdbook`
 - `npx`
 - `openssl`
 - `openvt`
@@ -584,6 +590,7 @@ We add new programs every day!
 - `xxd`
 - `xdg-open`
 - `xdg-mime`
+- `zapier`
 - `zsh`
 
 ### Virtualization
