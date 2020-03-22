@@ -337,6 +337,7 @@ We add new programs every day!
 - `az`
 - `gcloud`
 - `now`
+- `openstack`
 - `swift`
 
 
@@ -422,15 +423,19 @@ We add new programs every day!
 - `apt-get`
 - `apt-mark`
 - `aptitude`
+- `bpkg`
 - `cargo`
 - `chcon`
+- `dnf`
 - `dpkg`
 - `dpkg-query`
 - `gem`
 - `npm`
 - `makepkg`
 - `pip`
+- `port`
 - `pkg`
+- `synaptic`
 - `stack`
 - `yarn`
 - `yay`
@@ -554,23 +559,28 @@ We add new programs every day!
 - `exa`
 - `fd`
 - `fish`
+- `fincore`
 - `gh`
 - `gnome-terminal`
 - `gofmt`
 - `gradlew`
+- `gv`
 - `id`
 - `inxi`
 - `jq`
 - `kmdr`
 - `neofetch`
 - `md5sum`
+- `mdbook`
 - `npx`
 - `openssl`
 - `openvt`
 - `pandoc`
 - `pbcopy`
+- `rclone`
 - `reflector`
 - `screen`
+- `shellcheck`
 - `seq`
 - `sha1sum`
 - `sha256sum`
@@ -584,6 +594,8 @@ We add new programs every day!
 - `xxd`
 - `xdg-open`
 - `xdg-mime`
+- `zapier`
+- `zenity`
 - `zsh`
 
 ### Virtualization
@@ -604,6 +616,7 @@ We add new programs every day!
 - `conda`
 - `dh`
 - `firejail`
+- `fortune`
 - `fzf`
 - `gpart`
 - `gpg`
@@ -612,6 +625,7 @@ We add new programs every day!
 - `hyperfine`
 - `lsblk`
 - `rgh`
+- `rladmin`
 - `smbclient`
 - `tty`
 - `ttyd`
