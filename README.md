@@ -294,6 +294,7 @@ We add new programs every day!
 - `fg`
 - `hash`
 - `history`
+- `info`
 - `jobs`
 - `kill`
 - `logout`
@@ -305,6 +306,7 @@ We add new programs every day!
 - `readonly`
 - `return`
 - `readonly`
+- `set`
 - `sleep`
 - `true`
 - `unalias`
@@ -422,6 +424,7 @@ We add new programs every day!
 
 - `add-apt-repository`
 - `apt`
+- `apt-cache`
 - `apt-key`
 - `apt-get`
 - `apt-mark`
