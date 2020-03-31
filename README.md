@@ -319,6 +319,7 @@ We add new programs every day!
 - `docker-compose`
 - `kata-runtime`
 - `kubectl`
+- `minikube`
 - `singularity`
 
 ### Database server and clients
@@ -340,6 +341,7 @@ We add new programs every day!
 - `ansible-playbook`
 - `az`
 - `gcloud`
+- `helm`
 - `now`
 - `openstack`
 - `swift`
@@ -472,6 +474,7 @@ We add new programs every day!
 - `chsh`
 - `crontab`
 - `df`
+- `dtrace`
 - `dmesg`
 - `finger`
 - `free`
@@ -493,6 +496,7 @@ We add new programs every day!
 - `lspci`
 - `lsusb`
 - `mount`
+- `modprobe`
 - `nice`
 - `nohup`
 - `nproc`
@@ -513,6 +517,7 @@ We add new programs every day!
 - `useradd`
 - `usermod`
 - `visudo`
+- `vmstat`
 - `which`
 - `who`
 - `whois`
@@ -587,6 +592,7 @@ We add new programs every day!
 - `openvt`
 - `pandoc`
 - `pbcopy`
+- `prettier`
 - `rclone`
 - `reflector`
 - `screen`
