@@ -280,6 +280,7 @@ We add new programs every day!
 
 - `alias`
 - `bg`
+- `complete`
 - `cd`
 - `clear`
 - `command`
@@ -293,6 +294,7 @@ We add new programs every day!
 - `fg`
 - `hash`
 - `history`
+- `info`
 - `jobs`
 - `kill`
 - `logout`
@@ -301,8 +303,10 @@ We add new programs every day!
 - `pushd`
 - `pwd`
 - `read`
+- `readonly`
 - `return`
 - `readonly`
+- `set`
 - `sleep`
 - `true`
 - `unalias`
@@ -418,7 +422,9 @@ We add new programs every day!
 
 ### Package managers
 
+- `add-apt-repository`
 - `apt`
+- `apt-cache`
 - `apt-key`
 - `apt-get`
 - `apt-mark`
@@ -435,6 +441,7 @@ We add new programs every day!
 - `pip`
 - `port`
 - `pkg`
+- `snap`
 - `synaptic`
 - `stack`
 - `yarn`
@@ -459,6 +466,7 @@ We add new programs every day!
 ### Sysadmin / Monitoring
 
 - `adduser`
+- `apachectl`
 - `bmon`
 - `chroot`
 - `chsh`
@@ -490,6 +498,7 @@ We add new programs every day!
 - `nproc`
 - `numactl`
 - `parted`
+- `perf`
 - `ps`
 - `pstree`
 - `pkill`
@@ -500,6 +509,7 @@ We add new programs every day!
 - `systemctl`
 - `top`
 - `uname`
+- `umount`
 - `useradd`
 - `usermod`
 - `visudo`
