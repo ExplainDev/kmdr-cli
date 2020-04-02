@@ -259,7 +259,7 @@ $ kmdr explain
 ### Sending feedback
 
 ```
-$ kmdr feedback                                                                                                                                                   README*
+$ kmdr feedback
 ? How can we help? Support for printing explanantions with different colors :)
 ? Email address: eddie@kmdr.sh
 ✔ Your feedback was saved. Thank you!
@@ -268,7 +268,7 @@ $ kmdr feedback                                                                 
 ### Checking for updates
 
 ```
-$ kmdr upgrade                                                                                                                                                    README*
+$ kmdr upgrade
   You have the latest version of kmdr-cli
 ```
 
