@@ -324,6 +324,7 @@ We add new programs every day!
 
 ### Database server and clients
 
+- `etcdctl`
 - `mongod`
 - `mongodump`
 - `mysql`
@@ -345,6 +346,7 @@ We add new programs every day!
 - `now`
 - `openstack`
 - `swift`
+- `terraform`
 
 
 ### File and Archiving
@@ -437,6 +439,7 @@ We add new programs every day!
 - `dnf`
 - `dpkg`
 - `dpkg-query`
+- `dpkg-reconfigure`
 - `gem`
 - `npm`
 - `makepkg`
@@ -621,7 +624,8 @@ We add new programs every day!
 
 ### Version Control
 
-- `git`
+- `ctr`
+- `git` 
 - `hg`
 - `repo`
 
