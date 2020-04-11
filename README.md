@@ -436,6 +436,7 @@ We add new programs every day!
 - `bpkg`
 - `cargo`
 - `chcon`
+- `crew`
 - `dnf`
 - `dpkg`
 - `dpkg-query`
@@ -452,6 +453,7 @@ We add new programs every day!
 - `yarn`
 - `yay`
 - `yum`
+- `zypper`
 
 ### Programming Languages / Run time environments / Compilers
 
@@ -467,6 +469,7 @@ We add new programs every day!
 - `ruby`
 - `rails`
 - `virtualenv`
+- `webpack`
 
 ### Sysadmin / Monitoring
 
@@ -483,7 +486,10 @@ We add new programs every day!
 - `free`
 - `fusermount`
 - `fsav`
+- `getent`
+- `gpasswd`
 - `groupadd`
+- `grubby`
 - `halt`
 - `hostnamectl`
 - `htop`
@@ -499,6 +505,7 @@ We add new programs every day!
 - `lspci`
 - `lsusb`
 - `mount`
+- `modinfo`
 - `modprobe`
 - `nice`
 - `nohup`
@@ -521,6 +528,7 @@ We add new programs every day!
 - `usermod`
 - `visudo`
 - `vmstat`
+- `wg`
 - `which`
 - `who`
 - `whois`
@@ -596,6 +604,7 @@ We add new programs every day!
 - `pandoc`
 - `pbcopy`
 - `prettier`
+- `pwdx`
 - `rclone`
 - `reflector`
 - `screen`
