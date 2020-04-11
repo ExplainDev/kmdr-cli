@@ -402,6 +402,7 @@ We add new programs every day!
 
 - `curl`
 - `dig`
+- `firewall-cmd`
 - `host`
 - `iptables`
 - `ifconfig`
@@ -436,6 +437,7 @@ We add new programs every day!
 - `bpkg`
 - `cargo`
 - `chcon`
+- `clib`
 - `crew`
 - `dnf`
 - `dpkg`
@@ -461,6 +463,8 @@ We add new programs every day!
 - `gcc`
 - `go`
 - `java`
+- `jmap`
+- `jstat`
 - `node`
 - `nvm`
 - `perl`
@@ -539,6 +543,7 @@ We add new programs every day!
 - `cal`
 - `date`
 - `time`
+- `peaclock`
 
 ### Text Processing
 
@@ -555,6 +560,7 @@ We add new programs every day!
 - `less`
 - `nl`
 - `od`
+- `recode`
 - `sed`
 - `sort`
 - `shuf`
@@ -581,11 +587,13 @@ We add new programs every day!
 - `age`
 - `base64`
 - `chrpath`
+- `diffstat`
 - `env`
 - `exa`
 - `fd`
 - `fish`
 - `fincore`
+- `fluxbox`
 - `gh`
 - `gnome-terminal`
 - `gofmt`
@@ -615,6 +623,7 @@ We add new programs every day!
 - `strings`
 - `terminator`
 - `timeout`
+- `tldr`
 - `tput`
 - `uptime`
 - `whereis`
@@ -652,12 +661,14 @@ We add new programs every day!
 - `ncdu`
 - `header`
 - `hyperfine`
+- `lolcat`
 - `lsblk`
 - `rgh`
 - `rladmin`
 - `smbclient`
 - `tty`
 - `ttyd`
+- `unimatrix`
 - `yes`
 
 ## Stay tuned for more updates
