@@ -402,6 +402,7 @@ We add new programs every day!
 
 - `curl`
 - `dig`
+- `firewall-cmd`
 - `host`
 - `iptables`
 - `ifconfig`
@@ -436,6 +437,8 @@ We add new programs every day!
 - `bpkg`
 - `cargo`
 - `chcon`
+- `clib`
+- `crew`
 - `dnf`
 - `dpkg`
 - `dpkg-query`
@@ -452,6 +455,7 @@ We add new programs every day!
 - `yarn`
 - `yay`
 - `yum`
+- `zypper`
 
 ### Programming Languages / Run time environments / Compilers
 
@@ -459,6 +463,8 @@ We add new programs every day!
 - `gcc`
 - `go`
 - `java`
+- `jmap`
+- `jstat`
 - `node`
 - `nvm`
 - `perl`
@@ -467,6 +473,7 @@ We add new programs every day!
 - `ruby`
 - `rails`
 - `virtualenv`
+- `webpack`
 
 ### Sysadmin / Monitoring
 
@@ -483,7 +490,10 @@ We add new programs every day!
 - `free`
 - `fusermount`
 - `fsav`
+- `getent`
+- `gpasswd`
 - `groupadd`
+- `grubby`
 - `halt`
 - `hostnamectl`
 - `htop`
@@ -499,6 +509,7 @@ We add new programs every day!
 - `lspci`
 - `lsusb`
 - `mount`
+- `modinfo`
 - `modprobe`
 - `nice`
 - `nohup`
@@ -521,6 +532,7 @@ We add new programs every day!
 - `usermod`
 - `visudo`
 - `vmstat`
+- `wg`
 - `which`
 - `who`
 - `whois`
@@ -531,6 +543,7 @@ We add new programs every day!
 - `cal`
 - `date`
 - `time`
+- `peaclock`
 
 ### Text Processing
 
@@ -547,6 +560,7 @@ We add new programs every day!
 - `less`
 - `nl`
 - `od`
+- `recode`
 - `sed`
 - `sort`
 - `shuf`
@@ -573,11 +587,13 @@ We add new programs every day!
 - `age`
 - `base64`
 - `chrpath`
+- `diffstat`
 - `env`
 - `exa`
 - `fd`
 - `fish`
 - `fincore`
+- `fluxbox`
 - `gh`
 - `gnome-terminal`
 - `gofmt`
@@ -596,6 +612,7 @@ We add new programs every day!
 - `pandoc`
 - `pbcopy`
 - `prettier`
+- `pwdx`
 - `rclone`
 - `reflector`
 - `screen`
@@ -606,6 +623,7 @@ We add new programs every day!
 - `strings`
 - `terminator`
 - `timeout`
+- `tldr`
 - `tput`
 - `uptime`
 - `whereis`
@@ -643,12 +661,14 @@ We add new programs every day!
 - `ncdu`
 - `header`
 - `hyperfine`
+- `lolcat`
 - `lsblk`
 - `rgh`
 - `rladmin`
 - `smbclient`
 - `tty`
 - `ttyd`
+- `unimatrix`
 - `yes`
 
 ## Stay tuned for more updates
