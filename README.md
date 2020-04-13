@@ -308,6 +308,7 @@ We add new programs every day!
 - `readonly`
 - `set`
 - `sleep`
+- `source`
 - `true`
 - `unalias`
 - `umask`
@@ -438,6 +439,7 @@ We add new programs every day!
 - `cargo`
 - `chcon`
 - `clib`
+- `composer`
 - `crew`
 - `dnf`
 - `dpkg`
@@ -449,6 +451,8 @@ We add new programs every day!
 - `pip`
 - `port`
 - `pkg`
+- `rpmgraph`
+- `rpmbuild`
 - `snap`
 - `synaptic`
 - `stack`
@@ -460,11 +464,13 @@ We add new programs every day!
 ### Programming Languages / Run time environments / Compilers
 
 - `cobra`
+- `cmake`
 - `gcc`
 - `go`
 - `java`
 - `jmap`
 - `jstat`
+- `ld`
 - `node`
 - `nvm`
 - `perl`
