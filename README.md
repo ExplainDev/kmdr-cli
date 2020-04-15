@@ -18,13 +18,13 @@
 #### With `npm`
 
 ```bash
-npm install kmdr@latest --global
+npm install kmdr --global
 ```
 
 #### With `yarn`
 
 ```bash
-yarn global add kmdr@latest
+yarn global add kmdr
 ```
 
 #### With Homebrew 🍺 (only macOS)
