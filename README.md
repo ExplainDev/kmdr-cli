@@ -451,6 +451,7 @@ We add new programs every day!
 - `pip`
 - `port`
 - `pkg`
+- `rpm`
 - `rpmgraph`
 - `rpmbuild`
 - `snap`
