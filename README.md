@@ -445,6 +445,7 @@ We add new programs every day!
 - `dpkg`
 - `dpkg-query`
 - `dpkg-reconfigure`
+- `easy_install`
 - `gem`
 - `npm`
 - `makepkg`
@@ -460,6 +461,7 @@ We add new programs every day!
 - `yarn`
 - `yay`
 - `yum`
+- `yum-config-manager`
 - `zypper`
 
 ### Programming Languages / Run time environments / Compilers
@@ -531,6 +533,7 @@ We add new programs every day!
 - `shutdown`
 - `sudo`
 - `swapoff`
+- `sysctl`
 - `systemctl`
 - `top`
 - `uname`
@@ -635,6 +638,7 @@ We add new programs every day!
 - `uptime`
 - `whereis`
 - `w3m`
+- `xcode-select`
 - `xxd`
 - `xdg-open`
 - `xdg-mime`
