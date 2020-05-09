@@ -313,7 +313,6 @@ We add new programs every day!
 - `unalias`
 - `umask`
 
-
 ### Containers
 
 - `docker`
@@ -349,7 +348,6 @@ We add new programs every day!
 - `swift`
 - `terraform`
 
-
 ### File and Archiving
 
 - `7z`
@@ -363,6 +361,7 @@ We add new programs every day!
 - `dd`
 - `df`
 - `du`
+- `dirname`
 - `duplicity`
 - `fdupes`
 - `file`
@@ -374,6 +373,7 @@ We add new programs every day!
 - `link`
 - `ln`
 - `ls`
+- `lipo`
 - `mkdir`
 - `mktemp`
 - `more`
@@ -478,6 +478,7 @@ We add new programs every day!
 - `nvm`
 - `perl`
 - `python`
+- `python3`
 - `rbenv`
 - `ruby`
 - `rails`
@@ -654,7 +655,7 @@ We add new programs every day!
 ### Version Control
 
 - `ctr`
-- `git` 
+- `git`
 - `hg`
 - `repo`
 
