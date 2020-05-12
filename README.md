@@ -682,12 +682,19 @@ We add new programs every day!
 - `javac`
 - `lolcat`
 - `lsblk`
+- `nrm`
+- `nikto`
+- `nft`
+- `psql`
+- `redis-cli`
 - `rgh`
+- `rg`
 - `rladmin`
 - `smbclient`
 - `tty`
 - `ttyd`
 - `unimatrix`
+- `wp`
 - `yes`
 
 ## Stay tuned for more updates
