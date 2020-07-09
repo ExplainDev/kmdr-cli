@@ -1,15 +1,11 @@
 import { AxiosResponse } from "axios";
 import { Command, Program } from "kmdr-parser";
+import { UserInfo } from "os";
 
 export interface Theme {
-  node: string;
-  attributes: { color: string; style: string };
-}
-
-export interface Settings {
-  locale: string;
-  username: string;
-  token: string;
+  name: string;
+  mode?: string;
+  palette: ThemePalette;
 }
 
 export interface ExplainResponse extends AxiosResponse {
@@ -113,4 +109,62 @@ interface FeedbackData {
 
 interface Feedback {
   message: string;
+}
+
+export interface LoginIdResponse {
+  loginId: string;
+}
+
+export interface GetProgramAstResponse {
+  getProgramAST: ProgramAst;
+}
+
+interface User {
+  name: string;
+  email: string;
+  locale: string;
+  username: string;
+  location: string;
+}
+
+export interface CurrentUserReponse {
+  currentUser: User;
+}
+
+interface Feedback {
+  status: string;
+}
+
+export interface SaveFeedbackResponse {
+  saveFeedback: Feedback;
+}
+
+interface ProgramAst {
+  ast: string;
+  definitions: string;
+  perf?: string;
+  sessionId: string;
+}
+
+export interface ThemePalette {
+  argument: PaletteOptions;
+  comment: PaletteOptions;
+  keyword: PaletteOptions;
+  operator: PaletteOptions;
+  option: PaletteOptions;
+  program: PaletteOptions;
+  subcommand: PaletteOptions;
+  [key: string]: PaletteOptions;
+}
+
+export interface PaletteOptions {
+  background?: string;
+  foreground: string;
+  underline?: boolean;
+  italic?: boolean;
+  bold?: boolean;
+}
+
+export interface Settings {
+  theme: Theme;
 }

@@ -1,76 +1,75 @@
-import cli from "commander";
-import { KMDR_CLI_VERSION } from "./constants";
-import { Explain } from "./explain";
-import { Feedback } from "./feedback";
-import { Settings } from "./interfaces";
-import { Upgrade } from "./upgrade";
+import arg from "commander";
+import Explain from "./subcommands/explain";
+import Feedback from "./subcommands/feedback";
+import Login from "./subcommands/login";
+import Logout from "./subcommands/logout";
+import Settings from "./subcommands/settings";
+import Version from "./subcommands/version";
 
 class KMDR {
-  private settings?: Settings;
-  private cli = cli;
+  private arg = arg;
   // tslint:disable-next-line: max-line-length
   private welcomeMsg = `The ultimate CLI learning tool for explaining commands from your terminal\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl, npm, go and more straight forward programs such as those built into bash.`;
 
-  constructor(settings?: Settings) {
-    this.settings = settings;
-  }
-
   public init() {
-    this.cli.description(this.welcomeMsg).version(KMDR_CLI_VERSION, "-v, --version");
-    this.cli
+    this.arg
+      .description(this.welcomeMsg)
+      .version(process.env.npm_package_version || "unknown", "-v, --version");
+    // this.cli.command("config").alias("c").description("Configure kmdr-cli").action(this.config);
+    this.arg
       .command("explain")
       .alias("e")
       .description("Explain a shell command")
-      .option("--no-show-syntax", "Hide syntax highlighting")
-      .option("--no-prompt-again", "Do not return prompt for additional explanations")
-      .option("--no-show-related", "Hide related CLI programs")
-      .option("--no-show-examples", "Hide command examples")
       .action(this.explain);
-
-    this.cli
-      .command("upgrade")
-      .alias("u")
-      .description("Check for new releases")
-      .action(this.upgrade);
-
-    this.cli
-      .command("feedback")
-      .alias("f")
-      .description("Send feedback :)")
-      .action(this.feedback);
-
-    this.cli.parse(process.argv);
+    this.arg.command("login [email]").alias("l").description("Log in to kmdr").action(this.login);
+    this.arg.command("logout").description("Log out from kmdr").action(this.logout);
+    this.arg
+      .command("version")
+      .alias("v")
+      .description("Print current version and check for newer releases")
+      .action(this.version);
+    this.arg.command("feedback").alias("f").description("Send feedback :)").action(this.feedback);
+    // this.arg
+    //   .command("settings")
+    //   .alias("s")
+    //   .description("Adjust options and preferences")
+    //   .action(this.settings);
+    this.arg.parse(process.argv);
 
     if (process.argv.length < 3) {
-      this.cli.help();
+      this.arg.help();
     }
   }
 
   private async explain(command: any, opt: any) {
-    const {
-      promptAgain = false,
-      showSyntax = false,
-      showRelated = false,
-      showExamples = false,
-    } = command;
-    const explain = new Explain({
-      promptAgain,
-      showExamples,
-      showRelatedPrograms: showRelated,
-      showSyntax,
-    });
-    await explain.render();
+    const explain = new Explain();
+    await explain.init();
   }
 
-  private async upgrade() {
-    const upgrade = new Upgrade();
-    await upgrade.render();
+  private async login(email: string) {
+    const login = new Login(email);
+    await login.init();
+  }
+
+  private async logout() {
+    const logout = new Logout();
+    await logout.init();
+  }
+
+  private async version() {
+    const version = new Version();
+    await version.init();
   }
 
   private async feedback() {
     const feedback = new Feedback();
-    await feedback.render();
+    await feedback.init();
   }
+
+  // private async settings() {
+  //   const settings = new Settings();
+  //   await settings.init();
+  // }
 }
 
 export default KMDR;

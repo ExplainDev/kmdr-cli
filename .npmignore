@@ -1,7 +1,7 @@
-./src/
-./coverage/
-./tests/
-./github/
+src/
+coverage/
+tests/
+github/
 tsconfig.json
 tslint.json
 .prettierrc
@@ -9,3 +9,6 @@ tslint.json
 .prettierrc
 Dockerfile
 screenshot.png
+kmdr.yaml
+Dockerfile.demo
+.vscode/
