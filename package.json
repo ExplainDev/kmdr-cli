@@ -27,13 +27,8 @@
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
     "@types/eventsource": "^1.1.2",
-    "@types/inquirer": "^6.0.3",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.47",
-    "@types/node-emoji": "^1.8.1",
-    "@types/tunnel": "0.0.1",
-    "@types/uuid": "^3.4.9",
-    "@types/word-wrap": "^1.2.1",
     "jest": "^24.8.0",
     "kmdr-parser": "^2.4.2",
     "prettier": "^1.17.1",
@@ -73,17 +68,12 @@
     }
   },
   "dependencies": {
-    "ansi-colors": "^4.1.1",
-    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "enquirer": "^2.3.5",
     "eventsource": "^1.0.7",
     "graphql-request": "^2.1.0-next.1",
     "kmdr-ast": "^3.3.3",
-    "node-fetch": "^2.6.0",
-    "ora": "^3.4.0",
-    "tunnel": "^0.0.6",
-    "word-wrap": "^1.2.3"
+    "node-fetch": "^2.6.0"
   }
 }
