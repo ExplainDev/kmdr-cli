@@ -15,9 +15,6 @@ export default abstract class CLI {
   }
 
   // These values don't change during the execution of the program.
-  protected readonly KMDR_ENDPOINT_PROTOCOL: string;
-  protected readonly KMDR_ENDPOINT_HOST: string;
-  protected readonly KMDR_ENDPOINT_PORT?: number;
   protected readonly KMDR_ENDPOINT_URI: string;
   protected readonly KMDR_PATH: string;
   protected readonly KMDR_AUTH_FILE: string;
@@ -38,7 +35,7 @@ export default abstract class CLI {
   protected theme: ThemeManager;
 
   constructor() {
-    this.NODE_ENV = process.env.NODE_ENV || "development";
+    this.NODE_ENV = process.env.NODE_ENV || "production";
     this.OS_PLATFORM = os.platform();
     this.OS_RELEASE = os.release();
     this.OS_SHELL = os.userInfo().shell;
@@ -53,20 +50,17 @@ export default abstract class CLI {
 
     this.theme = new ThemeManager(DefaultTheme);
 
-    if (this.NODE_ENV === "development") {
-      this.KMDR_ENDPOINT_PROTOCOL = "http";
-      this.KMDR_ENDPOINT_HOST = "localhost";
-      this.KMDR_ENDPOINT_PORT = 8081;
-    } else {
-      this.KMDR_ENDPOINT_PROTOCOL = "https";
-      this.KMDR_ENDPOINT_HOST = "stg.api.kmdr.sh";
-    }
+    // if (this.NODE_ENV === "development") {
+    //   this.KMDR_ENDPOINT_PROTOCOL = "http";
+    //   this.KMDR_ENDPOINT_HOST = "localhost";
+    //   this.KMDR_ENDPOINT_PORT = 8081;
+    // } else {
+    //   this.KMDR_ENDPOINT_PROTOCOL = "https";
+    //   this.KMDR_ENDPOINT_HOST = "stg.api.kmdr.sh";
+    // }
 
-    this.KMDR_ENDPOINT_URI = `${this.KMDR_ENDPOINT_PROTOCOL}://${this.KMDR_ENDPOINT_HOST}`;
-
-    if (this.KMDR_ENDPOINT_PORT) {
-      this.KMDR_ENDPOINT_URI = `${this.KMDR_ENDPOINT_URI}:${this.KMDR_ENDPOINT_PORT}`;
-    }
+    // this.KMDR_ENDPOINT_URI = `${this.KMDR_ENDPOINT_PROTOCOL}://${this.KMDR_ENDPOINT_HOST}`;
+    this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://stg.api.kmdr.sh";
 
     if (this.kmdrAuthFileExists) {
       this.kmdrAuthCredentials = fs.readFileSync(this.KMDR_AUTH_FILE, "utf8");

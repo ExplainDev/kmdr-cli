@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "jest --verbose",
     "start:prod": "NODE_ENV=production ts-node src/bin.ts",
-    "start:dev": "NODE_ENV=development ts-node src/bin.ts"
+    "start:dev": "NODE_ENV=development KMDR_API_ENDPOINT=http://localhost:8081 ts-node src/bin.ts"
   },
   "bin": {
     "kmdr": "dist/bin.js"
