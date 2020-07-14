@@ -6,6 +6,9 @@ import CliDecorators from "../../CliDecorators";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
+import util from "util";
+import chalk from "chalk";
+import { ClientError } from "graphql-request";
 
 interface ExplainInputQuery {
   source: string;
@@ -36,7 +39,8 @@ export default class Explain extends CLI {
         const trimmedSource = rawSource.trim();
 
         if (trimmedSource === "") {
-          console.error("An error occurred");
+          Print.error("Enter a non-empty query");
+          Print.newLine();
           repeat = true;
           continue;
         }
@@ -101,7 +105,12 @@ export default class Explain extends CLI {
     } catch (err) {
       if (err instanceof KmdrAuthError) {
         Print.error(err.message);
+        Print.newLine();
+      } else if (err.code === "ECONNREFUSED") {
+        Print.error("Could not reach the API registry. Are you connected to the internet?");
+        Print.error(err);
       }
+      Print.newLine();
     }
   }
 
@@ -121,10 +130,11 @@ export default class Explain extends CLI {
       const data = await this.gqlClient.request<GetProgramAstResponse>(gqlQuery, { source });
       return data.getProgramAST;
     } catch (err) {
-      if (err.response.status === 401) {
-        throw new KmdrAuthError("YOu're not logged in");
+      if (err instanceof ClientError && err.response.status === 401) {
+        throw new KmdrAuthError("You are not logged in. Run `kmdr login` to sign in.");
+      } else {
+        throw err;
       }
-      throw err;
     }
   }
 

@@ -7,6 +7,7 @@ import { LoginIdResponse, CurrentUserReponse } from "../../interfaces";
 import Print from "../../Print";
 import KmdrError from "../../errors/KmdrError";
 import KmdrAuthError from "../../errors/KmdrAuthError";
+import { ClientError } from "graphql-request";
 
 interface EmailInput {
   email: string;
@@ -32,6 +33,11 @@ export default class Login extends CLI {
     try {
       if (this.kmdrAuthFileExists) {
         const currentUser = await this.getCurrentUser();
+        if (!currentUser) {
+          throw new KmdrAuthError(
+            `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again`,
+          );
+        }
         Print.text("You're logged in!");
         Print.newLine();
         Print.text(`Email: ${currentUser?.email}`);
@@ -49,10 +55,14 @@ export default class Login extends CLI {
       }
     } catch (err) {
       if (err instanceof KmdrAuthError) {
-        if (err.code === 5) {
-          Print.error(err.message);
-        }
+        Print.error(err.message);
+      } else if (err.code === "ECONNREFUSED") {
+        Print.error("Could not reach the API registry. Are you connected to the internet?");
+        Print.error(err);
+      } else {
+        Print.error(err);
       }
+      Print.newLine();
     }
   }
 
@@ -63,7 +73,7 @@ export default class Login extends CLI {
       if (!this.kmdrDirectoryExists) {
         fs.mkdirSync(this.KMDR_PATH);
       }
-      fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials);
+      fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials, { encoding: "ascii", mode: 0o600 });
     } catch (err) {
       throw err;
     }
@@ -116,7 +126,7 @@ export default class Login extends CLI {
       const data = await this.gqlClient.request<CurrentUserReponse>(gqlQuery);
       return data.currentUser;
     } catch (err) {
-      if (err.response.status === 401) {
+      if (err instanceof ClientError && err.response.status === 401) {
         throw new KmdrAuthError(
           `The login is invalid. Please manually delete file ${this.KMDR_AUTH_FILE} and login again`,
         );

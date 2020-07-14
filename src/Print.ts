@@ -10,7 +10,7 @@ export default class Print {
   }
 
   public static text(text: string, indent: number = 2) {
-    let spaces = ` `.repeat(indent);
+    const spaces = ` `.repeat(indent);
 
     console.log(`${spaces}${text}`);
   }
@@ -20,8 +20,8 @@ export default class Print {
   }
 
   public static error(text: string, indent: number = 2) {
-    let spaces = ` `.repeat(indent);
+    const spaces = ` `.repeat(indent);
 
-    console.error(`${spaces}${text}`);
+    console.error(`${spaces}${chalk.red(text)}`);
   }
 }
