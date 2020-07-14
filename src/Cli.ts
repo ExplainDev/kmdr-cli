@@ -78,48 +78,6 @@ export default abstract class CLI {
         authorization: `Basic ${this.kmdrAuthCredentials}`,
       },
     });
-
-    /*
-    let settingsFile: SettingsFile | undefined;
-
-    try {
-      const filePath = path.join(this.kmdrPath, this.fileName);
-
-      if (!fs.existsSync(filePath)) {
-        throw new Error(`File ${filePath} does not exist`);
-      } else {
-        console.log(`File ${filePath} exists!`);
-
-        const rawFile = fs.readFileSync(filePath, "utf8");
-
-        if (rawFile === "") {
-          throw new Error("The file is empty");
-        }
-
-        settingsFile = JSON.parse(rawFile);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      if (settingsFile?.email) {
-        this.email = settingsFile.email;
-      }
-
-      if (settingsFile?.token) {
-        this.token = settingsFile.token;
-      }
-
-      if (settingsFile?.theme) {
-        this.theme = settingsFile.theme;
-      }
-    }
-
-    const encodedCredentials = Buffer.from(`${settings.email}:${settings.token}`).toString(
-      "base64",
-    );
-
-    
-    */
   }
 
   // protected gqlClient: GraphQLClient;

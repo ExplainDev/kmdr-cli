@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { Command, Program } from "kmdr-parser";
 import { UserInfo } from "os";
 
@@ -6,10 +5,6 @@ export interface Theme {
   name: string;
   mode?: string;
   palette: ThemePalette;
-}
-
-export interface ExplainResponse extends AxiosResponse {
-  data: ExplainData;
 }
 
 interface ExplainData {
@@ -39,17 +34,9 @@ export interface ExplainConfig {
   showExamples: boolean;
 }
 
-export interface ExplainFeedbackResponse extends AxiosResponse {
-  data: ExplainFeedbackData;
-}
-
 interface ExplainFeedbackData {
   answer: string;
   comment: string;
-}
-
-export interface CommandResponse extends AxiosResponse {
-  data: CommandData;
 }
 
 interface CommandData {
@@ -59,16 +46,8 @@ interface CommandData {
   createdAt: string;
 }
 
-export interface RelatedProgramsResponse extends AxiosResponse {
-  data: RelatedProgramsData;
-}
-
 interface RelatedProgramsData {
   relatedPrograms: Program[];
-}
-
-export interface LatestCliReleaseResponse extends AxiosResponse {
-  data: LatestCliReleaseData;
 }
 
 interface LatestCliReleaseData {
@@ -97,10 +76,6 @@ export interface ConsolePrintOptions {
 
 export interface GraphQLResponse {
   data: any;
-}
-
-export interface FeedbackResponse extends AxiosResponse {
-  data: FeedbackData;
 }
 
 interface FeedbackData {

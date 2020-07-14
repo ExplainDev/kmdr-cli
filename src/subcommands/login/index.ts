@@ -42,10 +42,10 @@ export default class Login extends CLI {
         Print.text("Run `kmdr logout` to log out from this system");
         Print.newLine();
       } else if (this.email) {
-        await this.watchLoginEvent(this.email);
+        await this.watchLoginEvent();
       } else {
         this.email = await this.promptEmail();
-        await this.watchLoginEvent(this.email);
+        await this.watchLoginEvent();
       }
     } catch (err) {
       if (err instanceof KmdrAuthError) {
@@ -58,8 +58,6 @@ export default class Login extends CLI {
 
   protected saveAuthToDisk(email: string, token: string) {
     const encodedCredentials = Buffer.from(`${email}:${token}`).toString("base64");
-
-    console.log(encodedCredentials);
 
     try {
       fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials);
@@ -74,11 +72,12 @@ export default class Login extends CLI {
     switch (data) {
       case "active": {
         this.saveAuthToDisk(this.email, this.token);
-        console.log("Saved!");
+        Print.text("You're logged in.");
         this.eventSource.close();
         break;
       }
       case "pending": {
+        Print.text("Check your inbox and click on the link provided in the email");
         break;
       }
       case "expired": {
@@ -118,9 +117,11 @@ export default class Login extends CLI {
     }
   }
 
-  private async watchLoginEvent(email: string) {
+  private async watchLoginEvent() {
     try {
-      const res = await fetch("http://localhost:8081/login", {
+      const { email } = this;
+
+      const res = await fetch(`${this.KMDR_ENDPOINT_URI}/login`, {
         body: JSON.stringify({ email }),
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +135,9 @@ export default class Login extends CLI {
 
         if (loginResponse) {
           this.token = loginResponse.loginId;
-          this.eventSource = new EventSource(`http://localhost:8081/login-success?i=${this.token}`);
+          this.eventSource = new EventSource(
+            `${this.KMDR_ENDPOINT_URI}/login-success?i=${this.token}`,
+          );
           this.eventSource.onmessage = this.eventSourceMessage;
         }
       } else {
@@ -156,7 +159,7 @@ export default class Login extends CLI {
       try {
         const input = await prompt<EmailInput>(inputQuestion);
         if (input.email.trim() === "") {
-          console.error("Enter a valid email");
+          Print.error("Enter a valid email");
         } else {
           return input.email;
         }
