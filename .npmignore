@@ -7,6 +7,7 @@ tslint.json
 .prettierrc
 .dockerignore
 .prettierrc
+.github
 Dockerfile
 screenshot.png
 kmdr.yaml
