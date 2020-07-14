@@ -27,6 +27,7 @@ export default abstract class CLI {
   protected readonly OS_PLATFORM: string;
   protected readonly OS_RELEASE: string;
   protected readonly OS_SHELL: string;
+  protected readonly OS_USERNAME: string;
   protected readonly PKG_VERSION: string;
 
   protected readonly kmdrAuthCredentials?: string;
@@ -41,6 +42,7 @@ export default abstract class CLI {
     this.OS_SHELL = os.userInfo().shell;
     this.OS_ARCH = os.arch();
     this.OS_HOME_PATH = os.homedir();
+    this.OS_USERNAME = os.userInfo().username;
     this.NODE_VERSION = process.versions.node;
     this.NODE_PATH = process.env.NODE;
     this.PKG_VERSION = process.env.npm_package_version || "unknown";

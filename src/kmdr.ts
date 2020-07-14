@@ -1,6 +1,7 @@
 import arg from "commander";
 import Explain from "./subcommands/explain";
 import Feedback from "./subcommands/feedback";
+import Info from "./subcommands/info";
 import Login from "./subcommands/login";
 import Logout from "./subcommands/logout";
 import Settings from "./subcommands/settings";
@@ -29,11 +30,12 @@ class KMDR {
       .description("Print current version and check for newer releases")
       .action(this.version);
     this.arg.command("feedback").alias("f").description("Send feedback :)").action(this.feedback);
-    // this.arg
-    //   .command("settings")
-    //   .alias("s")
-    //   .description("Adjust options and preferences")
-    //   .action(this.settings);
+    this.arg
+      .command("settings")
+      .alias("s")
+      .description("Adjust options and preferences")
+      .action(this.settings);
+    this.arg.command("info").description("Display system-wide information").action(this.info);
     this.arg.parse(process.argv);
 
     if (process.argv.length < 3) {
@@ -66,10 +68,15 @@ class KMDR {
     await feedback.init();
   }
 
-  // private async settings() {
-  //   const settings = new Settings();
-  //   await settings.init();
-  // }
+  private async settings() {
+    const settings = new Settings();
+    await settings.init();
+  }
+
+  private async info() {
+    const info = new Info();
+    await info.init();
+  }
 }
 
 export default KMDR;
