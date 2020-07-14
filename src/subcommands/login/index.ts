@@ -60,6 +60,9 @@ export default class Login extends CLI {
     const encodedCredentials = Buffer.from(`${email}:${token}`).toString("base64");
 
     try {
+      if (!this.kmdrDirectoryExists) {
+        fs.mkdirSync(this.KMDR_PATH);
+      }
       fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials);
     } catch (err) {
       throw err;
@@ -71,8 +74,13 @@ export default class Login extends CLI {
 
     switch (data) {
       case "active": {
-        this.saveAuthToDisk(this.email, this.token);
-        Print.text("You're logged in.");
+        try {
+          this.saveAuthToDisk(this.email, this.token);
+          Print.text("You're logged in.");
+        } catch (err) {
+          Print.error(`Could not read or create directory ${this.KMDR_PATH}`);
+        }
+
         this.eventSource.close();
         break;
       }
