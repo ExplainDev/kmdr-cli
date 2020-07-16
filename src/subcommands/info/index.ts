@@ -11,7 +11,7 @@ export default class Info extends CLI {
     Print.text(`Version: ${this.PKG_VERSION}`, 4);
     Print.text(`Registry Endpoint: ${this.KMDR_ENDPOINT_URI}`, 4);
     Print.text(`Settings directory: ${this.KMDR_PATH}`, 4);
-    Print.text(`Current Theme: ${this.theme.name}`, 4);
+    Print.text(`Current Theme: ${this.settingsManager.theme.name}`, 4);
     Print.text(`Node.js:`);
     Print.text(`Version: ${this.NODE_VERSION}`, 4);
     Print.text(`Path: ${this.NODE_PATH}`, 4);

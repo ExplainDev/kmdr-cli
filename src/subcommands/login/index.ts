@@ -4,7 +4,7 @@ import EventSource from "eventsource";
 import fs from "fs";
 import { ClientError } from "graphql-request";
 import fetch from "node-fetch";
-import ora from "ora";
+import os from "os";
 import CLI from "../../cli";
 import KmdrAuthError from "../../errors/KmdrAuthError";
 import { CurrentUserReponse, LoginIdResponse } from "../../interfaces";
@@ -80,7 +80,10 @@ export default class Login extends CLI {
       if (!this.kmdrDirectoryExists) {
         fs.mkdirSync(this.KMDR_PATH);
       }
-      fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials, { encoding: "ascii", mode: 0o600 });
+      fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials + +os.EOL, {
+        encoding: "ascii",
+        mode: 0o600,
+      });
     } catch (err) {
       throw err;
     }

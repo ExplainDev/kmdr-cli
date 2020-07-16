@@ -6,8 +6,6 @@ import CliDecorators from "../../CliDecorators";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
-import util from "util";
-import chalk from "chalk";
 import { ClientError } from "graphql-request";
 
 interface ExplainInputQuery {
@@ -27,7 +25,7 @@ export default class Explain extends CLI {
 
   constructor() {
     super();
-    this.decorators = new CliDecorators(this.theme);
+    this.decorators = new CliDecorators(this.settingsManager.theme);
   }
 
   public async init() {

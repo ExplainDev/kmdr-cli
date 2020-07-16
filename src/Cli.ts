@@ -4,8 +4,7 @@ import ora from "ora";
 import os from "os";
 import path from "path";
 import pkg from "../package.json";
-import DefaultTheme from "./install/themes/greenway.theme.json";
-import ThemeManager from "./ThemeManager";
+import SettingsManager from "./SettingsManager";
 
 export default abstract class CLI {
   get kmdrDirectoryExists() {
@@ -37,7 +36,7 @@ export default abstract class CLI {
   protected readonly kmdrAuthCredentials?: string;
   protected httpHeaders: { [key: string]: string } = {};
   protected readonly gqlClient: GraphQLClient;
-  protected theme: ThemeManager;
+  protected settingsManager: SettingsManager;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || "production";
@@ -54,18 +53,8 @@ export default abstract class CLI {
     this.KMDR_PATH = path.join(this.OS_HOME_PATH, ".kmdr");
     this.KMDR_AUTH_FILE = path.join(this.KMDR_PATH, "auth");
 
-    this.theme = new ThemeManager(DefaultTheme);
+    this.settingsManager = new SettingsManager(this.KMDR_PATH);
 
-    // if (this.NODE_ENV === "development") {
-    //   this.KMDR_ENDPOINT_PROTOCOL = "http";
-    //   this.KMDR_ENDPOINT_HOST = "localhost";
-    //   this.KMDR_ENDPOINT_PORT = 8081;
-    // } else {
-    //   this.KMDR_ENDPOINT_PROTOCOL = "https";
-    //   this.KMDR_ENDPOINT_HOST = "stg.api.kmdr.sh";
-    // }
-
-    // this.KMDR_ENDPOINT_URI = `${this.KMDR_ENDPOINT_PROTOCOL}://${this.KMDR_ENDPOINT_HOST}`;
     this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://stg.api.kmdr.sh";
 
     if (this.kmdrAuthFileExists) {

@@ -143,3 +143,7 @@ export interface PaletteOptions {
 export interface Settings {
   theme: Theme;
 }
+
+export interface SettingsFile {
+  theme: string;
+}
