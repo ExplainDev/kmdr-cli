@@ -1,3 +1,4 @@
+import "cross-fetch/polyfill";
 import fs from "fs";
 import { GraphQLClient } from "graphql-request";
 import ora from "ora";

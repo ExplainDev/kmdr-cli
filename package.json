@@ -25,10 +25,10 @@
   "homepage": "https://kmdr.sh",
   "license": "MIT",
   "devDependencies": {
-    "@types/node-fetch": "^2.5.7",
     "@types/eventsource": "^1.1.2",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.47",
+    "@types/node": "^12.12.50",
+    "@types/node-fetch": "^2.5.7",
     "jest": "^24.8.0",
     "kmdr-parser": "^2.4.2",
     "prettier": "^1.17.1",
@@ -37,7 +37,7 @@
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.7"
   },
   "contributors": [
     {
@@ -70,9 +70,10 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "enquirer": "^2.3.5",
+    "cross-fetch": "^3.0.5",
+    "enquirer": "^2.3.6",
     "eventsource": "^1.0.7",
-    "graphql-request": "^2.1.0-next.1",
+    "graphql-request": "^2.0.0",
     "kmdr-ast": "^3.3.3",
     "node-fetch": "^2.6.0",
     "ora": "^4.0.4"
