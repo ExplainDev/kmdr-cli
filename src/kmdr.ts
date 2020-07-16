@@ -22,20 +22,21 @@ class KMDR {
       .alias("e")
       .description("Explain a shell command")
       .action(this.explain);
+    this.arg.command("feedback").alias("f").description("Send feedback :)").action(this.feedback);
+    this.arg.command("info").description("Display system-wide information").action(this.info);
     this.arg.command("login [email]").alias("l").description("Log in to kmdr").action(this.login);
     this.arg.command("logout").description("Log out from kmdr").action(this.logout);
-    this.arg
-      .command("version")
-      .alias("v")
-      .description("Print current version and check for newer releases")
-      .action(this.version);
-    this.arg.command("feedback").alias("f").description("Send feedback :)").action(this.feedback);
     this.arg
       .command("settings")
       .alias("s")
       .description("Adjust options and preferences")
       .action(this.settings);
-    this.arg.command("info").description("Display system-wide information").action(this.info);
+    this.arg
+      .command("version")
+      .alias("v")
+      .description("Print current version and check for newer releases")
+      .action(this.version);
+
     this.arg.parse(process.argv);
 
     if (process.argv.length < 3) {
@@ -43,7 +44,7 @@ class KMDR {
     }
   }
 
-  private async explain(command: any, opt: any) {
+  private async explain() {
     const explain = new Explain();
     await explain.init();
   }
