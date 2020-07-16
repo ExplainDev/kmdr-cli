@@ -2,7 +2,7 @@
   "name": "kmdr",
   "version": "1.1.0-3",
   "description": "A command-line interface for explaining commands in the terminal",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --verbose",
@@ -10,7 +10,7 @@
     "start:dev": "NODE_ENV=development KMDR_API_ENDPOINT=http://localhost:8081 ts-node src/bin.ts"
   },
   "bin": {
-    "kmdr": "dist/bin.js"
+    "kmdr": "dist/src/bin.js"
   },
   "keywords": [
     "shell",
