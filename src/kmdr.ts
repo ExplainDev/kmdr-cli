@@ -10,7 +10,7 @@ import Version from "./subcommands/version";
 class KMDR {
   private arg = arg;
   // tslint:disable-next-line: max-line-length
-  private welcomeMsg = `The ultimate CLI learning tool for explaining commands from your terminal\n\nkmdr provides command explanations for hundreds of programs including git, docker, kubectl, npm, go and more straight forward programs such as those built into bash.`;
+  private welcomeMsg = `The CLI tool for learning commands from your terminal\n\nLearn more at https://kmdr.sh/`;
 
   public init() {
     this.arg
