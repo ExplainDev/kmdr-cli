@@ -1,11 +1,42 @@
-import { parse } from "commander";
 import fs from "fs";
-import path from "path";
-import DefaultTheme from "./files/themes/greenway.theme.json";
-import { Settings, SettingsFile, Theme } from "./interfaces";
-import Print from "./Print";
-import ThemeManager from "./ThemeManager";
 import os from "os";
+import path from "path";
+import { Settings, SettingsFile, Theme } from "./interfaces";
+import ThemeManager from "./ThemeManager";
+
+const DEFAULT_THEME: Theme = {
+  name: "greenway",
+  mode: "dark",
+  palette: {
+    argument: {
+      bold: true,
+      foreground: "#f8f8f2",
+      italic: true,
+    },
+    comment: {
+      foreground: "#6272a4",
+    },
+    keyword: {
+      foreground: "#ff5555",
+    },
+    operator: {
+      foreground: "#f1fa8c",
+    },
+    option: {
+      foreground: "#50fa7b",
+    },
+    program: {
+      foreground: "#FFC0CB",
+    },
+    subcommand: {
+      foreground: "#bd93f9",
+    },
+    tokenKind: {
+      background: "#222222",
+      foreground: "#AA5599",
+    },
+  },
+};
 
 export default class SettingsManager implements Settings {
   public availableThemes: ThemeManager[] = [];
@@ -59,7 +90,7 @@ export default class SettingsManager implements Settings {
   }
 
   private loadDefault() {
-    this.theme = new ThemeManager(DefaultTheme);
+    this.theme = new ThemeManager(DEFAULT_THEME);
   }
 
   private loadFromDisk() {
@@ -73,7 +104,7 @@ export default class SettingsManager implements Settings {
       } else {
         const parsedFile = JSON.parse(file) as SettingsFile;
 
-        this.theme = this.loadTheme(parsedFile.theme) || new ThemeManager(DefaultTheme);
+        this.theme = this.loadTheme(parsedFile.theme) || new ThemeManager(DEFAULT_THEME);
       }
     } catch (err) {
       if (err.code === "ENOENT") {
