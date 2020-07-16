@@ -10,12 +10,14 @@ export default class Logout extends CLI {
   }
 
   public async init() {
+    this.spinner?.start();
+
     if (!this.kmdrDirectoryExists) {
-      Print.error(`The directory ${this.KMDR_PATH} does not exist`);
+      this.spinner?.fail(`The directory ${this.KMDR_PATH} does not exist`);
       Print.newLine();
       return;
     } else if (!this.kmdrAuthFileExists || !this.kmdrAuthCredentials) {
-      Print.error(`Could not log out because you're not logged in`);
+      this.spinner?.fail(`Could not log out because you're not logged in`);
       Print.newLine();
       return;
     }
@@ -30,7 +32,7 @@ export default class Logout extends CLI {
       });
       if (res.ok) {
         fs.unlinkSync(this.KMDR_AUTH_FILE);
-        Print.text("You're logged out!");
+        this.spinner?.succeed("You were logged out successfully!");
         Print.newLine();
       } else {
         throw new KmdrAuthError(
@@ -39,10 +41,10 @@ export default class Logout extends CLI {
       }
     } catch (err) {
       if (err.code === "ECONNREFUSED") {
-        Print.error("Could not reach the API registry. Are you connected to the internet?");
+        this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
       } else {
-        Print.error(err);
+        this.spinner?.fail(err);
       }
       Print.newLine();
     }

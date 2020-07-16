@@ -1,13 +1,14 @@
+import chalk from "chalk";
 import { prompt } from "enquirer";
 import EventSource from "eventsource";
 import fs from "fs";
-import fetch from "node-fetch";
-import CLI from "../../cli";
-import { LoginIdResponse, CurrentUserReponse } from "../../interfaces";
-import Print from "../../Print";
-import KmdrError from "../../errors/KmdrError";
-import KmdrAuthError from "../../errors/KmdrAuthError";
 import { ClientError } from "graphql-request";
+import fetch from "node-fetch";
+import ora from "ora";
+import CLI from "../../cli";
+import KmdrAuthError from "../../errors/KmdrAuthError";
+import { CurrentUserReponse, LoginIdResponse } from "../../interfaces";
+import Print from "../../Print";
 
 interface EmailInput {
   email: string;
@@ -32,13 +33,16 @@ export default class Login extends CLI {
   public async init() {
     try {
       if (this.kmdrAuthFileExists) {
+        this.spinner?.start("Validating your stored session...");
         const currentUser = await this.getCurrentUser();
+
         if (!currentUser) {
           throw new KmdrAuthError(
             `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again`,
           );
         }
-        Print.text("You're logged in!");
+        this.spinner?.succeed("You're logged in!");
+
         Print.newLine();
         Print.text(`Email: ${currentUser?.email}`);
         Print.text(`Username: ${currentUser.username || "You haven't picked a username"}`);
@@ -47,19 +51,22 @@ export default class Login extends CLI {
 
         Print.text("Run `kmdr logout` to log out from this system");
         Print.newLine();
-      } else if (this.email) {
-        await this.watchLoginEvent();
       } else {
-        this.email = await this.promptEmail();
+        if (!this.email) {
+          this.email = await this.promptEmail();
+        }
+        // spinner.start("")
         await this.watchLoginEvent();
       }
     } catch (err) {
+      // spinner.fail("An error occured!");
       if (err instanceof KmdrAuthError) {
-        Print.error(err.message);
+        this.spinner?.fail(err.message);
       } else if (err.code === "ECONNREFUSED") {
-        Print.error("Could not reach the API registry. Are you connected to the internet?");
+        this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
       } else {
+        this.spinner?.fail("An error occurred");
         Print.error(err);
       }
       Print.newLine();
@@ -86,23 +93,37 @@ export default class Login extends CLI {
       case "active": {
         try {
           this.saveAuthToDisk(this.email, this.token);
-          Print.text("You're logged in.");
+          this.spinner?.succeed("You are now logged in!");
+          Print.newLine();
+          Print.text("Try `kmdr explain` to get instant command definitions. ");
+          Print.newLine();
         } catch (err) {
+          this.spinner?.fail("An error occurred");
           Print.error(`Could not read or create directory ${this.KMDR_PATH}`);
+          Print.newLine();
         }
 
         this.eventSource.close();
         break;
       }
       case "pending": {
-        Print.text("Check your inbox and click on the link provided in the email");
+        this.spinner?.start(
+          `Check your inbox and click on the link provided in the email.\n\n  ${chalk.bold(
+            "DO NOT close the terminal or exit this program",
+          )}\n`,
+        );
+
         break;
       }
       case "expired": {
+        this.spinner?.fail("The link expired");
+        Print.newLine();
         this.eventSource.close();
         break;
       }
       case "logout": {
+        this.spinner?.fail("You're logged out.");
+        Print.newLine();
         this.eventSource.close();
         break;
       }
@@ -138,7 +159,7 @@ export default class Login extends CLI {
   private async watchLoginEvent() {
     try {
       const { email } = this;
-
+      this.spinner?.start();
       const res = await fetch(`${this.KMDR_ENDPOINT_URI}/login`, {
         body: JSON.stringify({ email }),
         headers: {

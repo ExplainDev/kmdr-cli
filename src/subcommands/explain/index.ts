@@ -46,9 +46,9 @@ export default class Explain extends CLI {
         }
         // Print a new line after prompting the user
         Print.newLine();
-
+        this.spinner?.start("Analyzing the command...");
         const programAst = await this.getProgramAST(trimmedSource);
-
+        this.spinner?.stop();
         const { ast, definitions, perf, sessionId } = programAst;
         const parsedAST = JSON.parse(ast);
         const tree = new Tree(parsedAST);
@@ -86,12 +86,13 @@ export default class Explain extends CLI {
           }
           case "feedback": {
             const answer = await this.promptFeedback();
+            this.spinner?.start("Sending your feedback...");
             const status = await this.saveFeedback(answer, sessionId);
 
             if (status) {
-              console.log("Success");
+              this.spinner?.succeed("Thank you!");
             } else {
-              console.error("An error");
+              this.spinner?.fail("Sorry, we couldn't save your feedback this time.");
             }
             repeat = true;
             break;
@@ -104,10 +105,10 @@ export default class Explain extends CLI {
       } while (repeat);
     } catch (err) {
       if (err instanceof KmdrAuthError) {
-        Print.error(err.message);
+        this.spinner?.fail(err.message);
         Print.newLine();
       } else if (err.code === "ECONNREFUSED") {
-        Print.error("Could not reach the API registry. Are you connected to the internet?");
+        this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
       }
       Print.newLine();

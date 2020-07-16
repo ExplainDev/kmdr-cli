@@ -1,5 +1,6 @@
 import fs from "fs";
 import { GraphQLClient } from "graphql-request";
+import ora from "ora";
 import os from "os";
 import path from "path";
 import DefaultTheme from "./install/themes/greenway.theme.json";
@@ -13,6 +14,8 @@ export default abstract class CLI {
   get kmdrAuthFileExists() {
     return fs.existsSync(this.KMDR_AUTH_FILE);
   }
+
+  public spinner?: ora.Ora = ora("Loading...");
 
   // These values don't change during the execution of the program.
   protected readonly KMDR_ENDPOINT_URI: string;
