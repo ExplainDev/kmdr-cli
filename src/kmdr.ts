@@ -13,9 +13,7 @@ class KMDR {
   private welcomeMsg = `The CLI tool for learning commands from your terminal\n\nLearn more at https://kmdr.sh/`;
 
   public init() {
-    this.arg
-      .description(this.welcomeMsg)
-      .version(process.env.npm_package_version || "unknown", "-v, --version");
+    this.arg.description(this.welcomeMsg).version("unknown", "-v, --version");
     // this.cli.command("config").alias("c").description("Configure kmdr-cli").action(this.config);
     this.arg
       .command("explain")

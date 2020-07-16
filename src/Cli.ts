@@ -4,7 +4,6 @@ import { GraphQLClient } from "graphql-request";
 import ora from "ora";
 import os from "os";
 import path from "path";
-import pkg from "../package.json";
 import SettingsManager from "./SettingsManager";
 
 export default abstract class CLI {
@@ -49,7 +48,7 @@ export default abstract class CLI {
     this.OS_USERNAME = os.userInfo().username;
     this.NODE_VERSION = process.versions.node;
     this.NODE_PATH = process.env.NODE;
-    this.PKG_VERSION = pkg.version || "unknown";
+    this.PKG_VERSION = "unknown";
     this.LANG = process.env.LANG;
     this.KMDR_PATH = path.join(this.OS_HOME_PATH, ".kmdr");
     this.KMDR_AUTH_FILE = path.join(this.KMDR_PATH, "auth");
