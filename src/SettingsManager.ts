@@ -69,7 +69,7 @@ export default class SettingsManager implements Settings {
   }
 
   private loadAllThemes() {
-    const themesPath = path.join(path.basename(__dirname), "files", "themes");
+    const themesPath = path.join(__dirname, "files", "themes");
 
     const themeFiles = fs.readdirSync(themesPath);
 
