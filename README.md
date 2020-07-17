@@ -78,7 +78,8 @@ export PATH="$(yarn global bin):$PATH"
 
 ### Sign In
 1. Log in on the kmdr CLI tool
-  ```kmdr login
+  ```bash
+  kmdr login
   ```
 
 2. Enter your email when prompted
