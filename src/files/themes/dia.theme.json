@@ -4,11 +4,14 @@
   "palette": {
     "argument": {
       "bold": true,
-      "foreground": "#f8f8f2",
+      "foreground": "#575F66",
       "italic": true
     },
     "comment": {
-      "foreground": "#6272a4"
+      "foreground": "#ABB0B6"
+    },
+    "function": {
+      "foreground": "#F2AE49"
     },
     "keyword": {
       "foreground": "#ff5555"
@@ -17,17 +20,23 @@
       "foreground": "#f1fa8c"
     },
     "option": {
-      "foreground": "#50fa7b"
+      "foreground": "#399EE6",
+      "bold": true
     },
     "program": {
-      "foreground": "#224466"
+      "foreground": "#F2AE49",
+      "bold": true
     },
     "subcommand": {
-      "foreground": "#bd93f9"
+      "foreground": "#4CBF99",
+      "bold": true
+    },
+    "varName": {
+      "foreground": "#F07171",
+      "bold": true
     },
     "tokenKind": {
       "background": "#222222",
-
       "foreground": "#AA5599"
     }
   }

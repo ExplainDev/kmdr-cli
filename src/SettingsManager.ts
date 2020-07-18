@@ -1,6 +1,7 @@
 import fs from "fs";
 import os from "os";
 import path from "path";
+import { KmdrError } from "./errors";
 import { Settings, SettingsFile, Theme } from "./interfaces";
 import ThemeManager from "./ThemeManager";
 
@@ -48,7 +49,7 @@ export default class SettingsManager implements Settings {
 
     this.loadAllThemes();
     // If directory does not exists, use default settings
-    if (!fs.existsSync(this.settingsPath)) {
+    if (!fs.existsSync(path.join(this.settingsPath, "settings.json"))) {
       this.loadDefault();
     } else {
       this.loadFromDisk();
@@ -103,6 +104,10 @@ export default class SettingsManager implements Settings {
         throw new Error("File is empty");
       } else {
         const parsedFile = JSON.parse(file) as SettingsFile;
+
+        if (parsedFile.theme.trim() === "") {
+          throw new KmdrError("KMDR_CLI_INVALID_THEME_NAME", 201, `Settings file is invalid`);
+        }
 
         this.theme = this.loadTheme(parsedFile.theme) || new ThemeManager(DEFAULT_THEME);
       }

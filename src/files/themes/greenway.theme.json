@@ -17,13 +17,16 @@
       "foreground": "#f1fa8c"
     },
     "option": {
-      "foreground": "#50fa7b"
+      "foreground": "#50fa7b",
+      "bold": true
     },
     "program": {
-      "foreground": "#FFC0CB"
+      "foreground": "#FFC0CB",
+      "bold": true
     },
     "subcommand": {
-      "foreground": "#bd93f9"
+      "foreground": "#bd93f9",
+      "bold": true
     },
     "tokenKind": {
       "background": "#222222",
