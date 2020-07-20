@@ -21,6 +21,7 @@ export default abstract class CLI {
   protected readonly KMDR_ENDPOINT_URI: string;
   protected readonly KMDR_PATH: string;
   protected readonly KMDR_AUTH_FILE: string;
+  protected readonly KMDR_SETTINGS_FILE: string;
   protected readonly LANG?: string;
   protected readonly NODE_ENV: string;
   protected readonly NODE_PATH?: string;
@@ -52,8 +53,9 @@ export default abstract class CLI {
     this.LANG = process.env.LANG;
     this.KMDR_PATH = path.join(this.OS_HOME_PATH, ".kmdr");
     this.KMDR_AUTH_FILE = path.join(this.KMDR_PATH, "auth");
+    this.KMDR_SETTINGS_FILE = path.join(this.KMDR_PATH, "settings.json");
 
-    this.settingsManager = new SettingsManager(this.KMDR_PATH);
+    this.settingsManager = new SettingsManager(this.KMDR_PATH, this.KMDR_SETTINGS_FILE);
 
     this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://stg.api.kmdr.sh";
 

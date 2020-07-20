@@ -24,4 +24,10 @@ export default class Print {
 
     console.error(`${spaces}${chalk.red(text)}`);
   }
+
+  public static warn(text: string, indent: number = 2) {
+    const spaces = ` `.repeat(indent);
+
+    console.warn(`${spaces}${chalk.yellow(text)}`);
+  }
 }

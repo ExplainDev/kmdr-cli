@@ -1,8 +1,10 @@
+import { rawListeners } from "commander";
 import fs from "fs";
 import os from "os";
 import path from "path";
-import { KmdrError } from "./errors";
+import { KmdrError, KmdrSettingsError } from "./errors";
 import { Settings, SettingsFile, Theme } from "./interfaces";
+import Print from "./Print";
 import ThemeManager from "./ThemeManager";
 
 const DEFAULT_THEME: Theme = {
@@ -43,9 +45,11 @@ export default class SettingsManager implements Settings {
   public availableThemes: ThemeManager[] = [];
   public theme!: ThemeManager;
   private settingsPath: string;
+  private settingsFile: string;
 
-  constructor(settingsPath: string) {
+  constructor(settingsPath: string, settingsFile: string) {
     this.settingsPath = settingsPath;
+    this.settingsFile = settingsFile;
 
     this.loadAllThemes();
     // If directory does not exists, use default settings
@@ -58,14 +62,12 @@ export default class SettingsManager implements Settings {
 
   public saveToDisk(newSettings: SettingsFile) {
     try {
-      const filePath = path.join(this.settingsPath, "settings.json");
-
-      fs.writeFileSync(filePath, JSON.stringify(newSettings, null, 2) + os.EOL, {
+      fs.writeFileSync(this.settingsFile, JSON.stringify(newSettings, null, 2) + os.EOL, {
         encoding: "utf8",
         mode: 0o640,
       });
     } catch (err) {
-      console.error(err);
+      throw err;
     }
   }
 
@@ -85,7 +87,7 @@ export default class SettingsManager implements Settings {
           this.availableThemes.push(theme);
         }
       } catch (err) {
-        console.error(err);
+        throw err;
       }
     }
   }
@@ -96,12 +98,10 @@ export default class SettingsManager implements Settings {
 
   private loadFromDisk() {
     try {
-      const filePath = path.join(this.settingsPath, "settings.json");
-
-      const file = fs.readFileSync(filePath, "utf8");
+      const file = fs.readFileSync(this.settingsFile, "utf8");
 
       if (file === "") {
-        throw new Error("File is empty");
+        this.theme = new ThemeManager(DEFAULT_THEME);
       } else {
         const parsedFile = JSON.parse(file) as SettingsFile;
 
@@ -112,8 +112,24 @@ export default class SettingsManager implements Settings {
         this.theme = this.loadTheme(parsedFile.theme) || new ThemeManager(DEFAULT_THEME);
       }
     } catch (err) {
-      if (err.code === "ENOENT") {
-        console.error(err.message);
+      if (err instanceof SyntaxError) {
+        Print.error(
+          `Settings file is invalid. Delete file ${this.settingsFile} and run "kmdr settings" again`,
+        );
+        Print.error(err.message);
+        Print.newLine();
+        process.exit(1);
+      } else if (err.code === "EACCES") {
+        Print.error(
+          `Could not open file ${this.settingsFile} for read. Make sure it has the right Read permissions for current user`,
+        );
+        Print.error(err.message);
+        process.exit(1);
+      } else if (err.code === "ENOENT") {
+        Print.error(err.message);
+        process.exit(1);
+      } else {
+        throw err;
       }
     }
   }

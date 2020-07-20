@@ -20,7 +20,6 @@ class KMDR {
       .alias("e")
       .description("Explain a shell command")
       .action(this.explain);
-    this.arg.command("feedback").alias("f").description("Send feedback :)").action(this.feedback);
     this.arg.command("info").description("Display system-wide information").action(this.info);
     this.arg.command("login [email]").alias("l").description("Log in to kmdr").action(this.login);
     this.arg.command("logout").description("Log out from kmdr").action(this.logout);
@@ -60,11 +59,6 @@ class KMDR {
   private async version() {
     const version = new Version();
     await version.init();
-  }
-
-  private async feedback() {
-    const feedback = new Feedback();
-    await feedback.init();
   }
 
   private async settings() {
