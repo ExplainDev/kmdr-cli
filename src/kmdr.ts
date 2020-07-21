@@ -1,4 +1,6 @@
 import arg from "commander";
+import fs from "fs";
+import path from "path";
 import Explain from "./subcommands/explain";
 import Info from "./subcommands/info";
 import Login from "./subcommands/login";
@@ -12,7 +14,14 @@ class KMDR {
   private welcomeMsg = `The CLI tool for learning commands from your terminal\n\nLearn more at https://kmdr.sh/`;
 
   public init() {
-    this.arg.description(this.welcomeMsg).version("unknown", "-v, --version");
+    let version = "";
+
+    try {
+      version = fs.readFileSync(path.join(__dirname, "..", "VERSION"), "utf8").trim();
+    } catch (err) {
+      version = "unknown";
+    }
+    this.arg.description(this.welcomeMsg).version(version, "-v, --version");
     // this.cli.command("config").alias("c").description("Configure kmdr-cli").action(this.config);
     this.arg
       .command("explain")

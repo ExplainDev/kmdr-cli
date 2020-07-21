@@ -49,7 +49,6 @@ export default abstract class CLI {
     this.OS_USERNAME = os.userInfo().username;
     this.NODE_VERSION = process.versions.node;
     this.NODE_PATH = process.env.NODE;
-    this.PKG_VERSION = "unknown";
     this.LANG = process.env.LANG;
     this.KMDR_PATH = path.join(this.OS_HOME_PATH, ".kmdr");
     this.KMDR_AUTH_FILE = path.join(this.KMDR_PATH, "auth");
@@ -58,6 +57,12 @@ export default abstract class CLI {
     this.settingsManager = new SettingsManager(this.KMDR_PATH, this.KMDR_SETTINGS_FILE);
 
     this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://stg.api.kmdr.sh";
+
+    try {
+      this.PKG_VERSION = fs.readFileSync(path.join(__dirname, "..", "VERSION"), "utf8").trim();
+    } catch (err) {
+      this.PKG_VERSION = "unknown";
+    }
 
     if (this.kmdrAuthFileExists) {
       this.kmdrAuthCredentials = fs.readFileSync(this.KMDR_AUTH_FILE, "utf8");

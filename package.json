@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && cp -r src/files dist/",
+    "build:version": "ts-node scripts/version.ts",
     "test": "jest --verbose",
     "start:prod": "NODE_ENV=production ts-node src/bin.ts",
     "start:dev": "NODE_ENV=development KMDR_API_ENDPOINT=http://localhost:8081 ts-node src/bin.ts"
