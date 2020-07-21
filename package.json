@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/eventsource": "^1.1.2",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.50",
+    "@types/node": "^12.12.51",
     "@types/node-fetch": "^2.5.7",
     "jest": "^24.8.0",
     "kmdr-parser": "^2.4.2",
@@ -70,13 +70,13 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "enquirer": "^2.3.6",
     "cross-fetch": "^3.0.5",
+    "enquirer": "^2.3.6",
     "eventsource": "^1.0.7",
     "graphql-request": "^2.0.0",
     "kmdr-ast": "^3.3.3",
     "node-fetch": "^2.6.0",
-    "ora": "^4.0.4"
+    "ora": "^4.0.5"
   },
   "bundledDependencies": [
     "kmdr-ast",
