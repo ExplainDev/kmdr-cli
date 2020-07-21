@@ -1,4 +1,4 @@
-import CLI from "../../cli";
+import CLI from "../../Cli";
 import Print from "../../Print";
 
 export default class Version extends CLI {

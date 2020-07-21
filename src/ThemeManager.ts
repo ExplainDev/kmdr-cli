@@ -1,4 +1,4 @@
-import chalk, { Chalk } from "chalk";
+import chalk from "chalk";
 import { PaletteOptions, Theme, ThemePalette } from "./interfaces";
 
 const defaultPaletteOptions: PaletteOptions = {

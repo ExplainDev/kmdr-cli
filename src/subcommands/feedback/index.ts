@@ -1,4 +1,4 @@
-import CLI from "../../cli";
+import CLI from "../../Cli";
 
 export default class Feedback extends CLI {
   constructor() {

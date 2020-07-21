@@ -5,7 +5,7 @@ import fs from "fs";
 import { ClientError } from "graphql-request";
 import fetch from "node-fetch";
 import os from "os";
-import CLI from "../../cli";
+import CLI from "../../Cli";
 import KmdrAuthError from "../../errors/KmdrAuthError";
 import { CurrentUserReponse, LoginIdResponse } from "../../interfaces";
 import Print from "../../Print";

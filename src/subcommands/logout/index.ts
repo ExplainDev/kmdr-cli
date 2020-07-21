@@ -1,6 +1,6 @@
 import fs from "fs";
 import fetch from "node-fetch";
-import CLI from "../../cli";
+import CLI from "../../Cli";
 import { KmdrAuthError } from "../../errors";
 import Print from "../../Print";
 

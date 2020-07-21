@@ -1,12 +1,11 @@
-import { parse } from "commander";
 import { prompt } from "enquirer";
+import { ClientError } from "graphql-request";
 import { Highlight, NodeDefinition, Tree } from "kmdr-ast";
 import CLI from "../../Cli";
 import CliDecorators from "../../CliDecorators";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
-import { ClientError } from "graphql-request";
 
 interface ExplainInputQuery {
   source: string;

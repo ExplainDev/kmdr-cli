@@ -1,6 +1,5 @@
 import arg from "commander";
 import Explain from "./subcommands/explain";
-import Feedback from "./subcommands/feedback";
 import Info from "./subcommands/info";
 import Login from "./subcommands/login";
 import Logout from "./subcommands/logout";
