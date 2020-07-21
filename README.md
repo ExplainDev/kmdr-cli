@@ -6,9 +6,11 @@
   <img src="screenshot.png">
 </p>
 
-`kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`.
+`kmdr` provides command explanations for hundreds of programs including `git`, `docker`, `kubectl`,`npm`, `go` and more straight forward programs such as those built into `bash`. See the full list at https://app.kmdr.sh/program.
 
 ## Installation
+
+You will need to install the kmdr program and sign-in to begin using kmdr on the CLI. 
 
 ### Requirements
 
@@ -25,12 +27,6 @@ npm install kmdr --global
 
 ```bash
 yarn global add kmdr
-```
-
-#### With Homebrew 🍺 (only macOS)
-
-```bash
-brew install kommandr/tap/kmdr
 ```
 
 ### Check installation
@@ -79,6 +75,15 @@ export PATH="$(yarn global bin):$PATH"
    ```bash
    docker run -it --rm  kmdr-cli
    ```
+
+### Sign In
+1. Log in on the kmdr CLI tool
+  ```bash
+  kmdr login
+  ```
+
+2. Enter your email when prompted
+3. Check your inbox and click on the link provided in the email.
 
 ## Usage
 
@@ -272,411 +277,10 @@ $ kmdr upgrade
   You have the latest version of kmdr-cli
 ```
 
+So what is the reason for signing in? why should it be included in CLI readme?
 ## Supported programs
 
-We add new programs every day!
-
-### Bash/Bourne Shell Builtins
-
-- `alias`
-- `bg`
-- `complete`
-- `cd`
-- `clear`
-- `command`
-- `declare`
-- `disown`
-- `echo`
-- `eval`
-- `exit`
-- `export`
-- `false`
-- `fg`
-- `hash`
-- `history`
-- `info`
-- `jobs`
-- `kill`
-- `logout`
-- `printf`
-- `popd`
-- `pushd`
-- `pwd`
-- `read`
-- `readonly`
-- `return`
-- `readonly`
-- `set`
-- `sleep`
-- `source`
-- `true`
-- `unalias`
-- `umask`
-
-
-### Containers
-
-- `docker`
-- `docker-compose`
-- `kata-runtime`
-- `kubectl`
-- `minikube`
-- `singularity`
-
-### Database server and clients
-
-- `etcdctl`
-- `mongod`
-- `mongodump`
-- `mysql`
-- `mysqldump`
-- `pg_ctl`
-- `pg_dump`
-- `pg_restore`
-- `q`
-- `sqlite3`
-
-### Deployment / Cloud
-
-- `aws`
-- `ansible`
-- `ansible-playbook`
-- `az`
-- `gcloud`
-- `helm`
-- `now`
-- `openstack`
-- `swift`
-- `terraform`
-
-
-### File and Archiving
-
-- `7z`
-- `7zr`
-- `basename`
-- `chgrp`
-- `chown`
-- `chmod`
-- `cmp`
-- `cp`
-- `dd`
-- `df`
-- `du`
-- `duplicity`
-- `fdupes`
-- `file`
-- `find`
-- `fsarchiver`
-- `ftp`
-- `gunzip`
-- `gzip`
-- `link`
-- `ln`
-- `ls`
-- `mkdir`
-- `mktemp`
-- `more`
-- `mv`
-- `openssl`
-- `realpath`
-- `rm`
-- `rmdir`
-- `rsync`
-- `scp`
-- `shred`
-- `split`
-- `stat`
-- `tar`
-- `touch`
-- `tree`
-- `unmask`
-- `unlink`
-- `watch`
-
-### Media (audio/video)
-
-- `ffmpeg`
-- `youtube-dl`
-
-### Network/Communication
-
-- `curl`
-- `dig`
-- `firewall-cmd`
-- `host`
-- `iptables`
-- `ifconfig`
-- `hostname`
-- `nc`
-- `ncat`
-- `netstat`
-- `nmcli`
-- `nmap`
-- `nslookup`
-- `ping`
-- `ssh`
-- `sshd`
-- `ssh-add`
-- `ssh-copy-id`
-- `ssh-keygen`
-- `sshutle`
-- `tcpdump`
-- `telnet`
-- `traceroute`
-- `wget`
-
-### Package managers
-
-- `add-apt-repository`
-- `apt`
-- `apt-cache`
-- `apt-key`
-- `apt-get`
-- `apt-mark`
-- `aptitude`
-- `bpkg`
-- `cargo`
-- `chcon`
-- `clib`
-- `composer`
-- `crew`
-- `dnf`
-- `dpkg`
-- `dpkg-query`
-- `dpkg-reconfigure`
-- `gem`
-- `npm`
-- `makepkg`
-- `pip`
-- `port`
-- `pkg`
-- `rpm`
-- `rpmgraph`
-- `rpmbuild`
-- `snap`
-- `synaptic`
-- `stack`
-- `yarn`
-- `yay`
-- `yum`
-- `zypper`
-
-### Programming Languages / Run time environments / Compilers
-
-- `cobra`
-- `cmake`
-- `gcc`
-- `go`
-- `java`
-- `jmap`
-- `jstat`
-- `ld`
-- `node`
-- `nvm`
-- `perl`
-- `python`
-- `rbenv`
-- `ruby`
-- `rails`
-- `virtualenv`
-- `webpack`
-
-### Sysadmin / Monitoring
-
-- `adduser`
-- `apachectl`
-- `bmon`
-- `chroot`
-- `chsh`
-- `crontab`
-- `df`
-- `dtrace`
-- `dmesg`
-- `finger`
-- `free`
-- `fusermount`
-- `fsav`
-- `getent`
-- `gpasswd`
-- `groupadd`
-- `grubby`
-- `halt`
-- `hostnamectl`
-- `htop`
-- `install`
-- `iperf`
-- `iperf3`
-- `journalctl`
-- `killall`
-- `localectl`
-- `lsof`
-- `lsb_release`
-- `lsmod`
-- `lspci`
-- `lsusb`
-- `mount`
-- `modinfo`
-- `modprobe`
-- `nice`
-- `nohup`
-- `nproc`
-- `numactl`
-- `parted`
-- `perf`
-- `ps`
-- `pstree`
-- `pkill`
-- `reboot`
-- `shutdown`
-- `sudo`
-- `swapoff`
-- `systemctl`
-- `top`
-- `uname`
-- `umount`
-- `useradd`
-- `usermod`
-- `visudo`
-- `vmstat`
-- `wg`
-- `which`
-- `who`
-- `whois`
-- `whoami`
-
-### Time/Date
-
-- `cal`
-- `date`
-- `time`
-- `peaclock`
-
-### Text Processing
-
-- `awk`
-- `cat`
-- `column`
-- `code`
-- `cut`
-- `diff`
-- `egrep`
-- `fold`
-- `grep`
-- `head`
-- `less`
-- `nl`
-- `od`
-- `recode`
-- `sed`
-- `sort`
-- `shuf`
-- `tail`
-- `tr`
-- `uniq`
-- `wc`
-
-### Text editors
-
-- `code`
-- `nano`
-- `pgrep`
-- `vi`
-- `vim`
-
-### Task Runner
-
-- `gulp`
-
-### Utilities
-
-- `autossh`
-- `age`
-- `base64`
-- `chrpath`
-- `diffstat`
-- `env`
-- `exa`
-- `fd`
-- `fish`
-- `fincore`
-- `fluxbox`
-- `gh`
-- `gnome-terminal`
-- `gofmt`
-- `gradlew`
-- `gv`
-- `id`
-- `inxi`
-- `jq`
-- `kmdr`
-- `neofetch`
-- `md5sum`
-- `mdbook`
-- `npx`
-- `openssl`
-- `openvt`
-- `pandoc`
-- `pbcopy`
-- `prettier`
-- `pwdx`
-- `rclone`
-- `reflector`
-- `screen`
-- `shellcheck`
-- `seq`
-- `sha1sum`
-- `sha256sum`
-- `strings`
-- `terminator`
-- `timeout`
-- `tldr`
-- `tput`
-- `uptime`
-- `whereis`
-- `w3m`
-- `xxd`
-- `xdg-open`
-- `xdg-mime`
-- `zapier`
-- `zenity`
-- `zsh`
-
-### Virtualization
-
-- `esxcli`
-- `vagrant`
-
-### Version Control
-
-- `ctr`
-- `git` 
-- `hg`
-- `repo`
-
-### Miscellaneous
-
-- `bash`
-- `bash/sh`
-- `conda`
-- `dh`
-- `firejail`
-- `fortune`
-- `fzf`
-- `gpart`
-- `gpg`
-- `ncdu`
-- `header`
-- `hyperfine`
-- `lolcat`
-- `lsblk`
-- `rgh`
-- `rladmin`
-- `smbclient`
-- `tty`
-- `ttyd`
-- `unimatrix`
-- `yes`
+We add new programs every day! See the full list here: https://app.kmdr.sh/program. 
 
 ## Stay tuned for more updates
 
