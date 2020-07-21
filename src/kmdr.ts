@@ -20,7 +20,11 @@ class KMDR {
       .alias("e")
       .description("Explain a shell command")
       .action(this.explain);
-    this.arg.command("info").description("Display system-wide information").action(this.info);
+    this.arg
+      .command("info")
+      .alias("i")
+      .description("Display system-wide information")
+      .action(this.info);
     this.arg.command("login [email]").alias("l").description("Log in to kmdr").action(this.login);
     this.arg.command("logout").description("Log out from kmdr").action(this.logout);
     this.arg
