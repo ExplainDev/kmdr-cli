@@ -4,7 +4,7 @@
   "description": "A command-line interface for explaining commands in the terminal",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && cp -r src/files dist/",
+    "build": "tsc --moduleResolution node && cp -r src/files dist/",
     "build:version": "ts-node scripts/version.ts",
     "test": "jest --verbose",
     "start:prod": "NODE_ENV=production ts-node src/bin.ts",
