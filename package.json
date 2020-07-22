@@ -1,7 +1,7 @@
 {
   "name": "kmdr",
   "version": "1.1.5",
-  "description": "A command-line interface for explaining commands in the terminal",
+  "description": "The CLI tool for learning commands from your terminal",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --moduleResolution node && cp -r src/files dist/",
