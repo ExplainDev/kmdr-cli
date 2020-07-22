@@ -52,6 +52,10 @@ export default class Login extends CLI {
         Print.text("Run `kmdr logout` to log out from this system");
         Print.newLine();
       } else {
+        Print.text(
+          `We use email-based, passwordless authentication. Enter your email address and you will receive a one-time login link   `,
+        );
+        Print.newLine();
         if (!this.email) {
           this.email = await this.promptEmail();
         }
@@ -111,7 +115,7 @@ export default class Login extends CLI {
       }
       case "pending": {
         this.spinner?.start(
-          `Check your inbox and click on the link provided in the email.\n\n  ${chalk.bold(
+          `Check your inbox and click on the link provided. The link in your email will be valid for 10 minutes.\n\n  ${chalk.bold(
             "DO NOT close the terminal or exit this program",
           )}\n`,
         );
