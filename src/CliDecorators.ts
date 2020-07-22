@@ -7,14 +7,14 @@ import {
   ProgramNodeDefinition,
   SubcommandNodeDefinition,
 } from "kmdr-ast";
-import Theme from "./ThemeManager";
+import ThemeManager from "./ThemeManager";
 
 const DEFAULT_THEME = "GreenWay";
 
 export default class CliDecorators implements Decorators<string> {
-  public theme: Theme;
+  public theme: ThemeManager;
 
-  constructor(theme: Theme) {
+  constructor(theme: ThemeManager) {
     this.theme = theme;
   }
 
@@ -84,11 +84,11 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public arithmeticOperator(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("operator", text);
   }
 
   public backtick(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("operator", text);
   }
 
   public bitwiseOperator(text: string, _definition?: NodeDefinition) {
@@ -108,27 +108,27 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public comment(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("comment", text);
   }
 
   public do(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("keyword", text);
   }
 
   public doubleQuotes(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("quotes", text);
   }
 
   public done(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("keyword", text);
   }
 
   public elif(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("keyword", text);
   }
 
   public else(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("keyword", text);
   }
 
   public equal(text: string, _definition?: NodeDefinition) {
@@ -140,7 +140,7 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public fileDescriptor(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("keyword", text);
   }
 
   public fn(text: string, _definition?: NodeDefinition) {
@@ -176,15 +176,15 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public optionArg(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("argument", text);
   }
 
   public parens(text: string) {
-    return text;
+    return this.theme.print("parens", text);
   }
 
   public pipeline(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("operator", text);
   }
 
   public program(text: string, _definition?: NodeDefinition) {
@@ -192,7 +192,7 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public redirect(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("redirect", text);
   }
 
   public relationalOperator(text: string, _definition?: NodeDefinition) {
@@ -220,7 +220,7 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public variableName(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("varName", text);
   }
 
   public while(text: string) {
