@@ -1,0 +1,36 @@
+{
+  "name": "greenway",
+  "mode": "dark",
+  "palette": {
+    "argument": {
+      "bold": true,
+      "foreground": "#f8f8f2",
+      "italic": true
+    },
+    "comment": {
+      "foreground": "#6272a4"
+    },
+    "keyword": {
+      "foreground": "#ff5555"
+    },
+    "operator": {
+      "foreground": "#f1fa8c"
+    },
+    "option": {
+      "foreground": "#50fa7b",
+      "bold": true
+    },
+    "program": {
+      "foreground": "#FFC0CB",
+      "bold": true
+    },
+    "subcommand": {
+      "foreground": "#bd93f9",
+      "bold": true
+    },
+    "tokenKind": {
+      "background": "#222222",
+      "foreground": "#AA5599"
+    }
+  }
+}

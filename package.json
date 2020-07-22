@@ -1,13 +1,14 @@
 {
   "name": "kmdr",
-  "version": "0.4.3",
-  "description": "A command-line interface for explaining commands in the terminal",
+  "version": "1.1.6",
+  "description": "The CLI tool for learning commands from your terminal",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --moduleResolution node && cp -r src/files dist/",
+    "build:version": "ts-node scripts/version.ts",
     "test": "jest --verbose",
-    "start:prod": " NODE_ENV=production ts-node src/bin.ts",
-    "start:dev": "KMDR_API_URL=http://localhost:8081/api/graphql NODE_ENV=development ts-node src/bin.ts"
+    "start:prod": "NODE_ENV=production ts-node src/bin.ts",
+    "start:dev": "NODE_ENV=development KMDR_API_ENDPOINT=http://localhost:8081 ts-node src/bin.ts"
   },
   "bin": {
     "kmdr": "dist/bin.js"
@@ -25,22 +26,19 @@
   "homepage": "https://kmdr.sh",
   "license": "MIT",
   "devDependencies": {
-    "@types/inquirer": "^6.0.3",
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.7.8",
-    "@types/node-emoji": "^1.8.1",
-    "@types/tunnel": "0.0.1",
-    "@types/uuid": "^3.4.5",
-    "@types/word-wrap": "^1.2.1",
+    "@types/eventsource": "^1.1.2",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.51",
+    "@types/node-fetch": "^2.5.7",
     "jest": "^24.8.0",
-    "kmdr-parser": "^1.1.4",
+    "kmdr-parser": "^2.4.2",
     "prettier": "^1.17.1",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.6.2",
+    "ts-jest": "^24.3.0",
+    "ts-node": "^8.10.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.9.7"
   },
   "contributors": [
     {
@@ -71,13 +69,18 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "inquirer": "^7.0.0",
-    "kmdr-ast": "^2.0.1",
-    "ora": "^3.4.0",
-    "tunnel": "^0.0.6",
-    "word-wrap": "^1.2.3"
-  }
+    "cross-fetch": "^3.0.5",
+    "enquirer": "^2.3.6",
+    "eventsource": "^1.0.7",
+    "graphql-request": "^2.0.0",
+    "kmdr-ast": "^3.3.3",
+    "node-fetch": "^2.6.0",
+    "ora": "^4.0.5"
+  },
+  "bundledDependencies": [
+    "kmdr-ast",
+    "cross-fetch"
+  ]
 }

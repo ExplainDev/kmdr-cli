@@ -1,3 +1,4 @@
-import KMDR from './kmdr';
+import KMDR from "./Kmdr";
+
 const kmdr = new KMDR();
 kmdr.init();
