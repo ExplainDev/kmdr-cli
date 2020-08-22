@@ -8,7 +8,7 @@ import Print from "./Print";
 import ThemeManager from "./ThemeManager";
 
 const DEFAULT_THEME: Theme = {
-  name: "greenway",
+  name: "Greenway",
   mode: "dark",
   palette: {
     argument: {
@@ -16,8 +16,15 @@ const DEFAULT_THEME: Theme = {
       foreground: "#f8f8f2",
       italic: true,
     },
+    braces: {
+      foreground: "#BD10E0",
+    },
+    brackets: {
+      foreground: "#BD10E0",
+    },
     comment: {
-      foreground: "#6272a4",
+      foreground: "#9B9B9B",
+      italic: true,
     },
     keyword: {
       foreground: "#ff5555",
@@ -27,16 +34,32 @@ const DEFAULT_THEME: Theme = {
     },
     option: {
       foreground: "#50fa7b",
+      bold: true,
+    },
+    parens: {
+      foreground: "#BD10E0",
     },
     program: {
-      foreground: "#FFC0CB",
+      foreground: "#50E3C2",
+      bold: true,
+    },
+    quotes: {
+      foreground: "#BD10E0",
+    },
+    redirect: {
+      foreground: "#F5A623",
+      bold: true,
     },
     subcommand: {
-      foreground: "#bd93f9",
+      foreground: "#F8E71C",
+      bold: true,
     },
     tokenKind: {
       background: "#222222",
       foreground: "#AA5599",
+    },
+    varName: {
+      foreground: "#B8E986",
     },
   },
 };

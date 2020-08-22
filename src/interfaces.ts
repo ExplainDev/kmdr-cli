@@ -119,6 +119,8 @@ interface ProgramAst {
   definitions: string;
   perf?: string;
   sessionId: string;
+  permalink: string;
+  commandId: string;
 }
 
 export interface ThemePalette {
@@ -129,6 +131,8 @@ export interface ThemePalette {
   option: PaletteOptions;
   program: PaletteOptions;
   subcommand: PaletteOptions;
+  brackets: PaletteOptions;
+  braces: PaletteOptions;
   [key: string]: PaletteOptions;
 }
 

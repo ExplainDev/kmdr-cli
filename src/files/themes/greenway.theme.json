@@ -7,6 +7,12 @@
       "foreground": "#f8f8f2",
       "italic": true
     },
+    "braces": {
+      "foreground": "#BD10E0"
+    },
+    "brackets": {
+      "foreground": "#BD10E0"
+    },
     "comment": {
       "foreground": "#9B9B9B",
       "italic": true

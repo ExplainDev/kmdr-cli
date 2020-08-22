@@ -74,6 +74,40 @@ export default class CliDecorators implements Decorators<string> {
         summary = definition.metadata.summary;
         break;
       }
+      case "||":
+      case "&&": {
+        header = this.logicalOperator(type);
+        summary = definition.metadata.summary;
+        break;
+      }
+      case ">":
+      case ">&":
+      case ">>":
+      case "&>": {
+        header = this.redirect(type);
+        summary = definition.metadata.summary;
+        break;
+      }
+      case "test_operator": {
+        header = this.testOperator(definition.metadata.name || "");
+        summary = definition.metadata.summary;
+        break;
+      }
+      case ";": {
+        header = this.semicolon(";");
+        summary = definition.metadata.summary;
+        break;
+      }
+      case "file_descriptor": {
+        header = this.fileDescriptor(definition.metadata.name || "");
+        summary = definition.metadata.summary;
+        break;
+      }
+      case "|": {
+        header = this.pipeline("|");
+        summary = definition.metadata.summary;
+        break;
+      }
     }
 
     return [header, summary];
@@ -96,11 +130,12 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public braces(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("braces", text);
   }
 
   public brackets(text: string, _definition?: NodeDefinition) {
-    return text;
+    console.log("brackets");
+    return this.theme.print("brackets", text);
   }
 
   public command(text: string) {
@@ -200,7 +235,7 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public semicolon(text: string, _definition?: NodeDefinition) {
-    return text;
+    return this.theme.print("operator", text);
   }
 
   public space() {

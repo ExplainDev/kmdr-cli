@@ -41,12 +41,13 @@ export default class Explain extends CLI {
           repeat = true;
           continue;
         }
+
         // Print a new line after prompting the user
         Print.newLine();
         this.spinner?.start("Analyzing the command...");
         const programAst = await this.getProgramAST(trimmedSource);
         this.spinner?.stop();
-        const { ast, definitions, perf, sessionId } = programAst;
+        const { ast, definitions, perf, sessionId, permalink, commandId } = programAst;
         const parsedAST = JSON.parse(ast);
         const tree = new Tree(parsedAST);
         const parsedDefinitions: NodeDefinition[] = JSON.parse(definitions);
@@ -71,6 +72,9 @@ export default class Explain extends CLI {
           Print.text(summary, 6);
         }
 
+        Print.newLine();
+
+        Print.text(`Learn more at ${this.KMDR_WEBAPP_URI}/history/${commandId}`);
         Print.newLine();
 
         // what do you want to do next?
@@ -108,18 +112,21 @@ export default class Explain extends CLI {
         this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
       }
+      console.error(err.response);
       Print.newLine();
     }
   }
 
   private async getProgramAST(source: string) {
     const gqlQuery = /* GraphQL */ `
-      query getProgramAST($source: String!, $locale: String, $url: String, $title: String) {
-        getProgramAST(source: $source, locale: $locale, url: $url, title: $title) {
+      query getProgramAST($source: String!) {
+        getProgramAST(source: $source) {
           ast
           definitions
           perf
           sessionId
+          permalink
+          commandId
         }
       }
     `;
