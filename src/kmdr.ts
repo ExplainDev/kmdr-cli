@@ -7,6 +7,7 @@ import Login from "./subcommands/login";
 import Logout from "./subcommands/logout";
 import Settings from "./subcommands/settings";
 import Version from "./subcommands/version";
+import History from "./subcommands/history";
 
 class KMDR {
   private arg = arg;
@@ -35,6 +36,7 @@ class KMDR {
       .action(this.info);
     this.arg.command("login [email]").alias("l").description("Log in to kmdr").action(this.login);
     this.arg.command("logout").description("Log out from kmdr").action(this.logout);
+    this.arg.command("history").alias("h").description("View command history").action(this.history);
     this.arg
       .command("settings")
       .alias("s")
@@ -56,6 +58,11 @@ class KMDR {
   private async explain() {
     const explain = new Explain();
     await explain.init();
+  }
+
+  private async history() {
+    const history = new History();
+    await history.init();
   }
 
   private async login(email: string) {
