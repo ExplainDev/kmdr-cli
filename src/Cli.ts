@@ -57,7 +57,7 @@ export default abstract class CLI {
     this.KMDR_WEBAPP_URI = process.env.KMDR_WEBAPP_ENDPOINT || "https://app.kmdr.sh";
     this.settingsManager = new SettingsManager(this.KMDR_PATH, this.KMDR_SETTINGS_FILE);
 
-    this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://stg.api.kmdr.sh";
+    this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://api.kmdr.sh";
 
     try {
       this.PKG_VERSION = fs.readFileSync(path.join(__dirname, "..", "VERSION"), "utf8").trim();
