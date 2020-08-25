@@ -72,6 +72,7 @@ export default abstract class CLI {
     this.gqlClient = new GraphQLClient(`${this.KMDR_ENDPOINT_URI}/api/graphql`, {
       headers: {
         "X-kmdr-origin": "cli",
+        "X-kmdr-origin-client-version": this.PKG_VERSION,
         authorization: `Basic ${this.kmdrAuthCredentials}`,
       },
     });
