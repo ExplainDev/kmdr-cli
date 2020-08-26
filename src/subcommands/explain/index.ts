@@ -112,7 +112,7 @@ export default class Explain extends CLI {
         this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
       }
-      console.error(err.response);
+
       Print.newLine();
     }
   }
@@ -210,11 +210,15 @@ export default class Explain extends CLI {
       type: "input",
     };
 
+    let source = "";
+
     try {
       const input = await prompt<ExplainInputQuery>(inputQuestion);
-      return input.source;
+      source = input.source;
     } catch (err) {
       throw err;
     }
+
+    return source;
   }
 }

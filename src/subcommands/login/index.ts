@@ -69,7 +69,7 @@ export default class Login extends CLI {
       } else if (err.code === "ECONNREFUSED") {
         this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
-      } else {
+      } else if (err !== "") {
         this.spinner?.fail("An error occurred");
         Print.error(err);
       }
@@ -201,17 +201,22 @@ export default class Login extends CLI {
       type: "input",
     };
 
+    let email = "";
+
     do {
       try {
         const input = await prompt<EmailInput>(inputQuestion);
         if (input.email.trim() === "") {
-          Print.error("Enter a valid email");
+          Print.error("Enter a valid email. Press Ctrl-c or Esc key to exit.");
         } else {
-          return input.email;
+          email = input.email;
+          break;
         }
       } catch (err) {
         throw err;
       }
     } while (true);
+
+    return email;
   }
 }
