@@ -134,7 +134,6 @@ export default class CliDecorators implements Decorators<string> {
   }
 
   public brackets(text: string, _definition?: NodeDefinition) {
-    console.log("brackets");
     return this.theme.print("brackets", text);
   }
 
