@@ -75,7 +75,7 @@
     "enquirer": "^2.3.6",
     "eventsource": "^1.0.7",
     "graphql-request": "^2.0.0",
-    "kmdr-ast": "^3.3.4",
+    "kmdr-ast": "^3.3.5",
     "node-fetch": "^2.6.0",
     "ora": "^4.1.1"
   },
