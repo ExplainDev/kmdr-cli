@@ -60,7 +60,9 @@ export default abstract class CLI {
     this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://api.kmdr.sh";
 
     try {
-      this.PKG_VERSION = fs.readFileSync(path.join(__dirname, "..", "VERSION"), "utf8").trim();
+      const pkg = fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8");
+      const parsedPkg = JSON.parse(pkg);
+      this.PKG_VERSION = parsedPkg.version;
     } catch (err) {
       this.PKG_VERSION = "unknown";
     }
