@@ -51,6 +51,7 @@ export default class Explain extends CLI {
         const parsedAST = JSON.parse(ast);
         const tree = new Tree(parsedAST);
         const parsedDefinitions: NodeDefinition[] = JSON.parse(definitions);
+
         const highlight = new Highlight<string>(this.decorators, "cli");
         const decoratedNodes = highlight.source(trimmedSource, tree, parsedDefinitions);
         const decoratedString = decoratedNodes.join("");
@@ -67,6 +68,7 @@ export default class Explain extends CLI {
         }
 
         for (const def of parsedDefinitions) {
+          if (def.type === "optionArg") continue;
           const [header, summary] = this.decorators.createDefinition(def);
           Print.text(header, 4);
           Print.text(summary, 6);
