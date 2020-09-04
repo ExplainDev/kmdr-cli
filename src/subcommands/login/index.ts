@@ -38,7 +38,7 @@ export default class Login extends CLI {
 
         if (!currentUser) {
           throw new KmdrAuthError(
-            `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again`,
+            `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again.\n\n  rm ${this.KMDR_AUTH_FILE}`,
           );
         }
         this.spinner?.succeed("You're logged in!");
