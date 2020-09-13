@@ -94,12 +94,13 @@ export interface GetProgramAstResponse {
   getProgramAST: ProgramAst;
 }
 
-interface User {
+export interface User {
   name: string;
   email: string;
   locale: string;
   username: string;
   location: string;
+  isPro: boolean;
 }
 
 export interface CurrentUserReponse {

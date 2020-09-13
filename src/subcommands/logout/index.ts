@@ -1,6 +1,8 @@
 import fs from "fs";
 import fetch from "node-fetch";
+import Auth from "../../Auth";
 import CLI from "../../Cli";
+import { EXIT_STATUS } from "../../contants";
 import { KmdrAuthError } from "../../errors";
 import Print from "../../Print";
 
@@ -10,22 +12,11 @@ export default class Logout extends CLI {
   }
 
   public async init() {
-    this.spinner?.start();
-
-    if (!this.kmdrDirectoryExists) {
-      this.spinner?.fail(`The directory ${this.KMDR_PATH} does not exist`);
-      Print.newLine();
-      return;
-    } else if (!this.kmdrAuthFileExists || !this.kmdrAuthCredentials) {
-      this.spinner?.fail(`Could not log out because you're not logged in`);
-      Print.newLine();
-      return;
-    }
-
     try {
+      this.spinner?.start("Logging you out...");
       const res = await fetch(`${this.KMDR_ENDPOINT_URI}/logout`, {
         headers: {
-          Authorization: `Basic ${this.kmdrAuthCredentials}`,
+          Authorization: `Basic ${this.auth.token}`,
           "X-kmdr-origin": "cli",
         },
         method: "POST",
@@ -36,17 +27,50 @@ export default class Logout extends CLI {
         Print.newLine();
       } else {
         throw new KmdrAuthError(
-          `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again`,
+          `The session stored ${this.KMDR_AUTH_FILE} is invalid. Manually delete the file and log in again.`,
         );
       }
     } catch (err) {
-      if (err.code === "ECONNREFUSED") {
+      if (err instanceof KmdrAuthError) {
+        this.spinner?.fail(err.message);
+        Print.error("");
+        Print.text(`$ rm ${this.KMDR_AUTH_FILE}`);
+        Print.error("");
+        process.exit(EXIT_STATUS.USER_NOT_AUTHENTICATED);
+      } else if (err.code === "ECONNREFUSED") {
         this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
+        Print.error("");
         Print.error(err);
-      } else {
-        this.spinner?.fail(err);
+        Print.error("");
+        process.exit(EXIT_STATUS.API_UNREACHABLE);
       }
-      Print.newLine();
+      this.spinner?.fail(err);
+      Print.error("");
+      process.exit(EXIT_STATUS.GENERIC);
+    }
+  }
+
+  protected async hookBeforeLoadingAuth() {
+    this.spinner?.start("Reading authentication file...");
+
+    if (!this.kmdrAuthFileExists) {
+      this.spinner?.info("You're not logged in to kmdr. Why not log in? ;)");
+      Print.text("");
+      Print.text("$ kmdr login");
+      Print.text("");
+      process.exit();
+    }
+  }
+
+  protected async hookAfterLoadingAuth() {
+    if (!Auth.isTokenValidFormat(this.auth.token)) {
+      this.spinner?.fail(
+        `File ${this.KMDR_AUTH_FILE} is invalid. Manually delete the file and log in again.`,
+      );
+      Print.error("");
+      Print.text(`$ rm ${this.KMDR_AUTH_FILE}`);
+      Print.error("");
+      process.exit(EXIT_STATUS.FILE_INVALID);
     }
   }
 }

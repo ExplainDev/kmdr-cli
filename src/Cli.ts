@@ -4,6 +4,7 @@ import { GraphQLClient } from "graphql-request";
 import ora from "ora";
 import os from "os";
 import path from "path";
+import Auth from "./Auth";
 import SettingsManager from "./SettingsManager";
 
 export default abstract class CLI {
@@ -15,7 +16,7 @@ export default abstract class CLI {
     return fs.existsSync(this.KMDR_AUTH_FILE);
   }
 
-  public spinner?: ora.Ora = ora("Loading...");
+  public spinner: ora.Ora = ora("Loading...");
 
   // These values don't change during the execution of the program.
   protected readonly KMDR_WEBAPP_URI: string;
@@ -33,12 +34,12 @@ export default abstract class CLI {
   protected readonly OS_RELEASE: string;
   protected readonly OS_SHELL: string;
   protected readonly OS_USERNAME: string;
-  protected readonly PKG_VERSION: string;
+  protected readonly PKG_VERSION!: string;
 
-  protected readonly kmdrAuthCredentials?: string;
   protected httpHeaders: { [key: string]: string } = {};
-  protected readonly gqlClient: GraphQLClient;
-  protected settingsManager: SettingsManager;
+  protected gqlClient!: GraphQLClient;
+  protected settingsManager!: SettingsManager;
+  protected auth: Auth;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || "production";
@@ -55,29 +56,31 @@ export default abstract class CLI {
     this.KMDR_AUTH_FILE = path.join(this.KMDR_PATH, "auth");
     this.KMDR_SETTINGS_FILE = path.join(this.KMDR_PATH, "settings.json");
     this.KMDR_WEBAPP_URI = process.env.KMDR_WEBAPP_ENDPOINT || "https://app.kmdr.sh";
-    this.settingsManager = new SettingsManager(this.KMDR_PATH, this.KMDR_SETTINGS_FILE);
 
     this.KMDR_ENDPOINT_URI = process.env.KMDR_API_ENDPOINT || "https://api.kmdr.sh";
+    this.PKG_VERSION = this.parsePkgJson();
 
-    try {
-      const pkg = fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8");
-      const parsedPkg = JSON.parse(pkg);
-      this.PKG_VERSION = parsedPkg.version;
-    } catch (err) {
-      this.PKG_VERSION = "unknown";
-    }
+    this.hookBeforeLoadingSettings();
+    this.settingsManager = new SettingsManager(this.KMDR_PATH, this.KMDR_SETTINGS_FILE);
+    this.hookAfterLoadingSettings();
 
-    if (this.kmdrAuthFileExists) {
-      this.kmdrAuthCredentials = fs.readFileSync(this.KMDR_AUTH_FILE, "utf8");
+    this.hookBeforeLoadingAuth();
+    this.auth = new Auth(this.KMDR_PATH);
+
+    let headers: any = {
+      "X-kmdr-origin": "cli",
+      "X-kmdr-origin-client-version": this.PKG_VERSION,
+    };
+
+    if (this.auth.token !== "") {
+      headers = { ...headers, authorization: `Basic ${this.auth.token}` };
     }
 
     this.gqlClient = new GraphQLClient(`${this.KMDR_ENDPOINT_URI}/api/graphql`, {
-      headers: {
-        "X-kmdr-origin": "cli",
-        "X-kmdr-origin-client-version": this.PKG_VERSION,
-        authorization: `Basic ${this.kmdrAuthCredentials}`,
-      },
+      headers,
     });
+
+    this.hookAfterLoadingAuth();
   }
 
   // protected gqlClient: GraphQLClient;
@@ -87,4 +90,30 @@ export default abstract class CLI {
   }
 
   public abstract init(): void;
+
+  protected hookBeforeLoadingSettings() {
+    return;
+  }
+
+  protected hookAfterLoadingSettings() {
+    return;
+  }
+
+  protected hookBeforeLoadingAuth() {
+    return;
+  }
+
+  protected hookAfterLoadingAuth() {
+    return;
+  }
+
+  private parsePkgJson() {
+    try {
+      const pkg = fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8");
+      const parsedPkg = JSON.parse(pkg);
+      return parsedPkg.version;
+    } catch {
+      return "unknown";
+    }
+  }
 }

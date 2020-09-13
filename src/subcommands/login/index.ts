@@ -5,9 +5,11 @@ import fs from "fs";
 import { ClientError } from "graphql-request";
 import fetch from "node-fetch";
 import os from "os";
+import Auth from "../../Auth";
 import CLI from "../../Cli";
+import { EXIT_STATUS } from "../../contants";
 import KmdrAuthError from "../../errors/KmdrAuthError";
-import { CurrentUserReponse, LoginIdResponse } from "../../interfaces";
+import { CurrentUserReponse, LoginIdResponse, User } from "../../interfaces";
 import Print from "../../Print";
 
 interface EmailInput {
@@ -27,69 +29,91 @@ export default class Login extends CLI {
     }
 
     this.eventSourceMessage = this.eventSourceMessage.bind(this);
-    this.saveAuthToDisk = this.saveAuthToDisk.bind(this);
   }
 
   public async init() {
     try {
-      if (this.kmdrAuthFileExists) {
-        this.spinner?.start("Validating your stored session...");
-        const currentUser = await this.getCurrentUser();
+      const currentUser = await this.getCurrentUser();
 
-        if (!currentUser) {
-          throw new KmdrAuthError(
-            `The session stored in this machine is invalid. Delete file ${this.KMDR_AUTH_FILE} and log in again.\n\n  rm ${this.KMDR_AUTH_FILE}`,
-          );
-        }
-        this.spinner?.succeed("You're logged in!");
-
+      if (currentUser) {
+        this.spinner.succeed("You're logged in!");
         Print.newLine();
-        Print.text(`Email: ${currentUser?.email}`);
-        Print.text(`Username: ${currentUser.username || "You haven't picked a username"}`);
-
+        this.printUserInfo(currentUser);
         Print.newLine();
+        process.exit();
+      }
 
-        Print.text("Run `kmdr logout` to log out from this system");
-        Print.newLine();
-      } else {
+      Print.text("Hi, welcome to kmdr-cli! 👋");
+      Print.newLine();
+
+      if (!this.email) {
         Print.text(
-          `We use email-based, passwordless authentication. Enter your email address and you will receive a one-time login link   `,
+          `We use email-based, passwordless authentication. Enter your email address and you will receive a one-time login link`,
         );
         Print.newLine();
-        if (!this.email) {
-          this.email = await this.promptEmail();
-        }
-        // spinner.start("")
-        await this.watchLoginEvent();
+
+        this.email = await this.promptEmail();
+      } else {
+        Print.text(
+          `We use email-based, passwordless authentication. You will receive a one-time login link.`,
+        );
       }
-    } catch (err) {
-      // spinner.fail("An error occured!");
-      if (err instanceof KmdrAuthError) {
-        this.spinner?.fail(err.message);
-      } else if (err.code === "ECONNREFUSED") {
-        this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
-        Print.error(err);
-      } else if (err !== "") {
-        this.spinner?.fail("An error occurred");
-        Print.error(err);
-      }
+
       Print.newLine();
+
+      await this.watchLoginEvent();
+    } catch (err) {
+      if (err instanceof KmdrAuthError) {
+        this.spinner.fail(err.message);
+        Print.newLine();
+        Print.text(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
+        Print.newLine();
+        process.exit(EXIT_STATUS.USER_NOT_AUTHENTICATED);
+      } else if (err.code === "ECONNREFUSED") {
+        this.spinner.fail("Could not reach the API registry. Are you connected to the internet?");
+        Print.error(err);
+        Print.error("");
+        process.exit(EXIT_STATUS.API_UNREACHABLE);
+      } else if (err !== "") {
+        this.spinner.fail("An error occurred");
+        Print.error("");
+        Print.error(err);
+        Print.error("");
+        process.exit(EXIT_STATUS.GENERIC);
+      }
     }
   }
 
-  protected saveAuthToDisk(email: string, token: string) {
-    const encodedCredentials = Buffer.from(`${email}:${token}`).toString("base64");
+  protected async hookAfterLoadingAuth() {
+    if (!this.kmdrAuthFileExists) {
+      return;
+    }
 
-    try {
-      if (!this.kmdrDirectoryExists) {
-        fs.mkdirSync(this.KMDR_PATH);
-      }
-      fs.writeFileSync(this.KMDR_AUTH_FILE, encodedCredentials + +os.EOL, {
-        encoding: "ascii",
-        mode: 0o600,
-      });
-    } catch (err) {
-      throw err;
+    if (!Auth.isTokenValidFormat(this.auth.token)) {
+      this.spinner.fail(`File ${this.KMDR_AUTH_FILE} is invalid. Delete it and try again.`);
+      Print.error("");
+      Print.error(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
+      Print.error("");
+      process.exit(EXIT_STATUS.FILE_INVALID);
+    }
+  }
+
+  /**
+   * Prints information about the user, e.g. email, username
+   *
+   * @param user
+   */
+  protected printUserInfo(user: User) {
+    Print.text(`Email: ${user.email}`);
+
+    if (!user.username) {
+      Print.text(`Username: You haven't picked a username yet`);
+      Print.newLine();
+      Print.text(`Complete your registration at ${this.KMDR_WEBAPP_URI}/welcome`);
+    } else {
+      Print.text(`Username: ${user.username}`);
+      Print.newLine();
+      Print.text(`Manage your account at ${this.KMDR_WEBAPP_URI}/settings`);
     }
   }
 
@@ -99,10 +123,15 @@ export default class Login extends CLI {
     switch (data) {
       case "active": {
         try {
-          this.saveAuthToDisk(this.email, this.token);
-          this.spinner?.succeed("You are now logged in!");
+          this.auth.save(this.email, this.token);
+          this.spinner.succeed("You are now logged in!");
+
+          this.gqlClient.setHeader("authorization", `Basic ${this.auth.token}`);
+          const currentUser = await this.getCurrentUser();
           Print.newLine();
-          Print.text("Try `kmdr explain` to get instant command definitions. ");
+          this.printUserInfo(currentUser);
+          Print.newLine();
+          Print.text("Run `kmdr explain` to get instant command definitions. ");
           Print.newLine();
         } catch (err) {
           this.spinner?.fail("An error occurred");
@@ -114,7 +143,9 @@ export default class Login extends CLI {
         break;
       }
       case "pending": {
-        this.spinner?.start(
+        this.spinner.color = "white";
+        this.spinner.spinner = "dots2";
+        this.spinner.start(
           `Check your inbox and click on the link provided. The link in your email will be valid for 10 minutes.\n\n  ${chalk.bold(
             "DO NOT close the terminal or exit this program",
           )}\n`,
@@ -123,9 +154,10 @@ export default class Login extends CLI {
         break;
       }
       case "expired": {
-        this.spinner?.fail("The link expired");
+        this.spinner.fail("The link expired :(");
         Print.newLine();
         this.eventSource.close();
+        process.exit(EXIT_STATUS.TOKEN_EXPIRED);
         break;
       }
       case "logout": {
@@ -146,6 +178,7 @@ export default class Login extends CLI {
           name
           location
           locale
+          isPro
         }
       }
     `;
@@ -154,38 +187,44 @@ export default class Login extends CLI {
       const data = await this.gqlClient.request<CurrentUserReponse>(gqlQuery);
       return data.currentUser;
     } catch (err) {
-      if (err instanceof ClientError && err.response.status === 401) {
+      if ((err instanceof ClientError && err.response.status === 401) || err instanceof TypeError) {
         throw new KmdrAuthError(
-          `The login is invalid. Please manually delete file ${this.KMDR_AUTH_FILE} and login again`,
+          `The token in ${this.KMDR_AUTH_FILE} is invalid. Manually delete the file and log in again`,
         );
       }
+
       throw err;
     }
   }
 
   private async watchLoginEvent() {
+    const { email } = this;
+
+    this.spinner.start("Contacting server...");
+
     try {
-      const { email } = this;
-      this.spinner?.start();
       const res = await fetch(`${this.KMDR_ENDPOINT_URI}/login`, {
         body: JSON.stringify({ email }),
         headers: {
           "Content-Type": "application/json",
           "X-kmdr-origin": "cli",
+          "X-kmdr-origin-client-version": this.PKG_VERSION,
         },
         method: "POST",
       });
 
       if (res.ok) {
+        this.spinner.succeed(`Email sent to ${this.email}`);
+        Print.newLine();
         const loginResponse: LoginIdResponse = await res.json();
 
-        if (loginResponse) {
-          this.token = loginResponse.loginId;
-          this.eventSource = new EventSource(
-            `${this.KMDR_ENDPOINT_URI}/login-success?i=${this.token}`,
-          );
-          this.eventSource.onmessage = this.eventSourceMessage;
-        }
+        this.token = loginResponse.loginId;
+
+        this.eventSource = new EventSource(
+          `${this.KMDR_ENDPOINT_URI}/login-success?i=${this.token}`,
+        );
+
+        this.eventSource.onmessage = this.eventSourceMessage;
       } else {
         throw new Error("Error");
       }
@@ -219,4 +258,6 @@ export default class Login extends CLI {
 
     return email;
   }
+
+  // protected pre()
 }

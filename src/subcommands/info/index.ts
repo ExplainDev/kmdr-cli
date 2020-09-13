@@ -27,4 +27,8 @@ export default class Info extends CLI {
     Print.text(`Locale: ${this.LANG}`, 4);
     Print.newLine();
   }
+
+  // protected pre() {
+  //   return;
+  // }
 }

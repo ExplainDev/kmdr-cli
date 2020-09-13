@@ -1,8 +1,10 @@
 import { prompt } from "enquirer";
 import { ClientError } from "graphql-request";
 import { Highlight, NodeDefinition, Tree } from "kmdr-ast";
+import Auth from "../../Auth";
 import CLI from "../../Cli";
 import CliDecorators from "../../CliDecorators";
+import { EXIT_STATUS } from "../../contants";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
@@ -109,13 +111,30 @@ export default class Explain extends CLI {
     } catch (err) {
       if (err instanceof KmdrAuthError) {
         this.spinner?.fail(err.message);
-        Print.newLine();
+        Print.error("");
+        process.exit(EXIT_STATUS.USER_NOT_AUTHENTICATED);
       } else if (err.code === "ECONNREFUSED") {
         this.spinner?.fail("Could not reach the API registry. Are you connected to the internet?");
         Print.error(err);
+        Print.error("");
+        process.exit(EXIT_STATUS.API_UNREACHABLE);
+      } else if (err !== "") {
+        process.exit(EXIT_STATUS.GENERIC);
       }
+    }
+  }
 
+  protected async hookAfterLoadingAuth() {
+    if (!this.kmdrAuthFileExists) {
+      Print.error(`No login detected on this machine. Sign in to continue.\n`);
+      Print.error(`$ kmdr login`);
       Print.newLine();
+      process.exit(EXIT_STATUS.FILE_NOT_PRESENT);
+    } else if (!Auth.isTokenValidFormat(this.auth.token)) {
+      Print.error(`File ${this.KMDR_AUTH_FILE} is invalid. Delete it and sign in again.\n`);
+      Print.error(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
+      Print.newLine();
+      process.exit(EXIT_STATUS.FILE_INVALID);
     }
   }
 
