@@ -2,7 +2,7 @@ import fs from "fs";
 import fetch from "node-fetch";
 import Auth from "../../Auth";
 import CLI from "../../Cli";
-import { EXIT_STATUS } from "../../contants";
+import { EXIT_STATUS } from "../../constants";
 import { KmdrAuthError } from "../../errors";
 import Print from "../../Print";
 

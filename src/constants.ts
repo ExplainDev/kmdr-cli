@@ -4,7 +4,7 @@ export const EXIT_STATUS = {
   /**  Auth file contents look invalid (multiple lines or empty)  $HOME/.kmdr/auth */
   FILE_INVALID: 10,
   /**  Auth file does not exist $HOME/.kmdr/auth */
-  FILE_NOT_PRESENT: 12,
+  FILE_NOT_PRESENT: 11,
   /**  Generic */
   GENERIC: 1,
   /** The token expired. It occurs when user does not click the login link. */

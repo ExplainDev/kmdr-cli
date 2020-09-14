@@ -7,7 +7,7 @@ import fetch from "node-fetch";
 import os from "os";
 import Auth from "../../Auth";
 import CLI from "../../Cli";
-import { EXIT_STATUS } from "../../contants";
+import { EXIT_STATUS } from "../../constants";
 import KmdrAuthError from "../../errors/KmdrAuthError";
 import { CurrentUserReponse, LoginIdResponse, User } from "../../interfaces";
 import Print from "../../Print";

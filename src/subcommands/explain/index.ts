@@ -4,7 +4,7 @@ import { Highlight, NodeDefinition, Tree } from "kmdr-ast";
 import Auth from "../../Auth";
 import CLI from "../../Cli";
 import CliDecorators from "../../CliDecorators";
-import { EXIT_STATUS } from "../../contants";
+import { EXIT_STATUS } from "../../constants";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
