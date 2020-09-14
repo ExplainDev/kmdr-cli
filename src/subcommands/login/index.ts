@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { EACCES } from "constants";
 import { prompt } from "enquirer";
 import EventSource from "eventsource";
 import fs from "fs";
@@ -94,7 +95,7 @@ export default class Login extends CLI {
       Print.error("");
       Print.error(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
       Print.error("");
-      process.exit(EXIT_STATUS.FILE_INVALID);
+      process.exit(EXIT_STATUS.AUTH_FILE_INVALID);
     }
   }
 
@@ -134,9 +135,20 @@ export default class Login extends CLI {
           Print.text("Run `kmdr explain` to get instant command definitions. ");
           Print.newLine();
         } catch (err) {
-          this.spinner?.fail("An error occurred");
-          Print.error(`Could not read or create directory ${this.KMDR_PATH}`);
+          this.spinner.fail("An error occurred");
           Print.newLine();
+          if (err instanceof KmdrAuthError) {
+            Print.error(err.message);
+            Print.newLine();
+            Print.text(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
+            Print.newLine();
+            process.exit(EXIT_STATUS.USER_NOT_AUTHENTICATED);
+          } else if (err.code === "EACCES") {
+            Print.error(`Could not read or create directory ${this.KMDR_PATH}`);
+            Print.error(err.message);
+            Print.newLine();
+            process.exit(EXIT_STATUS.AUTH_PATH_EACCESS);
+          }
         }
 
         this.eventSource.close();

@@ -129,12 +129,12 @@ export default class Explain extends CLI {
       Print.error(`No login detected on this machine. Sign in to continue.\n`);
       Print.error(`$ kmdr login`);
       Print.newLine();
-      process.exit(EXIT_STATUS.FILE_NOT_PRESENT);
+      process.exit(EXIT_STATUS.AUTH_FILE_NOT_PRESENT);
     } else if (!Auth.isTokenValidFormat(this.auth.token)) {
       Print.error(`File ${this.KMDR_AUTH_FILE} is invalid. Delete it and sign in again.\n`);
       Print.error(`$ rm ${this.KMDR_AUTH_FILE} && kmdr login`);
       Print.newLine();
-      process.exit(EXIT_STATUS.FILE_INVALID);
+      process.exit(EXIT_STATUS.AUTH_FILE_INVALID);
     }
   }
 

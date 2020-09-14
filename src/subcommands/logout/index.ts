@@ -70,7 +70,7 @@ export default class Logout extends CLI {
       Print.error("");
       Print.text(`$ rm ${this.KMDR_AUTH_FILE}`);
       Print.error("");
-      process.exit(EXIT_STATUS.FILE_INVALID);
+      process.exit(EXIT_STATUS.AUTH_FILE_INVALID);
     }
   }
 }
