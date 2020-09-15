@@ -64,20 +64,6 @@ Add the line below to your `.bashrc` or `.zshrc` if using `zsh`
 export PATH="$(yarn global bin):$PATH"
 ```
 
-### Running `kmdr` in a docker container
-
-1. Build the image
-
-   ```bash
-   docker build -t kmdr-cli .
-   ```
-
-2. Run the docker container
-
-   ```bash
-   docker run -it --rm  kmdr-cli
-   ```
-
 ### Sign In
 
 1. Log in on the kmdr CLI tool
