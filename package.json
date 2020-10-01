@@ -1,6 +1,6 @@
 {
   "name": "kmdr",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "description": "The CLI tool for learning commands from your terminal",
   "main": "dist/index.js",
   "scripts": {
