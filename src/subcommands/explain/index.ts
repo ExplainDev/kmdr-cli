@@ -8,6 +8,7 @@ import { EXIT_STATUS } from "../../constants";
 import { KmdrAuthError } from "../../errors";
 import { GetProgramAstResponse, SaveFeedbackResponse } from "../../interfaces";
 import Print from "../../Print";
+import chalk from "chalk";
 
 interface ExplainInputQuery {
   source: string;
@@ -78,7 +79,8 @@ export default class Explain extends CLI {
 
         Print.newLine();
 
-        Print.text(`Learn more at ${this.KMDR_WEBAPP_URI}/history/${commandId}`);
+        const detailsUrl = this.detailsURL(commandId);
+        Print.text(`Open in browser ${detailsUrl}`);
         Print.newLine();
 
         // what do you want to do next?
@@ -241,5 +243,14 @@ export default class Explain extends CLI {
     }
 
     return source;
+  }
+
+  private detailsURL(id: string) {
+    const url =
+      this.NODE_ENV === "production"
+        ? `https://h.kmdr.sh/${id}`
+        : `${this.KMDR_WEBAPP_URI}/history/${id}`;
+
+    return chalk.blueBright.bold.underline(url);
   }
 }
