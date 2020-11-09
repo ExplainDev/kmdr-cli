@@ -26,9 +26,9 @@
   "homepage": "https://kmdr.sh",
   "license": "MIT",
   "devDependencies": {
-    "@types/eventsource": "^1.1.4",
+    "@types/eventsource": "^1.1.5",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.58",
+    "@types/node": "^12.19.3",
     "@types/node-fetch": "^2.5.7",
     "jest": "^24.8.0",
     "kmdr-parser": "^2.4.2",
@@ -75,7 +75,7 @@
     "enquirer": "^2.3.6",
     "eventsource": "^1.0.7",
     "graphql-request": "^2.0.0",
-    "kmdr-ast": "^3.3.5",
+    "kmdr-ast": "^3.4.0",
     "node-fetch": "^2.6.1",
     "ora": "^4.1.1"
   },

@@ -48,6 +48,7 @@ export default class CliDecorators implements Decorators<string> {
         summary = definition.metadata.summary;
         break;
       }
+      case "missing_program":
       case "program": {
         const programDefinition = definition as ProgramNodeDefinition;
         const { name } = programDefinition.metadata;
@@ -195,6 +196,10 @@ export default class CliDecorators implements Decorators<string> {
 
   public logicalOperator(text: string, _definition?: NodeDefinition) {
     return this.theme.print("operator", text);
+  }
+
+  public missingProgram(text: string, _definition?: NodeDefinition) {
+    return this.theme.print("program", text);
   }
 
   public newLine() {
