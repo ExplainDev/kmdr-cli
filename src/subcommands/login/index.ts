@@ -257,7 +257,8 @@ export default class Login extends CLI {
     do {
       try {
         const input = await prompt<EmailInput>(inputQuestion);
-        if (input.email.trim() === "") {
+        const regex = /\S+@\S+\.\S+/;
+        if (input.email.trim() === "" || !regex.test(input.email)) {
           Print.error("Enter a valid email. Press Ctrl-c or Esc key to exit.");
         } else {
           email = input.email;
