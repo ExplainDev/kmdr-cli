@@ -33,7 +33,7 @@ yarn global add kmdr
 
 Run the command `kmdr` to check if it was correctly installed on your system.
 
-```
+```bash
 $ kmdr
 Usage: kmdr [options] [command]
 
@@ -87,7 +87,7 @@ When the `Enter your command:` prompt is returned, enter the command you would l
 
 An example explanation of `git commit -am "Initial commit"` can be seen below.
 
-```
+```bash
 $ kmdr explain
 ✔ Enter your command · git commit -am "Initial Commit"
 
@@ -109,7 +109,7 @@ $ kmdr explain
 
 #### Explaining commands with subcommands
 
-```
+```bash
 $ kmdr explain
 ? Enter your command: npm install kmdr@latest --global
 
@@ -129,7 +129,7 @@ $ kmdr explain
 
 #### Explanining commands with grouped options
 
-```
+```bash
 $ kmdr explain
 ? Enter your command: rsync -anv file1 file2
 
@@ -151,7 +151,7 @@ $ kmdr explain
 
 #### Explaining commands with redireciton
 
-```
+```bash
 $ kmdr explain
 ? Enter your command: ls -alh > contents.txt
 
@@ -173,7 +173,7 @@ $ kmdr explain
 
 #### Explaining list of commands
 
-```
+```bash
 $ kmdr explain
 ? Enter your command: dmesg | grep 'usb' > output.log 2>error.log
 
