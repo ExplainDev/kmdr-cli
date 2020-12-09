@@ -60,7 +60,7 @@ Commands:
 
 Add the line below to your `.bashrc` or `.zshrc` if using `zsh`
 
-```
+```bash
 export PATH="$(yarn global bin):$PATH"
 ```
 
